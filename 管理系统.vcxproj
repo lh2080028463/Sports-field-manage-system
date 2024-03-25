@@ -132,6 +132,7 @@
     <ClCompile Include="源.c" />
     <ClCompile Include="用户功能.c" />
     <ClCompile Include="基础功能.c" />
+    <ClCompile Include="结构体信息.h" />
     <ClCompile Include="菜单函数.c" />
   </ItemGroup>
   <ItemGroup>

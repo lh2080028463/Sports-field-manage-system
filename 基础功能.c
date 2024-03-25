@@ -1,3 +1,7 @@
+#include<stdio.h>
+#include"结构体信息.h"
+
+
 
 
 /*信息查询*/
