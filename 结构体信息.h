@@ -24,6 +24,10 @@ typedef struct Field
 	Duration openTime; //开放时间
 	bool rented;       //租用状态
 	unsigned int time; //计费时长(min)
+
+	struct Field* left;            //左节点
+	struct Field* right;           //右节点
+	int height;
 }Field;
 
 /*场地负责人结构体*/
@@ -54,7 +58,7 @@ typedef struct User
 /*预定信息结构体*/
 typedef struct Reservation
 {
-	Duration time;  //预定时间
-	int fieldIdx;   //预定场地
-	int owner;      //预订者 
+	Duration time;   //预定时间
+	char fieldName[50];  //预定场地
+	char owner[50];  //预订者 
 }Reservation;

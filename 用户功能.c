@@ -104,14 +104,35 @@ User* insertUser(User* node , char username[], char password[], char name[], cha
 	return node;
 }
 
-/*用户预订场地*/
-void makeReservation()
+/*定位场地指针*/
+Field* findField(Field* root,char fieldName[])
 {
-
+	if (root == NULL) return root;
+	Field* temp = (Field*)malloc(sizeof(Field));
+	if (strcmp(root->name,fieldName)<0)
+	{
+		temp = findField(root->left, fieldName);
+	}
+	else if (strcmp(root->name, fieldName) > 0)
+	{
+		temp = findField(root->right, fieldName);
+	}
+	else
+	{
+		return temp;
+	}
+}
+/*用户预订场地*/
+void makeReservation(Field* root,Reservation reservation)
+{
+	Field* temp = findField(root, reservation.fieldName);
+	if (temp == NULL) return NULL;
+	
 }
 
 /*查询场地信息*/
-void queryField()
+void queryField(Field* root,bool condition)
 {
+	if (root == NULL) return root;
 
 }
