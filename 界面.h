@@ -1,6 +1,9 @@
 #pragma once
 void menu();
+void magnagerMenu();
+
 void managerLogin();
 void responLogin();
 void userLogin();
-void magnagerMenu();
+
+void userRegister(User* userRoot);

@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include"结构体信息.h"
 
+
 /*创建新用户*/
 User* newUser(char username[], char password[], char name[], char phone[])
 {
@@ -9,6 +10,7 @@ User* newUser(char username[], char password[], char name[], char phone[])
 	//用户数据读入
 	strcpy(newUser->username, username);
 	strcpy(newUser->password, password);
+	strcpy(newUser->name, name);
 	strcpy(newUser->phone, phone);
 	newUser->time = 0;
 	//构建二叉树节点
@@ -108,7 +110,7 @@ User* insertUser(User* node , char username[], char password[], char name[], cha
 Field* findField(Field* root,char fieldName[])
 {
 	if (root == NULL) return root;
-	Field* temp = (Field*)malloc(sizeof(Field));
+	Field* temp = NULL;
 	if (strcmp(root->name,fieldName)<0)
 	{
 		temp = findField(root->left, fieldName);
@@ -122,6 +124,7 @@ Field* findField(Field* root,char fieldName[])
 		return temp;
 	}
 }
+
 /*用户预订场地*/
 void makeReservation(Field* root,Reservation reservation)
 {

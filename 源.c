@@ -2,14 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<stdbool.h>
+#include"基础功能.h"
+#include"界面.h"
+#include"结构体信息.h"
 
-unsigned int managerNum,userNum, responNum;
+unsigned int ManagerNum,UserNum, ResponNum;
+User* UserRoot;
 
 int main()
 {
 	menu();
 	int cmd;
-	scanf("&d", &cmd);
+	printf("请选择功能：");
+	scanf("%d", &cmd);
 	switch (cmd)
 	{
 	case 0:
@@ -34,7 +39,11 @@ int main()
 		
 		break;
 	}
-		
+	case 4:
+	{
+		userRegister(UserRoot);
+		break;
+	}
 
 	default:
 		break;

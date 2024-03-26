@@ -1,4 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
+#include"结构体信息.h"
+#include"用户.h"
+#include<Windows.h>
+#include"基础功能.h"
+
 
 /*初始界面*/
 void menu()
@@ -33,12 +39,38 @@ void responLogin()
 }
 
 /*用户登录界面*/
-void userLogin()
+void userLogin(User* userRoot,char username[])
 {
 	printf(" *****用户登录*****|\n");
 	printf(" 账  号：");
 	printf(" 密  码：");
 	printf(" *******************\n");
+}
+
+/*新用户注册界面及功能*/
+void userRegister(User* userRoot)
+{
+	char username[20] = { '\0' };  //账号
+	char password[20] = { '\0' };  //密码
+	printf(" *****新用户注册*****|\n");
+	printf(" 新 账 号：");
+	scanf("%s", username);
+	if (userRoot != NULL && findUsername(userRoot, username) == NULL)
+	{
+		system("cls");
+		printf("该账号已存在，请重新注册！\n");
+		Sleep(1000);
+		userRegister(userRoot);
+	}
+	else
+	{
+		printf(" 新 密 码：");
+		scanf("%s", password);
+		printf(" *******************\n");
+		printf("注册成功，请返回登录！");
+		Sleep(2000);
+		userLogin(userRoot,username);
+	}
 }
 
 /*管理员功能菜单*/
