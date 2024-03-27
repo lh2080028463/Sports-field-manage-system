@@ -19,6 +19,7 @@ char* getUserdataPath(const User user)
         char userIdx[10] = { '\0' };
         itoa(user.idx,userIdx,10);
         strcat(filePath, userIdx);
+        strcat(filePath, ".txt");
         return filePath;
     }
     else 
