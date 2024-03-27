@@ -36,6 +36,9 @@
     <ClCompile Include="结构体信息.h">
       <Filter>头文件</Filter>
     </ClCompile>
+    <ClCompile Include="文件操作.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="管理员.h">

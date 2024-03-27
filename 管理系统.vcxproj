@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="场地相关操作.c" />
     <ClCompile Include="场地负责人相关操作.c" />
+    <ClCompile Include="文件操作.c" />
     <ClCompile Include="源.c" />
     <ClCompile Include="用户功能.c" />
     <ClCompile Include="基础功能.c" />
