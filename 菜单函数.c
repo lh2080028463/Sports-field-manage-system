@@ -4,18 +4,16 @@
 #include"用户.h"
 #include<Windows.h>
 #include"基础功能.h"
-
-
 /*初始界面*/
 void menu()
 {
-	printf(" *****欢迎使用运动场馆管理系统********\n");
-	printf("  0.退出\n");
-	printf("  1.管理员\n");
-	printf("  2.场地负责人\n");
-	printf("  3.用户登录\n");
-	printf("  4.新用户注册\n");
-	printf("*******************\n");
+	printf("********欢迎使用运动场馆管理系统********\n");
+	printf("       0.退出\n");
+	printf("       1.管理员\n");
+	printf("       2.场地负责人\n");
+	printf("       3.用户登录\n");
+	printf("       4.新用户注册\n");
+	printf("****************************************\n");
 	printf("\n");
 }
 
@@ -23,28 +21,34 @@ void menu()
 void managerLogin()
 {
 	
-	printf(" *****管理员登录*****|\n");
+	printf(" ********管理员登录********|\n");
 	printf(" 账  号：");
+	printf(" \n");
 	printf(" 密  码：");
-	printf(" *************************\n");
+	printf(" \n");
+	printf(" **************************\n");
 }
 
 /*场地负责人登录界面*/
 void responLogin()
 {
-	printf(" *****场地负责人登录*****|\n");
+	printf(" ******场地负责人登录******\n");
 	printf(" 账  号：");
+	printf(" \n");
 	printf(" 密  码：");
-	printf(" *************************\n");
+	printf(" \n");
+	printf(" **************************\n");
 }
 
 /*用户登录界面*/
 void userLogin(User* userRoot,char username[])
 {
-	printf(" *****用户登录*****|\n");
+	printf(" ******用户登录******\n");
 	printf(" 账  号：");
+	printf(" \n");
 	printf(" 密  码：");
-	printf(" *******************\n");
+	printf(" \n");
+	printf(" ********************\n");
 }
 
 /*新用户注册界面及功能*/
@@ -77,14 +81,14 @@ void userRegister(User* userRoot)
 void magnagerMenu()
 {
 	printf(" ******************管理员功能****************\n");
-	printf(" 1.信息管理\n");
-	printf(" 2.场地负责人管理\n");
-	printf(" 3.信息查询\n");
-	printf(" 4.信息排序\n");
-	printf(" 5.信息统计\n");
-	printf(" 6.重置密码\n");
-	printf(" 7.退出\n");
-	printf(" *************************\n");
+	printf("                 1.信息管理\n");
+	printf("                 2.场地负责人管理\n");
+	printf("                 3.信息查询\n");
+	printf("                 4.信息排序\n");
+	printf("                 5.信息统计\n");
+	printf("                 6.重置密码\n");
+	printf("                 7.退出\n");
+	printf(" ********************************************\n");
 	printf("\n");
 }
 
@@ -92,13 +96,13 @@ void magnagerMenu()
 void responMenu()
 {
 	printf(" ******************场地负责人功能****************\n");
-	printf(" 1.场地管理\n");
-	printf(" 2.信息查询\n");
-	printf(" 3.信息排序\n");
-	printf(" 4.信息统计\n");
-	printf(" 5.重置密码\n");
-	printf(" 6.退出\n");
-	printf(" *************************\n");
+	printf("                 1.场地管理\n");
+	printf("                 2.信息查询\n");
+	printf("                 3.信息排序\n");
+	printf("                 4.信息统计\n");
+	printf("                 5.重置密码\n");
+	printf("                 6.退出\n");
+	printf(" ************************************************\n");
 	printf("\n");
 }
 
@@ -106,13 +110,13 @@ void responMenu()
 void userMenu()
 {
 	printf(" ******************用户功能****************\n");
-	printf(" 1.个人信息管理\n");
-	printf(" 2.场地预定\n");
-	printf(" 3.信息查询\n");
-	printf(" 4.信息排序\n");
-	printf(" 5.信息统计\n");
-	printf(" 6.重置密码\n");
-	printf(" 7.退出\n");
-	printf(" *************************\n");
+	printf("                 1.个人信息管理\n");
+	printf("                 2.场地预定\n");
+	printf("                 3.信息查询\n");
+	printf("                 4.信息排序\n");
+	printf("                 5.信息统计\n");
+	printf("                 6.重置密码\n");
+	printf("                 7.退出\n");
+	printf(" ******************************************\n");
 	printf("\n");
 }

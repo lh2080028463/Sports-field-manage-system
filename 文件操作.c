@@ -17,7 +17,7 @@ char* getUserdataPath(const User user)
         strcpy(filePath, cwd);
         strcat(filePath, "\\userdata\\user");
         char userIdx[10] = { '\0' };
-        itoa(user.idx,userIdx,10);
+        _itoa(user.idx,userIdx,10);
         strcat(filePath, userIdx);
         strcat(filePath, ".txt");
         return filePath;
