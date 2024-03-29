@@ -1,9 +1,58 @@
-
+#define _CRT_NONSTDC_NO_DEPRECATE
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<stdbool.h>
+#include<string.h>
+#include"结构体信息.h"
 
 /*添加场地信息*/
-void addField()
+void addField(Field* newField)
 {
-
+	printf("\n场地类型：");
+	scanf("%s", newField->name);
+	printf("\n场地面积：");
+	scanf("%lf", newField->area);
+	printf("\n场地早中晚价格：");
+	printf("\n早：");
+	scanf("%s", newField->price[0]);
+	printf("\n中：");
+	scanf("%s", newField->price[1]);
+	printf("\n晚：");
+	scanf("%s", newField->price[2]);
+	printf("\n开放时间：\n起始时间：\n小时：");
+	scanf("%d", newField->openTime.start.hour);
+	printf("分钟：");
+	scanf("%d", newField->openTime.start.minute);
+	printf("\n结束时间：\n小时：");
+	scanf("%d", newField->openTime.end.hour);
+	printf("分钟：");
+	scanf("%d", newField->openTime.end.minute);
+	printf("计费时长：\n");
+	scanf("%u", newField->time);
+	newField->rented = false;
+	FILE* fp;
+	char ch; 
+	for (int i = 0; i < 1000; i++)
+	{
+		char n[999];
+		char name[150];
+		_itoa(i, n, 10);
+		strcpy(name, "e:\\Sports - field - manage - system\\Fields\\field");
+		strcat(name, &n[0]);
+		strcat(name, ".txt");
+		if ((fp = fopen("name", "w+")) == NULL)
+		{
+			printf("Error!\n");
+			exit(0);
+		}
+		ch = fgetc(fp);
+		if (ch == EOF)
+		{
+			fprintf(fp, "%s %lf %lf %lf %lf %d %d %d %d %d %u", newField->name, newField->area, newField->price[0], newField->price[1], newField->price[2], newField->openTime.start.hour, newField->openTime.start.minute, newField->openTime.end.hour, newField->openTime.end.minute,newField->rented,newField->time);
+			break;
+		}
+	}
 }
 
 /*记录场地使用情况*/
@@ -13,13 +62,45 @@ void recordUserField()
 }
 
 /*修改场地信息*/
-void editField()
+void editField(Field* innerField)
 {
-
+	if ((fp = fopen("name", "w+")) == NULL)
+	{
+		printf("Error!\n");
+		exit(0);
+	}
+	fscanf(fp, "%s %lf %lf %lf %lf %d %d %d %d %d %u", innerField->name, innerField->area, innerField->price[0], innerField->price[1], innerField->price[2], innerField->openTime.start.hour, innerField->openTime.start.minute, innerField->openTime.end.hour, innerField->openTime.end.minute, innerField->rented, innerField->time);
 }
 
 /*删除场地信息*/
 void deleteField()
 {
 
+}
+
+void createBiTreeField(Field& T) 
+{
+	//按先序次序输入二叉树中节点的值（一个字符），点号字符表示空树，构造二叉链表表示的二叉树
+	//注意：若输入的字符数（不含#号）为n个，则相应的空树即点号就应该有n+1个
+	Field* innerField;
+	if ((fp = fopen("name", "w+")) == NULL)
+	{
+		printf("Error!\n");
+		exit(0);
+	}
+	fscanf(fp, "%s %lf %lf %lf %lf %d %d %d %d %d %u", innerField->name, innerField->area, innerField->price[0], innerField->price[1], innerField->price[2], innerField->openTime.start.hour, innerField->openTime.start.minute, innerField->openTime.end.hour, innerField->openTime.end.minute, innerField->rented, innerField->time);
+	if (ch != '#') 
+	{
+		if (ch == '.') 
+		{
+			T = NULL;
+		}
+		else 
+		{
+			T = (Field*)malloc(sizeof(Field));
+			T->data = ch;
+			createBiTreeField(Field->left);
+			createBiTreeField(Field->right);
+		}
+	}
 }
