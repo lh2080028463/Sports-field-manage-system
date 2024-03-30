@@ -7,9 +7,11 @@
 #include<direct.h>
 #include"结构体信息.h"
 
+
 /*添加场地信息*/
-void addField(Field* newField)
+void addField()
 {
+	Field* newField=(Field*)malloc(sizeof(Field));
 	printf("\n场地类型：");
 	scanf("%s", newField->name);
 	printf("\n场地面积：");
@@ -40,7 +42,7 @@ void addField(Field* newField)
 		char name[150];
 		_itoa(i, n, 10);
 		char cwd[100] = { '\0' };
-		getcwd(cwd, sizeof(cwd);
+		getcwd(cwd, sizeof(cwd));
 		strcpy(name, cwd);
 		strcat(name, &n[0]);
 		strcat(name, ".txt");
