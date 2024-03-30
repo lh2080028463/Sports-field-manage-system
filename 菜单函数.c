@@ -73,7 +73,6 @@ void userRegister(User* userRoot)
 		printf(" *******************\n");
 		printf("×¢²á³É¹¦£¬Çë·µ»ØµÇÂ¼£¡");
 		Sleep(2000);
-		userLogin(userRoot,username);
 	}
 }
 

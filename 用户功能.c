@@ -58,7 +58,7 @@ User* leftRotate(User* x)
 	return x;
 }
 
-/*用户注册*/
+/*增加用户*/
 User* insertUser(User* node , char username[], char password[], char name[], char phone[])
 {
 	if (node == NULL) 
