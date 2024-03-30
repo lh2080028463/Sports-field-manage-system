@@ -40,7 +40,9 @@ void addField(Field* newField)
 		char n[999];
 		char name[150];
 		_itoa(i, n, 10);
-		strcpy(name, "e:\\Sports - field - manage - system\\Fields\\field");
+		char cwd[100] = { '\0' };
+		getcwd(cwd, sizeof(cwd);
+		strcpy(name, cwd);
 		strcat(name, &n[0]);
 		strcat(name, ".txt");
 		if ((fp = fopen("name", "w+")) == NULL)
