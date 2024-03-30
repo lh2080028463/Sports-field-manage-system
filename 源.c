@@ -11,7 +11,6 @@ User* UserRoot;
 
 int main()
 {
-	addField();
 	menu();
 	int cmd;
 	printf("ÇëÑ¡Ôñ¹¦ÄÜ£º");

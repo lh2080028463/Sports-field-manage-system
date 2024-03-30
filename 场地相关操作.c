@@ -5,6 +5,7 @@
 #include<stdbool.h>
 #include<string.h>
 #include"结构体信息.h"
+typedef int N = 0;
 
 /*添加场地信息*/
 void addField(Field* newField)
@@ -49,7 +50,8 @@ void addField(Field* newField)
 		ch = fgetc(fp);
 		if (ch == EOF)
 		{
-			fprintf(fp, "%s %lf %lf %lf %lf %d %d %d %d %d %u", newField->name, newField->area, newField->price[0], newField->price[1], newField->price[2], newField->openTime.start.hour, newField->openTime.start.minute, newField->openTime.end.hour, newField->openTime.end.minute,newField->rented,newField->time);
+			newField->idx = i;
+			fprintf(fp, "%d %s %lf %lf %lf %lf %d %d %d %d %d %u", newField->idx, newField->name, newField->area, newField->price[0], newField->price[1], newField->price[2], newField->openTime.start.hour, newField->openTime.start.minute, newField->openTime.end.hour, newField->openTime.end.minute,newField->rented,newField->time);
 			break;
 		}
 	}
@@ -78,29 +80,41 @@ void deleteField()
 
 }
 
-void createBiTreeField(Field& T) 
+void createBiTreeField(Field* innerField) 
 {
-	//按先序次序输入二叉树中节点的值（一个字符），点号字符表示空树，构造二叉链表表示的二叉树
-	//注意：若输入的字符数（不含#号）为n个，则相应的空树即点号就应该有n+1个
-	Field* innerField;
+	extern N;
+	N++;
 	if ((fp = fopen("name", "w+")) == NULL)
 	{
 		printf("Error!\n");
 		exit(0);
 	}
+	innerField = (Field*)malloc(sizeof(Field));
 	fscanf(fp, "%s %lf %lf %lf %lf %d %d %d %d %d %u", innerField->name, innerField->area, innerField->price[0], innerField->price[1], innerField->price[2], innerField->openTime.start.hour, innerField->openTime.start.minute, innerField->openTime.end.hour, innerField->openTime.end.minute, innerField->rented, innerField->time);
-	if (ch != '#') 
+	createBiTreeField(Field->left);
+	createBiTreeField(Field->right);
+}
+
+char* getFielddataPath(const Field field)
+{
+	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+
+	// 获取当前工作目录
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		if (ch == '.') 
-		{
-			T = NULL;
-		}
-		else 
-		{
-			T = (Field*)malloc(sizeof(Field));
-			T->data = ch;
-			createBiTreeField(Field->left);
-			createBiTreeField(Field->right);
-		}
+		// 将当前工作目录与文件名拼接成完整的文件路径
+		strcpy(filePath, cwd);
+		strcat(filePath, "\\fielddata\\field");
+		char fieldIdx[10] = { '\0' };
+		_itoa(field.idx, fieldIdx, 10);
+		strcat(filePath, fieldIdx);
+		strcat(filePath, ".txt");
+		return filePath;
+	}
+	else
+	{
+		perror("getcwd() 错误");
+		return 1;
 	}
 }
