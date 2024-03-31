@@ -6,7 +6,6 @@
 #include<string.h>
 #include<direct.h>
 #include"结构体信息.h"
-typedef int N = 0;
 
 /*添加场地信息*/
 void addField(Field* newField)
@@ -41,7 +40,7 @@ void addField(Field* newField)
 		char name[150];
 		_itoa(i, n, 10);
 		char cwd[100] = { '\0' };
-		getcwd(cwd, sizeof(cwd);
+		getcwd(cwd, sizeof(cwd));
 		strcpy(name, cwd);
 		strcat(name, &n[0]);
 		strcat(name, ".txt");
@@ -69,6 +68,8 @@ void recordUserField()
 /*修改场地信息*/
 void editField(Field* innerField)
 {
+	FILE* fp;
+	char name[150];
 	if ((fp = fopen("name", "w+")) == NULL)
 	{
 		printf("Error!\n");
@@ -85,8 +86,7 @@ void deleteField()
 
 void createBiTreeField(Field* innerField) 
 {
-	extern N;
-	N++;
+	FILE* fp;
 	if ((fp = fopen("name", "w+")) == NULL)
 	{
 		printf("Error!\n");
@@ -94,8 +94,8 @@ void createBiTreeField(Field* innerField)
 	}
 	innerField = (Field*)malloc(sizeof(Field));
 	fscanf(fp, "%s %lf %lf %lf %lf %d %d %d %d %d %u", innerField->name, innerField->area, innerField->price[0], innerField->price[1], innerField->price[2], innerField->openTime.start.hour, innerField->openTime.start.minute, innerField->openTime.end.hour, innerField->openTime.end.minute, innerField->rented, innerField->time);
-	createBiTreeField(Field->left);
-	createBiTreeField(Field->right);
+	createBiTreeField(innerField->left);
+	createBiTreeField(innerField->right);
 }
 
 char* getFielddataPath(const Field field)
