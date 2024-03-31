@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include"结构体信息.h"
 
+extern unsigned int UserNum;
 
 /*创建新用户*/
 User* newUser(char username[], char password[], char name[], char phone[])
@@ -58,10 +59,10 @@ User* leftRotate(User* x)
 	return x;
 }
 
-/*用户注册*/
-User* insertUser(User* node , char username[], char password[], char name[], char phone[])
+/*增加用户*/
+User* insertUser(User* node, char username[], char password[], char name[], char phone[])
 {
-	if (node == NULL) 
+	if (node == NULL)
 		return newUser(username, password, name, phone);
 
 	if (strcmp(username, node->username) < 0)
@@ -70,13 +71,13 @@ User* insertUser(User* node , char username[], char password[], char name[], cha
 	}
 	else if (strcmp(username, node->username) > 0)
 	{
-		node->right = insertUser(node->right,username, password, name, phone);
+		node->right = insertUser(node->right, username, password, name, phone);
 	}
 	else //重复
 		return node;
 	//更新节点高度
 	node->height = max(height(node->left), height(node->right)) + 1;
-	
+
 	//获取平衡因子
 	int balance = getBalence(node);
 
@@ -92,7 +93,7 @@ User* insertUser(User* node , char username[], char password[], char name[], cha
 		return leftRotate(node);
 	}
 	// LR
-	if (balance > 1 && strcmp(username, node->left->username) > 0) 
+	if (balance > 1 && strcmp(username, node->left->username) > 0)
 	{
 		node->left = leftRotate(node->left);
 		return rightRotate(node);
@@ -103,15 +104,16 @@ User* insertUser(User* node , char username[], char password[], char name[], cha
 		node->right = rightRotate(node->left);
 		return leftRotate(node);
 	}
+	UserNum++;
 	return node;
 }
 
 /*定位场地指针*/
-Field* findField(Field* root,char fieldName[])
+Field* findField(Field* root, char fieldName[])
 {
 	if (root == NULL) return root;
 	Field* temp = NULL;
-	if (strcmp(root->name,fieldName)<0)
+	if (strcmp(root->name, fieldName) < 0)
 	{
 		temp = findField(root->left, fieldName);
 	}
@@ -126,15 +128,15 @@ Field* findField(Field* root,char fieldName[])
 }
 
 /*用户预订场地*/
-void makeReservation(Field* root,Reservation reservation)
+void makeReservation(Field* root, Reservation reservation)
 {
 	Field* temp = findField(root, reservation.fieldName);
 	if (temp == NULL) return NULL;
-	
+
 }
 
 /*查询场地信息*/
-void queryField(Field* root,bool condition)
+void queryField(Field* root, bool condition)
 {
 	if (root == NULL) return root;
 

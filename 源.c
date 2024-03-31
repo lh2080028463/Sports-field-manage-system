@@ -5,48 +5,60 @@
 #include"基础功能.h"
 #include"界面.h"
 #include"结构体信息.h"
+#include"文件处理.h"
 
-unsigned int ManagerNum,UserNum, ResponNum;
+unsigned int ManagerNum, UserNum, ResponNum;
 User* UserRoot;
 
 int main()
 {
-	menu();
-	int cmd;
-	printf("请选择功能：");
-	scanf("%d", &cmd);
-	switch (cmd)
+	initNum();
+	inputUserdata(UserRoot);
+
+	while (true)
 	{
-	case 0:
-	{
-		
-		break;
-	}
-		
-	case 1:
-	{
-		
-		break;
-	}
-		
-	case 2:
-	{
-		
-		break;
-	}
-	case 3:
-	{
-		
-		break;
-	}
-	case 4:
-	{
-		userRegister(UserRoot);
-		break;
+		menu();
+		int cmd;
+		printf("请选择功能：");
+		scanf("%d", &cmd);
+		switch (cmd)
+		{
+		case 0:
+		{
+
+			break;
+		}
+
+		case 1:
+		{
+
+			break;
+		}
+
+		case 2:
+		{
+
+			break;
+		}
+		case 3:
+		{
+
+			break;
+		}
+		case 4:
+		{
+			UserRoot = userRegister(UserRoot);
+			break;
+		}
+
+		default:
+			printf("请选择正确的功能！\n");
+			break;
+		}
+
+		editUserNum();
 	}
 
-	default:
-		break;
-	}
+
 	return 0;
 }
