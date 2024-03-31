@@ -49,7 +49,7 @@ typedef struct User
 	char username[20];     //账号
 	char password[20];     //密码
 	unsigned int time;     //总使用时长
-	
+
 	struct User* left;            //左节点
 	struct User* right;           //右节点
 	int height;

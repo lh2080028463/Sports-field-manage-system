@@ -4,6 +4,8 @@
 #include"用户.h"
 #include<Windows.h>
 #include"基础功能.h"
+
+extern unsigned int ManagerNum, UserNum, ResponNum;
 /*初始界面*/
 void menu()
 {
@@ -20,7 +22,7 @@ void menu()
 /*管理员登录界面*/
 void managerLogin()
 {
-	
+
 	printf(" ********管理员登录********|\n");
 	printf(" 账  号：");
 	printf(" \n");
@@ -41,7 +43,7 @@ void responLogin()
 }
 
 /*用户登录界面*/
-void userLogin(User* userRoot,char username[])
+void userLogin(User* userRoot, char username[])
 {
 	printf(" ******用户登录******\n");
 	printf(" 账  号：");
@@ -52,26 +54,34 @@ void userLogin(User* userRoot,char username[])
 }
 
 /*新用户注册界面及功能*/
-void userRegister(User* userRoot)
+User* userRegister(User* userRoot)
 {
 	char username[20] = { '\0' };  //账号
 	char password[20] = { '\0' };  //密码
+	char name[20] = { '\0' };
+	char phone[20] = { '\0' };
+
 	printf(" *****新用户注册*****|\n");
 	printf(" 新 账 号：");
 	scanf("%s", username);
-	if (userRoot != NULL && findUsername(userRoot, username) == NULL)
+	if (userRoot != NULL && findUsername(userRoot, username) != NULL)
 	{
 		system("cls");
 		printf("该账号已存在，请重新注册！\n");
 		Sleep(1000);
-		userRegister(userRoot);
+		return userRegister(userRoot);
 	}
 	else
 	{
 		printf(" 新 密 码：");
 		scanf("%s", password);
+		printf(" 姓 名：");
+		scanf("%s", name);
+		printf("联系方式：");
+		scanf("%s", phone);
 		printf(" *******************\n");
-		printf("注册成功，请返回登录！");
+		printf("注册成功，请返回登录！\n");
+		return insertUser(userRoot, username, password, name, phone);
 		Sleep(2000);
 	}
 }

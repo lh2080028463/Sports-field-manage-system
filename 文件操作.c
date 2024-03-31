@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-extern int UserNum;
+extern unsigned int ManagerNum, UserNum, ResponNum;
 
 
 /*获取用户数据路径*/
@@ -40,6 +40,7 @@ void inputUserdata(User* userRoot)
 
 	for (int i = 1; i <= UserNum; i++)
 	{
+		//更新文件路径
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 		{
 			strcpy(filePath, cwd);
@@ -54,8 +55,9 @@ void inputUserdata(User* userRoot)
 			perror("getcwd() 错误");
 			return 1;
 		}
+		//读入txt中用户数据
 		filePointer = fopen(filePath, "r");
-		if (filePointer==NULL)
+		if (filePointer == NULL)
 		{
 			printf("初始化读入数据时无法打开文件！\n");
 			return 1;
@@ -65,4 +67,52 @@ void inputUserdata(User* userRoot)
 		insertUser(userRoot, newUser->username, newUser->password, newUser->name, newUser->phone);
 		fclose(filePointer);
 	}
+}
+
+/*初始化时读入对象数量*/
+void initNum()
+{
+	FILE* filePointer; // 文件指针
+	// 打开文件以进行读取
+	filePointer = fopen("data.txt", "r");
+	// 检查文件是否成功打开
+	if (filePointer == NULL)
+	{
+		printf("无法打开文件。\n");
+		return 1;
+	}
+	//读入各对象数量
+	fscanf(filePointer, "UserNum %u\nManagerNum %u\nResponNum %u", &UserNum, &ManagerNum, &ResponNum);
+	// 关闭文件
+	fclose(filePointer);
+}
+
+/*结束时更新文件中用户数量*/
+void editUserNum()
+{
+	FILE* filePointer; // 文件指针
+	// 打开文件以进行读取
+	filePointer = fopen("data.txt", "r+");
+	// 检查文件是否成功打开
+	if (filePointer == NULL)
+	{
+		printf("无法打开文件。\n");
+		return 1;
+	}
+	char numName[50];
+	int num;
+	while (fscanf(filePointer, "%s %d", numName, &num) != EOF)
+	{
+		if (strcmp(numName, "UserNum") == 0)
+		{
+			char tempNum[64] = { '\0' };
+			_itoa(num, tempNum, 10);
+			int len = strlen(tempNum);
+			fseek(filePointer, -len, SEEK_CUR);
+			fprintf(filePointer, "%d", UserNum);
+			break;
+		}
+	}
+	// 关闭文件
+	fclose(filePointer);
 }
