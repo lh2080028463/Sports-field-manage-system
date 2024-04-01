@@ -3,14 +3,14 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+
 extern unsigned int ManagerNum, UserNum, ResponNum;
 
-
-/*获取用户数据路径*/
+/*获取用户数据地址*/
 char* getUserdataPath(const User user)
 {
-	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
-	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+    char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+    char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
 
 	// 获取当前工作目录
 	if (getcwd(cwd, sizeof(cwd)) != NULL)

@@ -7,11 +7,9 @@
 #include<direct.h>
 #include"结构体信息.h"
 
-
 /*添加场地信息*/
-void addField()
+void addField(Field* newField)
 {
-	Field* newField = (Field*)malloc(sizeof(Field));
 	printf("\n场地类型：");
 	scanf("%s", newField->name);
 	printf("\n场地面积：");
@@ -35,7 +33,7 @@ void addField()
 	scanf("%u", newField->time);
 	newField->rented = false;
 	FILE* fp;
-	char ch;
+	char ch; 
 	for (int i = 0; i < 1000; i++)
 	{
 		char n[999];
@@ -55,7 +53,7 @@ void addField()
 		if (ch == EOF)
 		{
 			newField->idx = i;
-			fprintf(fp, "%d %s %lf %lf %lf %lf %d %d %d %d %d %u", newField->idx, newField->name, newField->area, newField->price[0], newField->price[1], newField->price[2], newField->openTime.start.hour, newField->openTime.start.minute, newField->openTime.end.hour, newField->openTime.end.minute, newField->rented, newField->time);
+			fprintf(fp, "%d %s %lf %lf %lf %lf %d %d %d %d %d %u", newField->idx, newField->name, newField->area, newField->price[0], newField->price[1], newField->price[2], newField->openTime.start.hour, newField->openTime.start.minute, newField->openTime.end.hour, newField->openTime.end.minute,newField->rented,newField->time);
 			break;
 		}
 	}
@@ -86,7 +84,7 @@ void deleteField()
 
 }
 
-void createBiTreeField(Field* innerField)
+void createBiTreeField(Field* innerField) 
 {
 	FILE* fp;
 	if ((fp = fopen("name", "w+")) == NULL)

@@ -56,8 +56,5 @@
     <ClInclude Include="基础功能.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="文件处理.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

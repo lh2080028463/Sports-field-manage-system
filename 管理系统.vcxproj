@@ -139,7 +139,6 @@
   <ItemGroup>
     <ClInclude Include="场地负责人.h" />
     <ClInclude Include="基础功能.h" />
-    <ClInclude Include="文件处理.h" />
     <ClInclude Include="用户.h" />
     <ClInclude Include="界面.h" />
     <ClInclude Include="管理员.h" />

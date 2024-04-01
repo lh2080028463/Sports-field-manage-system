@@ -6,4 +6,4 @@ void managerLogin();
 void responLogin();
 void userLogin();
 
-User* userRegister(User* userRoot);
+void userRegister(User* userRoot);
