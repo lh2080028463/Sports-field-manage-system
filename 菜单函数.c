@@ -52,10 +52,12 @@ void userLogin(User* userRoot,char username[])
 }
 
 /*新用户注册界面及功能*/
-void userRegister(User* userRoot)
+User* userRegister(User* userRoot)
 {
 	char username[20] = { '\0' };  //账号
 	char password[20] = { '\0' };  //密码
+	char phone[20] = { '\0' };
+	char name[20] = { '\0' };
 	printf(" *****新用户注册*****|\n");
 	printf(" 新 账 号：");
 	scanf("%s", username);
