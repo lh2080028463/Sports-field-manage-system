@@ -59,7 +59,7 @@ void inputUserdata(User* userRoot)
 		filePointer = fopen(filePath, "r");
 		if (filePointer == NULL)
 		{
-			printf("初始化读入数据时无法打开文件！\n");
+			printf("初始化读入数据%d时无法打开文件！\n",i);
 			return 1;
 		}
 		User* newUser = (User*)malloc(sizeof(User));

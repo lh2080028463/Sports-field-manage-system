@@ -21,6 +21,8 @@ int main()
 		int cmd;
 		printf("ÇëÑ¡Ôñ¹¦ÄÜ£º");
 		scanf("%d", &cmd);
+		if (cmd == 0)
+			break;
 		switch (cmd)
 		{
 		case 0:

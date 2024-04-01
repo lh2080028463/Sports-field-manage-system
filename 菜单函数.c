@@ -77,10 +77,10 @@ User* userRegister(User* userRoot)
 		scanf("%s", password);
 		printf(" 姓 名：");
 		scanf("%s", name);
-		printf("联系方式：");
+		printf(" 联系方式：");
 		scanf("%s", phone);
 		printf(" *******************\n");
-		printf("注册成功，请返回登录！\n");
+		printf(" 注册成功，请返回登录！\n");
 		return insertUser(userRoot, username, password, name, phone);
 		Sleep(2000);
 	}
