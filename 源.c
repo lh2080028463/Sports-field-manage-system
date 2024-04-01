@@ -55,6 +55,8 @@ int main()
 		default:
 			break;
 		}
-		return 0;
+		
+		editUserNum();
 	}
+	return 0;
 }
