@@ -19,12 +19,12 @@ User* findUsername(const User* userRoot,const char username[])
 {
 	if (userRoot == NULL) 
 		return userRoot;
-	User* temp = NULL;
-	if (strcmp(userRoot->name, username) < 0)
+	User* temp = userRoot;
+	if (strcmp( username, userRoot->username) < 0)
 	{
 		temp = findUsername(userRoot->left, username);
 	}
-	else if (strcmp(userRoot->name, username) > 0)
+	else if (strcmp(username, userRoot->username) > 0)
 	{
 		temp = findUsername(userRoot->right, username);
 	}

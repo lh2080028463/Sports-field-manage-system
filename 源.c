@@ -5,6 +5,7 @@
 #include"基础功能.h"
 #include"界面.h"
 #include"结构体信息.h"
+#include"文件处理.h"
 
 unsigned int ManagerNum,UserNum, ResponNum;
 User* UserRoot;

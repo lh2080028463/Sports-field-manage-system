@@ -5,6 +5,7 @@
 #include<string.h>
 
 extern unsigned int ManagerNum, UserNum, ResponNum;
+extern User* UserRoot;
 
 /*获取用户数据地址*/
 char* getUserdataPath(const User user)
@@ -63,10 +64,37 @@ void inputUserdata(User* userRoot)
 			return 1;
 		}
 		User* newUser = (User*)malloc(sizeof(User));
-		fscanf(filePointer, "%d\n%s\n%s\n%s\n%s\n%u\n", &newUser->idx, newUser->name, newUser->phone, newUser->username, newUser->password, &newUser->time);
-		insertUser(userRoot, newUser->username, newUser->password, newUser->name, newUser->phone);
+		fscanf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n",&newUser->idx, newUser->name, newUser->phone, newUser->username, newUser->password, &newUser->time);
+		UserRoot=insertUser(UserRoot, newUser->idx,newUser->username, newUser->password, newUser->name, newUser->phone,newUser->time);
+		UserNum--;
 		fclose(filePointer);
 	}
+}
+
+/*编辑文件用户信息*/
+void editUserdata(unsigned int idx,char username[], char password[], char name[], char phone[], unsigned int time)
+{
+	//向文件中写入用户数据
+	FILE* filePointer;
+	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+	//更新文件路径
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		strcpy(filePath, cwd);
+		strcat(filePath, "\\userdata\\user");
+		char userIdx[10] = { '\0' };
+		_itoa(UserNum, userIdx, 10);
+		strcat(filePath, userIdx);
+		strcat(filePath, ".txt");
+	}
+	else
+	{
+		perror("getcwd() 错误");
+		return 1;
+	}
+	filePointer = fopen(filePath, "w");
+	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n",idx,name, username, password, phone, time);
 }
 
 /*初始化时读入对象数量*/

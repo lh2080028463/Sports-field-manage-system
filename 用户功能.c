@@ -2,19 +2,21 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include"结构体信息.h"
+#include"文件处理.h"
 
 extern unsigned int ManagerNum, UserNum, ResponNum;
 
 /*创建新用户*/
-User* newUser(char username[], char password[], char name[], char phone[])
+User* newUser(unsigned int idx,char username[], char password[], char name[], char phone[],unsigned int time)
 {
 	User* newUser = (User*)malloc(sizeof(User));
 	//用户数据读入
+	newUser->idx = idx;
 	strcpy(newUser->username, username);
 	strcpy(newUser->password, password);
 	strcpy(newUser->name, name);
 	strcpy(newUser->phone, phone);
-	newUser->time = 0;
+	newUser->time = time;
 	//构建二叉树节点
 	newUser->left = NULL;
 	newUser->right = NULL;
@@ -61,18 +63,24 @@ User* leftRotate(User* x)
 }
 
 /*用户注册*/
-User* insertUser(User* node , char username[], char password[], char name[], char phone[])
+User* insertUser(User* node ,unsigned int idx, char username[], char password[], char name[], char phone[],unsigned int time)
 {
-	if (node == NULL) 
-		return newUser(username, password, name, phone);
+	if (node == NULL)
+	{
+		UserNum++;
+		if(UserNum==1) 
+			editUserdata(1, username, password, name, phone, time);
+		return newUser(idx,username, password, name, phone, time);
+	}
+		
 
 	if (strcmp(username, node->username) < 0)
 	{
-		node->left = insertUser(node->left, username, password, name, phone);
+		node->left = insertUser(node->left, idx, username, password, name, phone, time);
 	}
 	else if (strcmp(username, node->username) > 0)
 	{
-		node->right = insertUser(node->right,username, password, name, phone);
+		node->right = insertUser(node->right, idx, username, password, name, phone, time);
 	}
 	else //重复
 		return node;
@@ -105,27 +113,8 @@ User* insertUser(User* node , char username[], char password[], char name[], cha
 		node->right = rightRotate(node->left);
 		return leftRotate(node);
 	}
-	
-	UserNum++;
-	FILE* filePointer;
-	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
-	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
-	//更新文件路径
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		strcpy(filePath, cwd);
-		strcat(filePath, "\\userdata\\user");
-		char userIdx[10] = { '\0' };
-		_itoa(UserNum, userIdx, 10);
-		strcat(filePath, userIdx);
-		strcat(filePath, ".txt");
-	}
-	else
-	{
-		perror("getcwd() 错误");
-		return 1;
-	}
-	
+
+	editUserdata(idx,username, password, name, phone, time);
 	return node;
 }
 
@@ -133,12 +122,12 @@ User* insertUser(User* node , char username[], char password[], char name[], cha
 Field* findField(Field* root,char fieldName[])
 {
 	if (root == NULL) return root;
-	Field* temp = NULL;
-	if (strcmp(root->name,fieldName)<0)
+	Field* temp = root;
+	if (strcmp(fieldName, root->name)<0)
 	{
 		temp = findField(root->left, fieldName);
 	}
-	else if (strcmp(root->name, fieldName) > 0)
+	else if (strcmp(fieldName,root->name) > 0)
 	{
 		temp = findField(root->right, fieldName);
 	}

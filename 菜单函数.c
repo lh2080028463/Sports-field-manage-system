@@ -4,6 +4,8 @@
 #include"用户.h"
 #include<Windows.h>
 #include"基础功能.h"
+
+extern unsigned int ManagerNum, UserNum, ResponNum;
 /*初始界面*/
 void menu()
 {
@@ -61,7 +63,7 @@ User* userRegister(User* userRoot)
 	printf(" *****新用户注册*****|\n");
 	printf(" 新 账 号：");
 	scanf("%s", username);
-	if (userRoot != NULL && findUsername(userRoot, username) == NULL)
+	if (userRoot != NULL && findUsername(userRoot, username) != NULL)
 	{
 		system("cls");
 		printf("该账号已存在，请重新注册！\n");
@@ -78,7 +80,7 @@ User* userRegister(User* userRoot)
 		scanf("%s", phone);
 		printf(" *******************\n");
 		printf(" 注册成功，请返回登录！\n");
-		return insertUser(userRoot, username, password, name, phone);
+		return insertUser(userRoot,UserNum+1, username, password, name, phone,0);
 		Sleep(2000);
 		userLogin(userRoot,username);
 	}
