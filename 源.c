@@ -43,7 +43,7 @@ int main()
 
 		case 2:
 		{
-
+			
 			break;
 		}
 		case 3:
@@ -66,6 +66,10 @@ int main()
 				else if (userCmd == 2)
 				{
 					makeReservation(reservations[ReservationNum++], FieldRoot, currentUser->username);
+				}
+				else if (userCmd == 3)
+				{
+					
 				}
 			}
 			break;

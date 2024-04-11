@@ -8,6 +8,7 @@
 
 extern unsigned int ManagerNum, UserNum, ResponNum;
 extern User* UserRoot;
+extern Field* FieldRoot;
 /*初始界面*/
 void menu()
 {
@@ -158,6 +159,7 @@ void userMenu()
 	printf(" ******************************************\n");
 	printf("\n");
 }
+
 /*用户个人信息管理*/
 void editMessageMenu(User* user)
 {
@@ -198,12 +200,55 @@ void editMessageMenu(User* user)
 		}
 		else
 		{
-			printf("请输入正确的序号：");
+			system("cls");
+			printf("请输入正确的序号!");
+			Sleep(1000);
+			system("cls");
 		}
 	}
 	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time);
 	printf(" ******************************************\n");
 	
-	
 	printf("\n");
+}
+
+/*用户功能：信息查询*/
+void queryMessageMenu()
+{
+	int querycmd;
+	printf(" ******************信息查询****************\n");
+	printf("                 0.退出\n");
+	printf("                 1.场地信息\n");
+	printf("                 2.个人预定信息\n");
+	printf(" ******************************************\n");
+	printf("\n");
+	while (true)
+	{
+		printf("请选择功能：");
+		scanf("%d", &querycmd);
+		if (querycmd == 0)
+		{
+			break;
+		}
+		else if (querycmd == 1)
+		{
+			Field* tempField[100] = { NULL };
+			bool condition=true;//待写入
+			queryField(FieldRoot, condition, tempField);
+			putFieldMessage(tempField);
+		}
+		else if (querycmd == 2)
+		{
+
+		}
+		else
+		{
+			system("cls");
+			printf("请输入正确的序号!");
+			Sleep(1000);
+			system("cls");
+		}
+		
+	}
+	
 }

@@ -19,12 +19,11 @@ typedef struct Field
 {
 	unsigned int idx;   //场地编号
 	char name[50];     //名称
-	double area;	   //面积	
+	double area;	   //面积
 	double price[3];   //早中晚价格
 	Duration openTime; //开放时间
 	bool rented;       //租用状态
 	unsigned int time; //计费时长(min)
-	char Site_type;  	 //场地类型(用abc来代替）
 
 	struct Field* left;            //左节点
 	struct Field* right;           //右节点

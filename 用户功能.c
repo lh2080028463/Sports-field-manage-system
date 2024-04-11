@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include"结构体信息.h"
 #include"文件处理.h"
 
@@ -161,9 +162,26 @@ void makeReservation(Reservation reservation,Field* root,char username[])
 	}
 }
 
-/*查询场地信息(未完成)*/
-void queryField(Field* root,bool condition)
+/*查询场地信息*/
+void queryField(Field* root,bool condition, Field* fields[])
 {
+	static int i = 0;
 	if (root == NULL) return root;
-
+	if (condition)
+	{
+		fields[i++] = root;
+		queryField(root->left, condition, fields);
+		queryField(root->right, condition, fields);
+	}
+}
+/*输出场地信息*/
+void putFieldMessage(Field* tempField[])
+{
+	for (int i = 0; tempField[i] != NULL; i++)
+	{
+		printf("场地名称：%s\n", tempField[i]->name);
+		printf("早晨价格：%lf 中午价格：%lf 晚上价格：%lf\n", tempField[i]->price[0], tempField[i]->price[1], tempField[i]->price[2]);
+		printf("开放时间：%d:%d~%d:%d\n", tempField[i]->openTime.start.hour, tempField[i]->openTime.start.minute, tempField[i]->openTime.end.hour, tempField[i]->openTime.end.minute);
+		printf("\n");
+	}
 }
