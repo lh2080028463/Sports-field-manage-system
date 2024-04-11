@@ -4,7 +4,7 @@
 #include"结构体信息.h"
 #include"文件处理.h"
 
-extern unsigned int ManagerNum, UserNum, ResponNum;
+extern unsigned int ManagerNum, UserNum, ResponNum,ReservationNum;
 
 /*创建新用户*/
 User* newUser(unsigned int idx,char username[], char password[], char name[], char phone[],unsigned int time)
@@ -138,14 +138,30 @@ Field* findField(Field* root,char fieldName[])
 }
 
 /*用户预订场地*/
-void makeReservation(Field* root,Reservation reservation)
+void makeReservation(Reservation reservation,Field* root,char username[])
 {
+
+	strcpy(reservation.owner, username);
+	printf("请输入需要预定的场地名称：");
+	scanf("%s", reservation.fieldName);
+	//检查场地是否存在
 	Field* temp = findField(root, reservation.fieldName);
-	if (temp == NULL) return NULL;
-	
+	if (temp == NULL)
+	{
+		printf("无该场地名称！请重新预定！\n");
+		makeReservation(reservation, root, username);
+	}
+	else
+	{
+		printf("请输入预定时间：");
+		scanf("%d:%d", &reservation.time.start.hour, &reservation.time.start.minute);
+		printf("请输入截止时间：");
+		scanf("%d:%d", &reservation.time.end.hour, &reservation.time.end.minute);
+		ReservationNum++;
+	}
 }
 
-/*查询场地信息*/
+/*查询场地信息(未完成)*/
 void queryField(Field* root,bool condition)
 {
 	if (root == NULL) return root;

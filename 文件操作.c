@@ -84,7 +84,7 @@ void editUserdata(unsigned int idx,char username[], char password[], char name[]
 		strcpy(filePath, cwd);
 		strcat(filePath, "\\userdata\\user");
 		char userIdx[10] = { '\0' };
-		_itoa(UserNum, userIdx, 10);
+		_itoa(idx, userIdx, 10);
 		strcat(filePath, userIdx);
 		strcat(filePath, ".txt");
 	}
@@ -94,7 +94,7 @@ void editUserdata(unsigned int idx,char username[], char password[], char name[]
 		return 1;
 	}
 	filePointer = fopen(filePath, "w");
-	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n",idx,name, username, password, phone, time);
+	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n",idx,name, phone, username, password, time);
 }
 
 /*初始化时读入对象数量*/

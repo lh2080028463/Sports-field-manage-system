@@ -60,7 +60,6 @@ typedef struct User
 typedef struct Reservation
 {
 	Duration time;   //预定时间
-	int Estimated_time_of_use;//预计使用时间
 	char fieldName[50];  //预定场地
 	char owner[50];  //预订者 
 }Reservation;

@@ -4,8 +4,10 @@
 #include"用户.h"
 #include<Windows.h>
 #include"基础功能.h"
+#include"文件处理.h"
 
 extern unsigned int ManagerNum, UserNum, ResponNum;
+extern User* UserRoot;
 /*初始界面*/
 void menu()
 {
@@ -43,14 +45,40 @@ void responLogin()
 }
 
 /*用户登录界面*/
-void userLogin(User* userRoot,char username[])
+User* userLogin()
 {
+	char username[20] = { '\0' };  //账号
+	char password[20] = { '\0' };  //密码
 	printf(" ******用户登录******\n");
 	printf(" 账  号：");
-	printf(" \n");
+	scanf("%s", username);
+	User* tempUser = findUsername(UserRoot, username);
+	if (tempUser == NULL)
+	{
+		system("cls");
+		printf("该账号未注册，请返回后注册！\n");
+		Sleep(2000);
+		system("cls");
+		return NULL;
+	}
 	printf(" 密  码：");
-	printf(" \n");
+	scanf("%s", password);
 	printf(" ********************\n");
+	system("cls");
+	
+	if (strcmp(tempUser->password,password)==0)
+	{
+		printf("登录成功！\n");
+		Sleep(2000);
+		return tempUser;
+	}
+	else
+	{
+		printf("用户名或密码错误，请重新登录！\n");
+		Sleep(2000);
+		system("cls");
+		userLogin();
+	}
 }
 
 /*新用户注册界面及功能*/
@@ -119,13 +147,63 @@ void responMenu()
 void userMenu()
 {
 	printf(" ******************用户功能****************\n");
+	printf("                 0.退出\n");
 	printf("                 1.个人信息管理\n");
 	printf("                 2.场地预定\n");
 	printf("                 3.信息查询\n");
 	printf("                 4.信息排序\n");
 	printf("                 5.信息统计\n");
 	printf("                 6.重置密码\n");
-	printf("                 7.退出\n");
+	
 	printf(" ******************************************\n");
+	printf("\n");
+}
+/*用户个人信息管理*/
+void editMessageMenu(User* user)
+{
+	printf(" ******************用户个人信息管理****************\n");
+	printf("                 0.退出\n");
+	printf("                 1.姓名：");
+	printf("%s\n", user->name);
+	printf("                 2.联系方式：");
+	printf("%s\n", user->phone);
+	
+	while (true)
+	{
+		printf("请输入要修改的序号：");
+		int cmd;
+		scanf("%d", &cmd);
+		if (cmd == 0)
+		{
+			break;
+		}
+		else if (cmd == 1)
+		{
+			printf("请输入新的姓名：");
+			scanf("%s", user->name);
+			printf("修改成功！当前信息如下：\n");
+			printf("                 1.姓名：");
+			printf("%s\n", user->name);
+			printf("                 2.联系方式：");
+			printf("%s\n", user->phone);
+		}
+		else if (cmd == 2)
+		{
+			printf("请输入新的联系方式：");
+			scanf("%s", user->phone);
+			printf("                 1.姓名：");
+			printf("%s\n", user->name);
+			printf("                 2.联系方式：");
+			printf("%s\n", user->phone);
+		}
+		else
+		{
+			printf("请输入正确的序号：");
+		}
+	}
+	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time);
+	printf(" ******************************************\n");
+	
+	
 	printf("\n");
 }

@@ -4,6 +4,7 @@ void magnagerMenu();
 
 void managerLogin();
 void responLogin();
-void userLogin();
-
+User* userLogin();
+void userMenu();
 User* userRegister(User* userRoot);
+void editMessageMenu(User* user);

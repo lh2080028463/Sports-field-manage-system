@@ -20,7 +20,7 @@ User* findUsername(const User* userRoot,const char username[])
 	if (userRoot == NULL) 
 		return userRoot;
 	User* temp = userRoot;
-	if (strcmp( username, userRoot->username) < 0)
+	if (strcmp(username, userRoot->username) < 0)
 	{
 		temp = findUsername(userRoot->left, username);
 	}
@@ -30,7 +30,6 @@ User* findUsername(const User* userRoot,const char username[])
 	}
 	else
 		return temp;
-
 }
 
 /*–≈œ¢≤È—Ø*/
