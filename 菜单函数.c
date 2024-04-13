@@ -9,6 +9,7 @@
 extern unsigned int ManagerNum, UserNum, ResponNum;
 extern User* UserRoot;
 extern Field* FieldRoot;
+extern Reservation reservations[10000];
 /*初始界面*/
 void menu()
 {
@@ -218,8 +219,8 @@ void queryMessageMenu()
 	int querycmd;
 	printf(" ******************信息查询****************\n");
 	printf("                 0.退出\n");
-	printf("                 1.场地信息\n");
-	printf("                 2.个人预定信息\n");
+	printf("                 1.场地信息查询\n");
+	printf("                 2.个人预定信息查询\n");
 	printf(" ******************************************\n");
 	printf("\n");
 	while (true)
@@ -233,13 +234,18 @@ void queryMessageMenu()
 		else if (querycmd == 1)
 		{
 			Field* tempField[100] = { NULL };
-			bool condition=true;//待写入
-			queryField(FieldRoot, condition, tempField);
+			char query[100];
+			printf("请输入查询场地名：");
+			scanf("%s", query);
+			queryField(FieldRoot, query, tempField);
 			putFieldMessage(tempField);
 		}
 		else if (querycmd == 2)
 		{
-
+			for (int i = 0; reservations[i].owner!=NULL; i++)
+			{
+				putReservation(reservations[i]);
+			}
 		}
 		else
 		{

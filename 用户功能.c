@@ -142,7 +142,7 @@ Field* findField(Field* root,char fieldName[])
 void makeReservation(Reservation reservation,Field* root,char username[])
 {
 
-	strcpy(reservation.owner, username);
+	
 	printf("请输入需要预定的场地名称：");
 	scanf("%s", reservation.fieldName);
 	//检查场地是否存在
@@ -158,22 +158,29 @@ void makeReservation(Reservation reservation,Field* root,char username[])
 		scanf("%d:%d", &reservation.time.start.hour, &reservation.time.start.minute);
 		printf("请输入截止时间：");
 		scanf("%d:%d", &reservation.time.end.hour, &reservation.time.end.minute);
+		strcpy(reservation.owner, username);
 		ReservationNum++;
 	}
+
 }
 
-/*查询场地信息*/
-void queryField(Field* root,bool condition, Field* fields[])
+/*按照名称查询场地信息*/
+void queryField(Field* root, const char* query, Field* fields[])
 {
 	static int i = 0;
-	if (root == NULL) return root;
-	if (condition)
+	if (root == NULL) return;
+
+	// 如果场地名称包含查询条件字符串，则将该场地加入结果数组中
+	if (strstr(root->name, query) != NULL)
 	{
 		fields[i++] = root;
-		queryField(root->left, condition, fields);
-		queryField(root->right, condition, fields);
 	}
+
+	// 递归查询左子树和右子树
+	queryField(root->left, query, fields);
+	queryField(root->right, query, fields);
 }
+
 /*输出场地信息*/
 void putFieldMessage(Field* tempField[])
 {
@@ -184,4 +191,12 @@ void putFieldMessage(Field* tempField[])
 		printf("开放时间：%d:%d~%d:%d\n", tempField[i]->openTime.start.hour, tempField[i]->openTime.start.minute, tempField[i]->openTime.end.hour, tempField[i]->openTime.end.minute);
 		printf("\n");
 	}
+}
+
+/*输出预定信息*/
+void putReservation(Reservation tempReservation)
+{
+	printf("%d\n", tempReservation.time);
+	printf("%s\n", tempReservation.fieldName);
+	printf("\n");
 }

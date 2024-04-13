@@ -53,24 +53,42 @@ int main()
 			{
 				userMenu();
 				int userCmd;
-				printf("请选择功能：");
-				scanf("%d", &userCmd);
-				if (userCmd==0)
+				while (true)
 				{
-					continue;
+					printf("请选择功能：");
+					scanf("%d", &userCmd);
+					if (userCmd == 0)
+					{
+						break;
+					}
+					else if (userCmd == 1)
+					{
+						editMessageMenu(currentUser);
+					}
+					else if (userCmd == 2)
+					{
+						makeReservation(reservations[ReservationNum++], FieldRoot, currentUser->username);
+					}
+					else if (userCmd == 3)
+					{
+						if (ReservationNum > 0)
+						{
+							for (int i = 0; i < ReservationNum; i++)
+							{
+								if (strcmp(reservations[i].owner, currentUser->username) == 0)
+								{
+									putReservation(reservations[i]);
+								}
+							}
+						}
+						else
+						{
+							printf("目前暂无预订信息！\n");
+						}
+
+					}
 				}
-				else if (userCmd == 1)
-				{
-					editMessageMenu(currentUser);
-				}
-				else if (userCmd == 2)
-				{
-					makeReservation(reservations[ReservationNum++], FieldRoot, currentUser->username);
-				}
-				else if (userCmd == 3)
-				{
-					
-				}
+				
 			}
 			break;
 		}
