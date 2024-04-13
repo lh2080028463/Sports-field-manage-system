@@ -24,7 +24,7 @@ typedef struct Field
 	Duration openTime; //开放时间
 	bool rented;       //租用状态
 	unsigned int time; //计费时长(min)
-
+	char Site_type;//场地类型
 	struct Field* left;            //左节点
 	struct Field* right;           //右节点
 	int height;
