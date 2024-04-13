@@ -17,14 +17,15 @@ int main()
 {
 	initNum();
 	inputUserdata(UserRoot);
+	inputReservation(reservations);
 
 	while (true)
 	{
-		system("cls");
 		menu();
 		int cmd;
 		printf("请选择功能：");
 		scanf("%d", &cmd);
+		
 		if (cmd == 0)
 			break;
 		switch (cmd)
@@ -34,7 +35,6 @@ int main()
 
 			break;
 		}
-
 		case 1:
 		{
 
@@ -73,12 +73,18 @@ int main()
 					{
 						if (ReservationNum > 0)
 						{
+							bool flag = true;
 							for (int i = 0; i < ReservationNum; i++)
 							{
 								if (strcmp(reservations[i].owner, currentUser->username) == 0)
 								{
 									putReservation(reservations[i]);
+									flag = false;
 								}
+							}
+							if (flag)
+							{
+								printf("目前暂无预订信息！\n");
 							}
 						}
 						else
@@ -97,11 +103,10 @@ int main()
 			UserRoot = userRegister(UserRoot);
 			break;
 		}
-
 		default:
 			system("cls");
 			printf("请选择正确的序号！\n");
-			Sleep(1000);
+			getchar();
 			break;
 		}
 		

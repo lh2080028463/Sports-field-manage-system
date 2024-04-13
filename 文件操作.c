@@ -4,8 +4,10 @@
 #include<stdlib.h>
 #include<string.h>
 
-extern unsigned int ManagerNum, UserNum, ResponNum;
+extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum;
 extern User* UserRoot;
+extern Field* FieldRoot;
+extern Reservation reservations[10000];
 
 /*获取用户数据地址*/
 char* getUserdataPath(const User user)
@@ -110,7 +112,7 @@ void initNum()
 		return 1;
 	}
 	//读入各对象数量
-	fscanf(filePointer, "UserNum %u\nManagerNum %u\nResponNum %u", &UserNum, &ManagerNum, &ResponNum);
+	fscanf(filePointer, "UserNum %u\nManagerNum %u\nResponNum %u\nReservationNum %u", &UserNum, &ManagerNum, &ResponNum, &ReservationNum);
 	// 关闭文件
 	fclose(filePointer);
 }
@@ -132,6 +134,74 @@ void editUserNum()
 	while (fscanf(filePointer, "%s %d", numName, &num) != EOF)
 	{
 		if (strcmp(numName, "UserNum") == 0)
+		{
+			char tempNum[64] = { '\0' };
+			_itoa(num, tempNum, 10);
+			int len = strlen(tempNum);
+			fseek(filePointer, -len, SEEK_CUR);
+			fprintf(filePointer, "%d", UserNum);
+			break;
+		}
+	}
+	// 关闭文件
+	fclose(filePointer);
+}
+
+/*读入已有预定信息*/
+void inputReservation(Reservation r[])
+{
+	FILE* filePointer;
+	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+
+	for (int i = 1; i <= ReservationNum; i++)
+	{
+		//更新文件路径
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			strcpy(filePath, cwd);
+			strcat(filePath, "\\reservations\\reservation");
+			char reservationIdx[10] = { '\0' };
+			_itoa(i, reservationIdx, 10);
+			strcat(filePath, reservationIdx);
+			strcat(filePath, ".txt");
+		}
+		else
+		{
+			perror("getcwd() 错误");
+			return 1;
+		}
+		//读入txt中场地预定数据
+		filePointer = fopen(filePath, "r");
+		if (filePointer == NULL)
+		{
+			printf("初始化读入数据%d时无法打开文件！\n", i);
+			return 1;
+		}
+		Reservation* tempr = (Reservation*)malloc(sizeof(Reservation));
+		fscanf(filePointer, "%d\n%s\n%d:%d\n%d:%d\n%s",&tempr->idx,tempr->fieldName,&tempr->time.start.hour, &tempr->time.start.minute, &tempr->time.end.hour, &tempr->time.end.minute,tempr->owner);
+		reservations[i-1] = *tempr;
+		fclose(filePointer);
+	}
+}
+
+/*结束时更新文件中预定信息数量*/
+void editReservationNum()
+{
+	FILE* filePointer; // 文件指针
+	// 打开文件以进行读取
+	filePointer = fopen("data.txt", "r+");
+	// 检查文件是否成功打开
+	if (filePointer == NULL)
+	{
+		printf("无法打开文件。\n");
+		return 1;
+	}
+	char numName[50];
+	int num;
+	while (fscanf(filePointer, "%s %d", numName, &num) != EOF)
+	{
+		if (strcmp(numName, "ReservationNum") == 0)
 		{
 			char tempNum[64] = { '\0' };
 			_itoa(num, tempNum, 10);

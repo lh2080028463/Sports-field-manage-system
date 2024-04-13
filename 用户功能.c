@@ -196,7 +196,7 @@ void putFieldMessage(Field* tempField[])
 /*输出预定信息*/
 void putReservation(Reservation tempReservation)
 {
-	printf("%d\n", tempReservation.time);
+	printf("%d:%d~%d:%d  ", tempReservation.time.start.hour, tempReservation.time.start.minute, tempReservation.time.end.hour, tempReservation.time.end.minute);
 	printf("%s\n", tempReservation.fieldName);
 	printf("\n");
 }
