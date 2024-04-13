@@ -6,6 +6,9 @@
 #include"基础功能.h"
 
 extern unsigned int ManagerNum, UserNum, ResponNum;
+extern User* UserRoot;
+extern Field* FieldRoot;
+extern Reservation reservations[10000];
 /*初始界面*/
 void menu()
 {
@@ -128,4 +131,98 @@ void userMenu()
 	printf("                 7.退出\n");
 	printf(" ******************************************\n");
 	printf("\n");
+}
+/*用户个人信息管理*/
+void editMessageMenu(User* user)
+{
+	printf(" ******************用户个人信息管理****************\n");
+	printf("                 0.退出\n");
+	printf("                 1.姓名：");
+	printf("%s\n", user->name);
+	printf("                 2.联系方式：");
+	printf("%s\n", user->phone);
+	
+	while (true)
+	{
+		printf("请输入要修改的序号：");
+		int cmd;
+		scanf("%d", &cmd);
+		if (cmd == 0)
+		{
+			break;
+		}
+		else if (cmd == 1)
+		{
+			printf("请输入新的姓名：");
+			scanf("%s", user->name);
+			printf("修改成功！当前信息如下：\n");
+			printf("                 1.姓名：");
+			printf("%s\n", user->name);
+			printf("                 2.联系方式：");
+			printf("%s\n", user->phone);
+		}
+		else if (cmd == 2)
+		{
+			printf("请输入新的联系方式：");
+			scanf("%s", user->phone);
+			printf("                 1.姓名：");
+			printf("%s\n", user->name);
+			printf("                 2.联系方式：");
+			printf("%s\n", user->phone);
+		}
+		else
+		{
+			printf("请输入正确的序号：");
+		}
+	}
+	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time);
+	printf(" ******************************************\n");
+	
+	printf("\n");
+}
+
+/*用户功能：信息查询*/
+void queryMessageMenu()
+{
+	int querycmd;
+	printf(" ******************信息查询****************\n");
+	printf("                 0.退出\n");
+	printf("                 1.场地信息查询\n");
+	printf("                 2.个人预定信息查询\n");
+	printf(" ******************************************\n");
+	printf("\n");
+	while (true)
+	{
+		printf("请选择功能：");
+		scanf("%d", &querycmd);
+		if (querycmd == 0)
+		{
+			break;
+		}
+		else if (querycmd == 1)
+		{
+			Field* tempField[100] = { NULL };
+			char query[100];
+			printf("请输入查询场地名：");
+			scanf("%s", query);
+			queryField(FieldRoot, query, tempField);
+			putFieldMessage(tempField);
+		}
+		else if (querycmd == 2)
+		{
+			for (int i = 0; reservations[i].owner!=NULL; i++)
+			{
+				putReservation(reservations[i]);
+			}
+		}
+		else
+		{
+			system("cls");
+			printf("请输入正确的序号!");
+			Sleep(1000);
+			system("cls");
+		}
+		
+	}
+	
 }
