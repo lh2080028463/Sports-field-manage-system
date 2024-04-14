@@ -43,7 +43,44 @@ int main()
 
 		case 2:
 		{
-			
+			system("cls");
+			Respondent* currentrespon = responLogin(); 
+			if (currentrespon != NULL)
+			{
+				responMenu();
+				int i;
+				scanf("%d", &i);
+				switch (i)
+				{
+					case 1:
+					{
+						registration();
+						break;
+					}
+					case 2:
+					{
+						break;
+					}
+					case 3:
+					{
+						break;
+					}
+					case 4:
+					{
+						break;
+					}
+					case 5:
+					{
+						break;
+					}
+					default:
+					{
+						system("cls");
+					}
+				}
+			}
+			else
+				system("cls");
 			break;
 		}
 		case 3:

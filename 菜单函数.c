@@ -36,14 +36,83 @@ void managerLogin()
 }
 
 /*场地负责人登录界面*/
-void responLogin()
+Respondent* responLogin()
 {
-	printf(" ******场地负责人登录******\n");
+	char responname[10] = { '\0' };
+	char password[20] = { '\0' };
+	int temp = 0;
+	printf(" ********场地负责人登录*********\n");
+	printf(" ***在账号中输入 0 返回上一级***\n");
 	printf(" 账  号：");
-	printf(" \n");
-	printf(" 密  码：");
-	printf(" \n");
-	printf(" **************************\n");
+	scanf("%s", responname);
+	if (strcmp(responname, "0") == 0)
+	{
+		return NULL;
+	}
+	FILE* responPointer;
+	char cwd[100] = { '\0' };
+	char filePath[100] = { '\0' };
+	for (int i = 0; i <= ResponNum; i++)
+	{
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			strcpy(filePath, cwd);
+			strcat(filePath, "\\respondata\\respon");
+			char Idx[10] = { '\0' };
+			_itoa(i, Idx, 10);
+			strcat(filePath, Idx);
+			strcat(filePath, ".txt");
+		}
+		else
+		{
+			perror("getcwd() 错误");
+			return 1;
+		}
+		responPointer = fopen(filePath, "r");
+		if (responPointer == NULL)
+		{
+			printf("初始化读入数据%d时无法打开文件！\n", i);
+			return 1;
+		}
+		Respondent* respon = (Respondent*)malloc(sizeof(Respondent));
+		fscanf(responPointer, "%s\n%s\n", &respon->name, &respon->password);
+		if (strcmp(respon->name, responname) != 0)
+		{
+			temp = 1;
+			system("cls");
+		}
+		else
+		{
+			printf(" 密  码：");
+			scanf("%s", password);
+			if (strcmp(respon->password, password) != 0)
+			{
+				temp = 1;
+				fclose(responPointer);
+				break;
+			}
+			else
+			{
+				temp = 0;
+				system("cls");
+				printf("登录成功！\n");
+				Sleep(2000);
+				fclose(responPointer);
+				return respon;
+				break;
+			}
+		}
+
+		if (temp = 1)
+		{
+			system("cls");
+			printf("账号或密码错误，请重新输入！");
+			Sleep(2000);
+			system("cls");
+			responLogin();
+		}
+		printf(" **************************\n");
+	}
 }
 
 /*用户登录界面*/
@@ -132,16 +201,17 @@ void magnagerMenu()
 }
 
 /*场地负责人功能菜单*/
-void responMenu()
+void  responMenu()
 {
 	printf(" ******************场地负责人功能****************\n");
-	printf("                 1.场地管理\n");
-	printf("                 2.信息查询\n");
-	printf("                 3.信息排序\n");
+	printf("                 1.登记\n");
+	printf("                 2.分配场地\n");
+	printf("                 3.信息查询\n");
 	printf("                 4.信息统计\n");
 	printf("                 5.重置密码\n");
-	printf("                 6.退出\n");
+	printf("                 其他数字：退出\n");
 	printf(" ************************************************\n");
+	printf("请输入功能数字：");
 	printf("\n");
 }
 

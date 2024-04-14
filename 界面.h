@@ -1,9 +1,9 @@
 #pragma once
 void menu();
-void magnagerMenu();
-
-void managerLogin();
-void responLogin();
+void managerMenu();
+void editManagerMenu();
+Manager* managerLogin();
+Respondent* responLogin();
 User* userLogin();
 void userMenu();
 User* userRegister(User* userRoot);
