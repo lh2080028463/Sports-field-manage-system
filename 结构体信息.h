@@ -27,7 +27,7 @@ typedef struct Field
 
 	struct Field* left;            //左节点
 	struct Field* right;           //右节点
-	int height;
+	int Fieldheight;
 }Field;
 
 /*场地负责人结构体*/
