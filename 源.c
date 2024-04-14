@@ -119,6 +119,18 @@ int main()
 						}
 
 					}
+					else if (userCmd == 4)
+					{
+
+					}
+					else if (userCmd == 5)
+					{
+
+					}
+					else if (userCmd == 6)
+					{
+						resetUserPass(currentUser);
+					}
 				}
 				
 			}
