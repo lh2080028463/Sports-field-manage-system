@@ -31,14 +31,14 @@ typedef struct Field
 }Field;
 
 /*场地负责人结构体*/
-typedef struct Manager
+typedef struct Respondent
 {
 	char name[10];		   //姓名
 	char phone[20];        //联系方式
 	int managedField[10];  //管理场地编号
 	char username[20];     //账号
 	char password[20];     //密码
-}Manager;
+}Respondent;
 
 /*用户结构体*/
 typedef struct User
@@ -63,3 +63,10 @@ typedef struct Reservation
 	Duration time;   //预定时间
 	char owner[50];  //预订者 
 }Reservation;
+
+/*管理员结构体*/
+typedef struct Manager
+{
+	char name[10];
+	char password[20];
+}Manager;

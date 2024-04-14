@@ -26,12 +26,70 @@ void menu()
 /*管理员登录界面*/
 void managerLogin()
 {
-	
+	char managername[10] = { '\0' };
+	char password[20] = { '\0' };
+	int temp = 0;
 	printf(" ********管理员登录********|\n");
 	printf(" 账  号：");
-	printf(" \n");
-	printf(" 密  码：");
-	printf(" \n");
+	scanf("%s", managername);
+	FILE* managerPointer;
+	char cwd[100] = { '\0' };
+	char filePath[100] = { '\0' };
+	for (int i = 0; i <= ManagerNum; i++)
+	{
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			strcpy(filePath, cwd);
+			strcat(filePath, "\\managerdata\\manager");
+			char Idx[10] = { '\0' };
+			_itoa(i, Idx, 10);
+			strcat(filePath, Idx);
+			strcat(filePath, ".txt");
+		}
+		else
+		{
+			perror("getcwd() 错误");
+			return 1;
+		}
+		managerPointer = fopen(filePath, "r");
+		if (managerPointer == NULL)
+		{
+			printf("初始化读入数据%d时无法打开文件！\n", i);
+			return 1;
+		}
+		Manager* manager = (Manager*)malloc(sizeof(Manager));
+		fscanf(managerPointer, "%s\n%s\n", &manager->name, &manager->password);
+		if (strcmp(manager->name, managername) != 0)
+		{
+			printf("账号输入错误！请重新输入！\n");
+			temp = 1;
+			fclose(managerPointer);
+			break;
+		}
+		else
+		{
+			printf(" 密  码：");
+			scanf("%s", password);
+			if (strcmp(manager->password, password) != 0)
+			{
+				printf("密码错误！请重新输入！\n");
+				temp = 1;
+				fclose(managerPointer);
+				break;
+			}
+			else
+			{
+				printf("登录成功！\n");
+				fclose(managerPointer);
+				return manager;
+				break;
+			}
+		}
+	}
+	if (temp = 1)
+	{
+		managerLogin();
+	}
 	printf(" **************************\n");
 }
 

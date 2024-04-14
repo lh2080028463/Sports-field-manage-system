@@ -37,7 +37,7 @@ int main()
 		}
 		case 1:
 		{
-
+			managerLogin();
 			break;
 		}
 
