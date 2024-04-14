@@ -141,8 +141,6 @@ Field* findField(Field* root,char fieldName[])
 /*用户预订场地*/
 void makeReservation(Reservation reservation,Field* root,char username[])
 {
-
-	
 	printf("请输入需要预定的场地名称：");
 	scanf("%s", reservation.fieldName);
 	//检查场地是否存在
@@ -159,7 +157,7 @@ void makeReservation(Reservation reservation,Field* root,char username[])
 		printf("请输入截止时间：");
 		scanf("%d:%d", &reservation.time.end.hour, &reservation.time.end.minute);
 		strcpy(reservation.owner, username);
-		ReservationNum++;
+		editReservations(ReservationNum, reservation.fieldName, reservation.time, reservation.owner);
 	}
 
 }
@@ -199,4 +197,10 @@ void putReservation(Reservation tempReservation)
 	printf("%d:%d~%d:%d  ", tempReservation.time.start.hour, tempReservation.time.start.minute, tempReservation.time.end.hour, tempReservation.time.end.minute);
 	printf("%s\n", tempReservation.fieldName);
 	printf("\n");
+}
+
+/*删除预定场地信息*/
+void deleteReservation(Reservation reservation, Field* root, char username[])
+{
+
 }

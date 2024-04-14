@@ -185,6 +185,32 @@ void inputReservation(Reservation r[])
 	}
 }
 
+/*编辑文件预定信息*/
+void editReservations(unsigned int idx,char fieldName[],Duration time,char owner[])
+{
+	//向文件中写入预定信息数据
+	FILE* filePointer;
+	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+	//更新文件路径
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		strcpy(filePath, cwd);
+		strcat(filePath, "\\reservations\\reservation");
+		char reservationIdx[10] = { '\0' };
+		_itoa(idx, reservationIdx, 10);
+		strcat(filePath, reservationIdx);
+		strcat(filePath, ".txt");
+	}
+	else
+	{
+		perror("getcwd() 错误");
+		return 1;
+	}
+	filePointer = fopen(filePath, "w");
+	fprintf(filePointer, "%d\n%s\n%d:%d\n%d:%d\n%s", idx,fieldName,time.start.hour,time.start.minute,time.end.hour,time.end.minute,owner);
+}
+
 /*结束时更新文件中预定信息数量*/
 void editReservationNum()
 {
