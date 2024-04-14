@@ -4,6 +4,7 @@
 #include"用户.h"
 #include"界面.h"
 #include"结构体信息.h"
+#include"管理员.h"
 #include<stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -63,6 +64,18 @@ int main()
 						{
 
 						}
+					}
+					else if (managerCmd == 2)
+					{
+
+					}
+					else if (managerCmd == 3)
+					{
+
+					}
+					else if (managerCmd == 4)
+					{
+
 					}
 					else
 					{
