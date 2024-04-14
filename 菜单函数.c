@@ -179,17 +179,27 @@ User* userRegister(User* userRoot)
 }
 
 /*管理员功能菜单*/
-void magnagerMenu()
+void managerMenu()
 {
 	printf(" ******************管理员功能****************\n");
+	printf("                 0.退出\n");
 	printf("                 1.信息管理\n");
-	printf("                 2.场地负责人管理\n");
 	printf("                 3.信息查询\n");
 	printf("                 4.信息排序\n");
 	printf("                 5.信息统计\n");
 	printf("                 6.重置密码\n");
-	printf("                 7.退出\n");
 	printf(" ********************************************\n");
+	printf("\n");
+}
+
+void editManagerMenu()
+{
+	printf(" ******************管理员信息管理****************\n");
+	printf("                 0.退出\n");
+	printf("                 1.场地管理\n");
+	printf("                 2.用户管理\n");
+	printf("                 3.场地负责人管理\n");
+	printf(" ************************************************\n");
 	printf("\n");
 }
 

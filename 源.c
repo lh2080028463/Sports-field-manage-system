@@ -40,7 +40,37 @@ int main()
 				while (true)
 				{
 					system("cls");
+					managerMenu();
+					printf("请选择功能：");
+					scanf("%d", &managerCmd);
+					if (managerCmd == 0)
+					{
+						system("cls");
+						break;
+					}
+					else if (managerCmd == 1)
+					{
+						system("cls");
+						editManagerMenu();
+						printf("请选择功能：");
+						scanf("%d", &managerCmd);
+						if (managerCmd == 0)
+						{
+							system("cls");
+							break;
+						}
+						else if (managerCmd == 1)
+						{
 
+						}
+					}
+					else
+					{
+						system("cls");
+						printf("请选择正确的序号！\n");
+						Sleep(2000);
+						system("cls");
+					}
 				}
 			}
 			break;
@@ -66,6 +96,7 @@ int main()
 					scanf("%d", &userCmd);
 					if (userCmd == 0)
 					{
+						system("cls");
 						break;
 					}
 					else if (userCmd == 1)
