@@ -2,7 +2,7 @@
 void menu();
 void magnagerMenu();
 
-void managerLogin();
+Manager* managerLogin();
 void responLogin();
 User* userLogin();
 void userMenu();

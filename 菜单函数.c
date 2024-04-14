@@ -24,7 +24,7 @@ void menu()
 }
 
 /*管理员登录界面*/
-void managerLogin()
+Manager* managerLogin()
 {
 	char managername[10] = { '\0' };
 	char password[20] = { '\0' };
@@ -61,10 +61,8 @@ void managerLogin()
 		fscanf(managerPointer, "%s\n%s\n", &manager->name, &manager->password);
 		if (strcmp(manager->name, managername) != 0)
 		{
-			printf("账号输入错误！请重新输入！\n");
 			temp = 1;
-			fclose(managerPointer);
-			break;
+			system("cls");
 		}
 		else
 		{
@@ -72,14 +70,16 @@ void managerLogin()
 			scanf("%s", password);
 			if (strcmp(manager->password, password) != 0)
 			{
-				printf("密码错误！请重新输入！\n");
 				temp = 1;
 				fclose(managerPointer);
 				break;
 			}
 			else
 			{
+				temp = 0;
+				system("cls");
 				printf("登录成功！\n");
+				Sleep(2000);
 				fclose(managerPointer);
 				return manager;
 				break;
@@ -88,6 +88,10 @@ void managerLogin()
 	}
 	if (temp = 1)
 	{
+		system("cls");
+		printf("账号或密码错误，请重新输入！");
+		Sleep(2000);
+		system("cls");
 		managerLogin();
 	}
 	printf(" **************************\n");

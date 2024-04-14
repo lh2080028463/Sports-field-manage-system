@@ -1,71 +1,20 @@
-#define _CRT_NONSTDC_NO_DEPRECATE
+ï»¿#define _CRT_NONSTDC_NO_DEPRECATE
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
 #include<string.h>
 #include<direct.h>
-#include"½á¹¹ÌåÐÅÏ¢.h"
+#include"ç»“æž„ä½“ä¿¡æ¯.h"
+extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 
-/*Ìí¼Ó³¡µØÐÅÏ¢*/
-void addField(Field* newField)
-{
-	printf("\n³¡µØÀàÐÍ£º");
-	scanf("%s", newField->name);
-	printf("\n³¡µØÃæ»ý£º");
-	scanf("%lf", newField->area);
-	printf("\n³¡µØÔçÖÐÍí¼Û¸ñ£º");
-	printf("\nÔç£º");
-	scanf("%s", newField->price[0]);
-	printf("\nÖÐ£º");
-	scanf("%s", newField->price[1]);
-	printf("\nÍí£º");
-	scanf("%s", newField->price[2]);
-	printf("\n¿ª·ÅÊ±¼ä£º\nÆðÊ¼Ê±¼ä£º\nÐ¡Ê±£º");
-	scanf("%d", newField->openTime.start.hour);
-	printf("·ÖÖÓ£º");
-	scanf("%d", newField->openTime.start.minute);
-	printf("\n½áÊøÊ±¼ä£º\nÐ¡Ê±£º");
-	scanf("%d", newField->openTime.end.hour);
-	printf("·ÖÖÓ£º");
-	scanf("%d", newField->openTime.end.minute);
-	printf("¼Æ·ÑÊ±³¤£º\n");
-	scanf("%u", newField->time);
-	newField->rented = false;
-	FILE* fp;
-	char ch; 
-	for (int i = 0; i < 1000; i++)
-	{
-		char n[999];
-		char name[150];
-		_itoa(i, n, 10);
-		char cwd[100] = { '\0' };
-		getcwd(cwd, sizeof(cwd));
-		strcpy(name, cwd);
-		strcat(name, &n[0]);
-		strcat(name, ".txt");
-		if ((fp = fopen("name", "w+")) == NULL)
-		{
-			printf("Error!\n");
-			exit(0);
-		}
-		ch = fgetc(fp);
-		if (ch == EOF)
-		{
-			newField->idx = i;
-			fprintf(fp, "%d %s %lf %lf %lf %lf %d %d %d %d %d %u", newField->idx, newField->name, newField->area, newField->price[0], newField->price[1], newField->price[2], newField->openTime.start.hour, newField->openTime.start.minute, newField->openTime.end.hour, newField->openTime.end.minute,newField->rented,newField->time);
-			break;
-		}
-	}
-}
-
-/*¼ÇÂ¼³¡µØÊ¹ÓÃÇé¿ö*/
+/*è®°å½•åœºåœ°ä½¿ç”¨æƒ…å†µ*/
 void recordUserField()
 {
 
 }
 
-/*ÐÞ¸Ä³¡µØÐÅÏ¢*/
+/*ä¿®æ”¹åœºåœ°ä¿¡æ¯*/
 void editField(Field* innerField)
 {
 	FILE* fp;
@@ -78,7 +27,7 @@ void editField(Field* innerField)
 	fscanf(fp, "%s %lf %lf %lf %lf %d %d %d %d %d %u", innerField->name, innerField->area, innerField->price[0], innerField->price[1], innerField->price[2], innerField->openTime.start.hour, innerField->openTime.start.minute, innerField->openTime.end.hour, innerField->openTime.end.minute, innerField->rented, innerField->time);
 }
 
-/*É¾³ý³¡µØÐÅÏ¢*/
+/*åˆ é™¤åœºåœ°ä¿¡æ¯*/
 void deleteField()
 {
 
@@ -100,13 +49,13 @@ void createBiTreeField(Field* innerField)
 
 char* getFielddataPath(const Field field)
 {
-	char cwd[100] = { '\0' };      // ÓÃÓÚ´æ´¢µ±Ç°¹¤×÷Ä¿Â¼µÄ×Ö·ûÊý×é
-	char filePath[100] = { '\0' }; // ÓÃÓÚ´æ´¢ÎÄ¼þÂ·¾¶µÄ×Ö·ûÊý×é
+	char cwd[100] = { '\0' };      // ç”¨äºŽå­˜å‚¨å½“å‰å·¥ä½œç›®å½•çš„å­—ç¬¦æ•°ç»„
+	char filePath[100] = { '\0' }; // ç”¨äºŽå­˜å‚¨æ–‡ä»¶è·¯å¾„çš„å­—ç¬¦æ•°ç»„
 
-	// »ñÈ¡µ±Ç°¹¤×÷Ä¿Â¼
+	// èŽ·å–å½“å‰å·¥ä½œç›®å½•
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		// ½«µ±Ç°¹¤×÷Ä¿Â¼ÓëÎÄ¼þÃûÆ´½Ó³ÉÍêÕûµÄÎÄ¼þÂ·¾¶
+		// å°†å½“å‰å·¥ä½œç›®å½•ä¸Žæ–‡ä»¶åæ‹¼æŽ¥æˆå®Œæ•´çš„æ–‡ä»¶è·¯å¾„
 		strcpy(filePath, cwd);
 		strcat(filePath, "\\fielddata\\field");
 		char fieldIdx[10] = { '\0' };
@@ -117,7 +66,118 @@ char* getFielddataPath(const Field field)
 	}
 	else
 	{
-		perror("getcwd() ´íÎó");
+		perror("getcwd() é”™è¯¯");
 		return 1;
 	}
+}
+
+/*æ–°å»ºåœºåœ°*/
+Field* newField(unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time)
+{
+	Field* newField = (Field*)malloc(sizeof(Field));
+	//åœºåœ°æ•°æ®è¯»å…¥
+	newField->idx = idx;
+	strcpy(newField->name, name);
+	newField->area = area;
+	newField->price[3] = price[3];
+	newField->openTime = openTime;
+	newField->rented = rented;
+	newField->time = time;
+	//ï¿½æž„å»ºäºŒå‰æ ‘èŠ‚ç‚¹
+	newField->left = NULL;
+	newField->right = NULL;
+	newField->Fieldheight = 1;
+	return newField;
+}
+
+/*è®¡ç®—æ ‘çš„é«˜åº¦*/
+int Fieldheight(Field* node)
+{
+	if (node == NULL) return 0;
+	return node->Fieldheight;
+}
+
+/*èŽ·å–å¹³è¡¡å› å­*/
+int getFieldBalence(Field* node)
+{
+	if (node == NULL) return 0;
+	return Fieldheight(node->left) - Fieldheight(node->right);
+}
+
+/*å³æ—‹*/
+Field* FieldrightRotate(Field* x)
+{
+	Field* y = x->left;
+	Field* t = y->right;
+	y->right = x;
+	x->left = t;
+	x->Fieldheight = max(Fieldheight(x->left), Fieldheight(x->right)) + 1;
+	y->Fieldheight = max(Fieldheight(y->left), Fieldheight(y->right)) + 1;
+	return x;
+}
+
+/*å·¦æ—‹*/
+Field* FieldleftRotate(Field* x)
+{
+	Field* y = x->right;
+	Field* t = y->left;
+	y->left = x;
+	x->right = t;
+	x->Fieldheight = max(Fieldheight(x->left), Fieldheight(x->right)) + 1;
+	y->Fieldheight = max(Fieldheight(y->left), Fieldheight(y->right)) + 1;
+	return x;
+}
+
+/*åœºåœ°æ·»åŠ */
+Field* addField(Field* node, unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time)
+{
+	if (node == NULL)
+	{
+		FieldNum++;
+		if (FieldNum == 1)
+			editFielddata(1, name, area, price, openTime, rented, time);
+		return newField(idx, name, area, price, openTime, rented, time);
+	}
+
+	if (strcmp(name, node->name) < 0)
+	{
+		node->left = addField(node->left, idx, name, area, price, openTime, rented, time);
+	}
+	else if (strcmp(name, node->name) > 0)
+	{
+		node->right = addField(node->right, idx, name, area, price, openTime, rented, time);
+	}
+	else //é‡å¤
+		return node;
+	//æ›´æ–°èŠ‚ç‚¹é«˜åº¦
+	node->Fieldheight = max(Fieldheight(node->left), Fieldheight(node->right)) + 1;
+
+	//èŽ·å–å¹³è¡¡å› å­
+	int balance = getFieldBalence(node);
+
+	//ä¸å¹³è¡¡æ—¶ï¼Œè°ƒæ•´èŠ‚ç‚¹
+	//LL
+	if (balance > 1 && strcmp(name, node->left->name) < 0)
+	{
+		return FieldrightRotate(node);
+	}
+	//RR
+	if (balance < -1 && strcmp(name, node->right->name) > 0)
+	{
+		return FieldleftRotate(node);
+	}
+	// LR
+	if (balance > 1 && strcmp(name, node->left->name) > 0)
+	{
+		node->left = FieldleftRotate(node->left);
+		return FieldrightRotate(node);
+	}
+	//RL
+	if (balance < -1 && strcmp(name, node->left->name) < 0)
+	{
+		node->right = FieldrightRotate(node->left);
+		return FieldleftRotate(node);
+	}
+	editFielddata(idx, name, area, price, openTime, rented, time);
+	return node;
 }

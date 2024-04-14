@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-unsigned int ManagerNum,UserNum, ResponNum,ReservationNum;
+unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 User* UserRoot;
 Field* FieldRoot;
 Reservation reservations[10000];
@@ -30,14 +30,19 @@ int main()
 			break;
 		switch (cmd)
 		{
-		case 0:
-		{
-
-			break;
-		}
 		case 1:
 		{
-			managerLogin();
+			system("cls");
+			Manager* currentManager = managerLogin();
+			if (currentManager != NULL)
+			{
+				int managerCmd;
+				while (true)
+				{
+					system("cls");
+
+				}
+			}
 			break;
 		}
 
