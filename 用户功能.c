@@ -4,11 +4,12 @@
 #include<string.h>
 #include"结构体信息.h"
 #include"文件处理.h"
+#include"基础功能.h"
 
-extern unsigned int ManagerNum, UserNum, ResponNum,ReservationNum;
+extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum;
 
 /*创建新用户*/
-User* newUser(unsigned int idx,char username[], char password[], char name[], char phone[],unsigned int time)
+User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time)
 {
 	User* newUser = (User*)malloc(sizeof(User));
 	//用户数据读入
@@ -64,16 +65,16 @@ User* leftRotate(User* x)
 }
 
 /*用户注册*/
-User* insertUser(User* node ,unsigned int idx, char username[], char password[], char name[], char phone[],unsigned int time)
+User* insertUser(User* node, unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time)
 {
 	if (node == NULL)
 	{
 		UserNum++;
-		if(UserNum==1) 
+		if (UserNum == 1)
 			editUserdata(1, username, password, name, phone, time);
-		return newUser(idx,username, password, name, phone, time);
+		return newUser(idx, username, password, name, phone, time);
 	}
-		
+
 
 	if (strcmp(username, node->username) < 0)
 	{
@@ -87,7 +88,7 @@ User* insertUser(User* node ,unsigned int idx, char username[], char password[],
 		return node;
 	//更新节点高度
 	node->height = max(height(node->left), height(node->right)) + 1;
-	
+
 	//获取平衡因子
 	int balance = getBalence(node);
 
@@ -103,7 +104,7 @@ User* insertUser(User* node ,unsigned int idx, char username[], char password[],
 		return leftRotate(node);
 	}
 	// LR
-	if (balance > 1 && strcmp(username, node->left->username) > 0) 
+	if (balance > 1 && strcmp(username, node->left->username) > 0)
 	{
 		node->left = leftRotate(node->left);
 		return rightRotate(node);
@@ -115,20 +116,20 @@ User* insertUser(User* node ,unsigned int idx, char username[], char password[],
 		return leftRotate(node);
 	}
 
-	editUserdata(idx,username, password, name, phone, time);
+	editUserdata(idx, username, password, name, phone, time);
 	return node;
 }
 
 /*定位场地指针*/
-Field* findField(Field* root,char fieldName[])
+Field* findField(Field* root, char fieldName[])
 {
 	if (root == NULL) return root;
 	Field* temp = root;
-	if (strcmp(fieldName, root->name)<0)
+	if (strcmp(fieldName, root->name) < 0)
 	{
 		temp = findField(root->left, fieldName);
 	}
-	else if (strcmp(fieldName,root->name) > 0)
+	else if (strcmp(fieldName, root->name) > 0)
 	{
 		temp = findField(root->right, fieldName);
 	}
@@ -139,7 +140,7 @@ Field* findField(Field* root,char fieldName[])
 }
 
 /*用户预订场地*/
-void makeReservation(Reservation reservation,Field* root,char username[])
+void makeReservation(Reservation reservation, Field* root, char username[])
 {
 	printf("请输入需要预定的场地名称：");
 	scanf("%s", reservation.fieldName);
@@ -162,7 +163,7 @@ void makeReservation(Reservation reservation,Field* root,char username[])
 
 }
 
-/*按照名称查询场地信息*/
+/*按照名称查询场地信息（模糊查询）并保存在fields中*/
 void queryField(Field* root, const char* query, Field* fields[])
 {
 	static int i = 0;
@@ -203,4 +204,38 @@ void putReservation(Reservation tempReservation)
 void deleteReservation(Reservation reservation, Field* root, char username[])
 {
 
+}
+
+/*用户功能：重置密码*/
+void resetUserPass(User* curUser)
+{
+	char password0[20];
+	char newPass[20];
+	printf("请输入旧密码：");
+	scanf("%s", password0);
+	printf("请输入新密码：");
+	scanf("%s", newPass);
+	if (strcmp(curUser->password, password0) == 0)
+	{
+		strcpy(curUser->password, newPass);
+		char* path = getUserdataPath(*curUser);
+		FILE* filePointer = fopen(path, "r+");
+		// 检查文件是否成功打开
+		if (filePointer == NULL)
+		{
+			printf("无法打开文件。\n");
+			return 1;
+		}
+		else
+		{
+			fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n", curUser->idx, curUser->name, curUser->phone, curUser->username, curUser->password, curUser->time);
+		}
+		
+		// 关闭文件
+		fclose(filePointer);
+	}
+	else
+	{
+		printf("密码输入错误！\n");
+	}
 }

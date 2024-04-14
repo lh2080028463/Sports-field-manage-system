@@ -5,3 +5,4 @@ User* insertUser(User* node, unsigned int idx, char username[], char password[],
 void queryField(Field* root, const char* query, Field* fields[]);
 void putFieldMessage(Field* tempField[]);
 void putReservation(Reservation tempReservation);
+void resetUserPass(User* curUser);
