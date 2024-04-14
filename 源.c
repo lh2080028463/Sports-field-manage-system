@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-unsigned int ManagerNum,UserNum, ResponNum,ReservationNum, FieldNum;
+unsigned int ManagerNum,UserNum, ResponNum,ReservationNum;
 User* UserRoot;
 Field* FieldRoot;
 Reservation reservations[10000];

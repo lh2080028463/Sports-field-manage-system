@@ -4,7 +4,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
+extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum;
 extern User* UserRoot;
 extern Field* FieldRoot;
 extern Reservation reservations[10000];
@@ -99,32 +99,6 @@ void editUserdata(unsigned int idx,char username[], char password[], char name[]
 	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n",idx,name, phone, username, password, time);
 }
 
-/*编辑文件用户信息*/
-void editFielddata(unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time)
-{
-	//向文件中写入用户数据
-	FILE* filePointer;
-	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
-	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
-	//更新文件路径
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		strcpy(filePath, cwd);
-		strcat(filePath, "\\fielddata\\field");
-		char fieldIdx[10] = { '\0' };
-		_itoa(idx, fieldIdx, 10);
-		strcat(filePath, fieldIdx);
-		strcat(filePath, ".txt");
-	}
-	else
-	{
-		perror("getcwd() 错误");
-		return 1;
-	}
-	filePointer = fopen(filePath, "w");
-	fprintf(filePointer, "%u\n%s\n%lf\n%lf\n%lf\n%lf\n%d\n%d\n%d\n%d\n%d\n%u\n", idx, name, area, price[0], price[1], price[2], openTime.start.hour, openTime.start.minute, openTime.end.hour, openTime.end.minute, rented, time);
-}
-
 /*初始化时读入对象数量*/
 void initNum()
 {
@@ -138,7 +112,7 @@ void initNum()
 		return 1;
 	}
 	//读入各对象数量
-	fscanf(filePointer, "UserNum %u\nManagerNum %u\nResponNum %u\nReservationNum %u\nFieldNum %u", &UserNum, &ManagerNum, &ResponNum, &ReservationNum, &FieldNum);
+	fscanf(filePointer, "UserNum %u\nManagerNum %u\nResponNum %u\nReservationNum %u", &UserNum, &ManagerNum, &ResponNum, &ReservationNum);
 	// 关闭文件
 	fclose(filePointer);
 }

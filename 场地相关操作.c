@@ -6,10 +6,61 @@
 #include<string.h>
 #include<direct.h>
 #include"结构体信息.h"
-extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
+
+/*添加场地信息*/
+void addField(Field* newField)
+{
+	printf("\n场地类型：");
+	scanf("%s", newField->name);
+	printf("\n场地面积：");
+	scanf("%lf", newField->area);
+	printf("\n场地早中晚价格：");
+	printf("\n早：");
+	scanf("%s", newField->price[0]);
+	printf("\n中：");
+	scanf("%s", newField->price[1]);
+	printf("\n晚：");
+	scanf("%s", newField->price[2]);
+	printf("\n开放时间：\n起始时间：\n小时：");
+	scanf("%d", newField->openTime.start.hour);
+	printf("分钟：");
+	scanf("%d", newField->openTime.start.minute);
+	printf("\n结束时间：\n小时：");
+	scanf("%d", newField->openTime.end.hour);
+	printf("分钟：");
+	scanf("%d", newField->openTime.end.minute);
+	printf("计费时长：\n");
+	scanf("%u", newField->time);
+	newField->rented = false;
+	FILE* fp;
+	char ch; 
+	for (int i = 0; i < 1000; i++)
+	{
+		char n[999];
+		char name[150];
+		_itoa(i, n, 10);
+		char cwd[100] = { '\0' };
+		getcwd(cwd, sizeof(cwd));
+		strcpy(name, cwd);
+		strcat(name, &n[0]);
+		strcat(name, ".txt");
+		if ((fp = fopen("name", "w+")) == NULL)
+		{
+			printf("Error!\n");
+			exit(0);
+		}
+		ch = fgetc(fp);
+		if (ch == EOF)
+		{
+			newField->idx = i;
+			fprintf(fp, "%d %s %lf %lf %lf %lf %d %d %d %d %d %u", newField->idx, newField->name, newField->area, newField->price[0], newField->price[1], newField->price[2], newField->openTime.start.hour, newField->openTime.start.minute, newField->openTime.end.hour, newField->openTime.end.minute,newField->rented,newField->time);
+			break;
+		}
+	}
+}
 
 /*记录场地使用情况*/
-void recordFieldField()
+void recordUserField()
 {
 
 }
@@ -69,115 +120,4 @@ char* getFielddataPath(const Field field)
 		perror("getcwd() 错误");
 		return 1;
 	}
-}
-
-/*创建新场地*/
-Field* newField(unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time)
-{
-	Field* newField = (Field*)malloc(sizeof(Field));
-	//场地数据读入
-	newField->idx = idx;
-	strcpy(newField->name, name);
-	newField->area = area;
-	newField->price[3] = price[3];
-	newField->openTime = openTime;
-	newField->rented = rented;
-	newField->time = time;
-	//构建二叉树节点
-	newField->left = NULL;
-	newField->right = NULL;
-	newField->Fieldheight = 1;
-	return newField;
-}
-
-/*计算树的高度*/
-int Fieldheight(Field* node)
-{
-	if (node == NULL) return 0;
-	return node->Fieldheight;
-}
-
-/*获取平衡因子*/
-int getFieldBalence(Field* node)
-{
-	if (node == NULL) return 0;
-	return Fieldheight(node->left) - Fieldheight(node->right);
-}
-
-/*右旋*/
-Field* FieldrightRotate(Field* x)
-{
-	Field* y = x->left;
-	Field* t = y->right;
-	y->right = x;
-	x->left = t;
-	x->Fieldheight = max(Fieldheight(x->left), Fieldheight(x->right)) + 1;
-	y->Fieldheight = max(Fieldheight(y->left), Fieldheight(y->right)) + 1;
-	return x;
-}
-
-/*左旋*/
-Field* FieldleftRotate(Field* x)
-{
-	Field* y = x->right;
-	Field* t = y->left;
-	y->left = x;
-	x->right = t;
-	x->Fieldheight = max(Fieldheight(x->left), Fieldheight(x->right)) + 1;
-	y->Fieldheight = max(Fieldheight(y->left), Fieldheight(y->right)) + 1;
-	return x;
-}
-
-/*添加场地信息*/
-Field* addField(Field* node, unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time)
-{
-	if (node == NULL)
-	{
-		FieldNum++;
-		if (FieldNum == 1)
-			editFielddata(1, name, area, price, openTime, rented, time);
-		return newField(idx, name, area, price, openTime, rented, time);
-	}
-
-	if (strcmp(name, node->name) < 0)
-	{
-		node->left = addField(node->left, idx, name, area, price, openTime, rented, time);
-	}
-	else if (strcmp(name, node->name) > 0)
-	{
-		node->right = addField(node->right, idx, name, area, price, openTime, rented, time);
-	}
-	else //重复
-		return node;
-	//更新节点高度
-	node->Fieldheight = max(Fieldheight(node->left), Fieldheight(node->right)) + 1;
-
-	//获取平衡因子
-	int balance = getFieldBalence(node);
-
-	//不平衡时，调整节点
-	//LL
-	if (balance > 1 && strcmp(name, node->left->name) < 0)
-	{
-		return FieldrightRotate(node);
-	}
-	//RR
-	if (balance < -1 && strcmp(name, node->right->name) > 0)
-	{
-		return FieldleftRotate(node);
-	}
-	// LR
-	if (balance > 1 && strcmp(name, node->left->name) > 0)
-	{
-		node->left = FieldleftRotate(node->left);
-		return FieldrightRotate(node);
-	}
-	//RL
-	if (balance < -1 && strcmp(name, node->left->name) < 0)
-	{
-		node->right = FieldrightRotate(node->left);
-		return FieldleftRotate(node);
-	}
-	editFielddata(idx, name, area, price, openTime, rented, time);
-	return node;
 }

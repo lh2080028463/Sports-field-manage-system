@@ -6,7 +6,7 @@
 #include"文件处理.h"
 #include"基础功能.h"
 
-extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum;
+extern unsigned int ManagerNum, UserNum, ResponNum,ReservationNum;
 
 /*创建新用户*/
 User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time)
