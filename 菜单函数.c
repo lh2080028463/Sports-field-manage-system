@@ -117,7 +117,7 @@ User* userLogin()
 	{
 		system("cls");
 		printf("该账号未注册，请返回后注册！\n");
-		Sleep(2000);
+		Sleep(500);
 		system("cls");
 		return NULL;
 	}
@@ -129,13 +129,13 @@ User* userLogin()
 	if (strcmp(tempUser->password,password)==0)
 	{
 		printf("登录成功！\n");
-		Sleep(2000);
+		Sleep(500);
 		return tempUser;
 	}
 	else
 	{
 		printf("用户名或密码错误，请重新登录！\n");
-		Sleep(2000);
+		Sleep(500);
 		system("cls");
 		userLogin();
 	}
@@ -155,7 +155,7 @@ User* userRegister(User* userRoot)
 	{
 		system("cls");
 		printf("该账号已存在，请重新注册！\n");
-		Sleep(1000);
+		Sleep(500);
 		userRegister(userRoot);
 	}
 	else
@@ -169,7 +169,7 @@ User* userRegister(User* userRoot)
 		printf(" *******************\n");
 		printf(" 注册成功，请返回登录！\n");
 		return insertUser(userRoot,UserNum+1, username, password, name, phone,0);
-		Sleep(2000);
+		Sleep(500);
 		userLogin(userRoot,username);
 	}
 }
@@ -211,9 +211,8 @@ void userMenu()
 	printf("                 1.个人信息管理\n");
 	printf("                 2.场地预定\n");
 	printf("                 3.信息查询\n");
-	printf("                 4.信息排序\n");
-	printf("                 5.信息统计\n");
-	printf("                 6.重置密码\n");
+	printf("                 4.信息统计\n");
+	printf("                 5.重置密码\n");
 	
 	printf(" ******************************************\n");
 	printf("\n");
@@ -261,7 +260,7 @@ void editMessageMenu(User* user)
 		{
 			system("cls");
 			printf("请输入正确的序号!");
-			Sleep(1000);
+			Sleep(500);
 			system("cls");
 		}
 	}
@@ -309,7 +308,7 @@ void queryMessageMenu()
 		{
 			system("cls");
 			printf("请输入正确的序号!");
-			Sleep(1000);
+			Sleep(500);
 			system("cls");
 		}
 		

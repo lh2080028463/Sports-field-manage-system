@@ -159,6 +159,7 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 		scanf("%d:%d", &reservation.time.end.hour, &reservation.time.end.minute);
 		strcpy(reservation.owner, username);
 		editReservations(ReservationNum, reservation.fieldName, reservation.time, reservation.owner);
+		printf("场地预定成功！\n");
 	}
 
 }
@@ -218,8 +219,9 @@ void resetUserPass(User* curUser)
 	if (strcmp(curUser->password, password0) == 0)
 	{
 		strcpy(curUser->password, newPass);
-		char* path = getUserdataPath(*curUser);
-		FILE* filePointer = fopen(path, "r+");
+		char path[100] = { '\0' };
+		strcpy(path, getUserdataPath(*curUser));
+		FILE* filePointer = fopen(path, "w");
 		// 检查文件是否成功打开
 		if (filePointer == NULL)
 		{
@@ -229,6 +231,7 @@ void resetUserPass(User* curUser)
 		else
 		{
 			fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n", curUser->idx, curUser->name, curUser->phone, curUser->username, curUser->password, curUser->time);
+			printf("密码修改成功!\n");
 		}
 		
 		// 关闭文件
