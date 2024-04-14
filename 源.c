@@ -1,12 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <stdlib.h>
-#include<stdbool.h>
 #include"基础功能.h"
-#include"界面.h"
-#include"结构体信息.h"
 #include"文件处理.h"
 #include"用户.h"
+#include"界面.h"
+#include"结构体信息.h"
+#include<stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 unsigned int ManagerNum,UserNum, ResponNum,ReservationNum;
 User* UserRoot;
@@ -51,10 +51,12 @@ int main()
 			User* currentUser=userLogin();
 			if (currentUser!=NULL)
 			{
-				userMenu();
+				
 				int userCmd;
 				while (true)
 				{
+					system("cls");
+					userMenu();
 					printf("请选择功能：");
 					scanf("%d", &userCmd);
 					if (userCmd == 0)
@@ -67,7 +69,31 @@ int main()
 					}
 					else if (userCmd == 2)
 					{
-						makeReservation(reservations[ReservationNum++], FieldRoot, currentUser->username);
+						int reserveCmd;
+						while (true)
+						{
+							system("cls");
+							reserveMenu();
+							printf("请选择功能：");
+							scanf("%d", &reserveCmd);
+							if (reserveCmd==0)
+							{
+								break;
+							}
+							else if (reserveCmd == 1)
+							{
+								makeReservation(reservations[ReservationNum++], FieldRoot, currentUser->username);
+							}
+							else if (reserveCmd == 2)
+							{
+
+							}
+							else if (reserveCmd == 3)
+							{
+
+							}
+						}
+						
 					}
 					else if (userCmd == 3)
 					{

@@ -58,7 +58,7 @@ typedef struct User
 /*预定信息结构体*/
 typedef struct Reservation
 {
-	int idx;
+	int idx;              //序号
 	char fieldName[50];  //预定场地
 	Duration time;   //预定时间
 	char owner[50];  //预订者 
