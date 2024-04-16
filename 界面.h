@@ -1,7 +1,7 @@
 #pragma once
 void menu();
-void managerMenu();
-void editManagerMenu();
+void magnagerMenu();
+
 Manager* managerLogin();
 void responLogin();
 User* userLogin();
