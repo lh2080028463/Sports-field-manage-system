@@ -9,7 +9,7 @@
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum;
 
 /*创建新用户*/
-User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time)
+User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time,bool deleted)
 {
 	User* newUser = (User*)malloc(sizeof(User));
 	//用户数据读入
@@ -19,6 +19,7 @@ User* newUser(unsigned int idx, char username[], char password[], char name[], c
 	strcpy(newUser->name, name);
 	strcpy(newUser->phone, phone);
 	newUser->time = time;
+	newUser->deleted = deleted;
 	//构建二叉树节点
 	newUser->left = NULL;
 	newUser->right = NULL;
@@ -65,26 +66,26 @@ User* leftRotate(User* x)
 }
 
 /*用户注册*/
-User* insertUser(User* node, unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time)
+User* insertUser(User* node, unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, bool deleted)
 {
 	if (node == NULL)
 	{
 		UserNum++;
 		if (UserNum == 1)
-			editUserdata(1, username, password, name, phone, time);
-		return newUser(idx, username, password, name, phone, time);
+			editUserdata(1, username, password, name, phone, time,deleted);
+		return newUser(idx, username, password, name, phone, time,deleted);
 	}
 
 
 	if (strcmp(username, node->username) < 0)
 	{
-		node->left = insertUser(node->left, idx, username, password, name, phone, time);
+		node->left = insertUser(node->left, idx, username, password, name, phone, time,deleted);
 	}
 	else if (strcmp(username, node->username) > 0)
 	{
-		node->right = insertUser(node->right, idx, username, password, name, phone, time);
+		node->right = insertUser(node->right, idx, username, password, name, phone, time,deleted);
 	}
-	else //重复
+	else
 		return node;
 	//更新节点高度
 	node->height = max(height(node->left), height(node->right)) + 1;
@@ -116,7 +117,7 @@ User* insertUser(User* node, unsigned int idx, char username[], char password[],
 		return leftRotate(node);
 	}
 
-	editUserdata(idx, username, password, name, phone, time);
+	editUserdata(idx, username, password, name, phone, time, deleted);
 	return node;
 }
 
@@ -201,7 +202,7 @@ void putReservation(Reservation tempReservation)
 	printf("\n");
 }
 
-/*删除预定场地信息*/
+/*删除预定场地信息（未完成）*/
 void deleteReservation(Reservation reservation, Field* root, char username[])
 {
 
@@ -241,4 +242,11 @@ void resetUserPass(User* curUser)
 	{
 		printf("密码输入错误！\n");
 	}
+}
+
+/*注销用户*/
+void deleteUser(User* user)
+{
+	user->deleted = 1;
+	//editUserdata(user->idx, user->username,user-> password,user->name, user->phone,user-> time,user->deleted);
 }

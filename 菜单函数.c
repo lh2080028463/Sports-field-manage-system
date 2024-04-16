@@ -117,7 +117,7 @@ User* userLogin()
 	printf(" 账  号：");
 	scanf("%s", username);
 	User* tempUser = findUsername(UserRoot, username);
-	if (tempUser == NULL)
+	if (tempUser == NULL||tempUser->deleted)
 	{
 		system("cls");
 		printf("该账号未注册，请返回后注册！\n");
@@ -155,7 +155,8 @@ User* userRegister(User* userRoot)
 	printf(" *****新用户注册*****|\n");
 	printf(" 新 账 号：");
 	scanf("%s", username);
-	if (userRoot != NULL && findUsername(userRoot, username) != NULL)
+	User* tempUser = findUsername(userRoot, username);
+	if (userRoot != NULL && tempUser != NULL&&!tempUser->deleted)
 	{
 		system("cls");
 		printf("该账号已存在，请重新注册！\n");
@@ -172,7 +173,7 @@ User* userRegister(User* userRoot)
 		scanf("%s", phone);
 		printf(" *******************\n");
 		printf(" 注册成功，请返回登录！\n");
-		return insertUser(userRoot,UserNum+1, username, password, name, phone,0);
+		return insertUser(userRoot,UserNum+1, username, password, name, phone,0,0);
 		Sleep(500);
 		userLogin(userRoot,username);
 	}
@@ -227,6 +228,7 @@ void userMenu()
 	printf("                 3.信息查询\n");
 	printf("                 4.信息统计\n");
 	printf("                 5.重置密码\n");
+	printf("                 6.注销账户\n");
 	
 	printf(" ******************************************\n");
 	printf("\n");
@@ -278,7 +280,7 @@ void editMessageMenu(User* user)
 			system("cls");
 		}
 	}
-	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time);
+	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time,user->deleted);
 	printf(" ******************************************\n");
 	
 	printf("\n");
