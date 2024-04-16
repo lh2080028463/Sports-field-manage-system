@@ -66,7 +66,7 @@ void inputUserdata(User* userRoot)
 			return 1;
 		}
 		User* newUser = (User*)malloc(sizeof(User));
-		fscanf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%d\n",&newUser->idx, newUser->name, newUser->phone, newUser->username, newUser->password, &newUser->time);
+		fscanf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n",&newUser->idx, newUser->name, newUser->phone, newUser->username, newUser->password, &newUser->time);
 		UserRoot=insertUser(UserRoot, newUser->idx,newUser->username, newUser->password, newUser->name, newUser->phone,newUser->time);
 		UserNum--;
 		fclose(filePointer);
@@ -96,7 +96,7 @@ void editUserdata(unsigned int idx,char username[], char password[], char name[]
 		return 1;
 	}
 	filePointer = fopen(filePath, "w");
-	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%d",idx,name, phone, username, password, time);
+	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n",idx,name, phone, username, password, time);
 }
 
 /*编辑文件场地信息*/
