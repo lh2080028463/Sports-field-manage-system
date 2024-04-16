@@ -117,7 +117,7 @@ User* userLogin()
 	printf(" ук  ╨её╨");
 	scanf("%s", username);
 	User* tempUser = findUsername(UserRoot, username);
-	if (tempUser == NULL||tempUser->deleted)
+	if (tempUser == NULL)
 	{
 		system("cls");
 		printf("╦цук╨ен╢в╒╡Аё╛гК╥╣╩ь╨Св╒╡Аё║\n");

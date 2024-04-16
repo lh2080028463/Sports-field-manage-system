@@ -25,7 +25,7 @@ int main()
 		int cmd;
 		printf("请选择功能：");
 		scanf("%d", &cmd);
-		
+
 		if (cmd == 0)
 			break;
 		switch (cmd)
@@ -43,20 +43,26 @@ int main()
 
 				}
 			}
+			else
+			{
+				system("cls");
+				printf("请选择正确的序号！\n");
+				Sleep(2000);
+				system("cls");
+			}
 			break;
 		}
-
 		case 2:
 		{
-			
+
 			break;
 		}
 		case 3:
 		{
-			User* currentUser=userLogin();
-			if (currentUser!=NULL)
+			User* currentUser = userLogin();
+			if (currentUser != NULL)
 			{
-				
+
 				int userCmd;
 				while (true)
 				{
@@ -132,9 +138,9 @@ int main()
 					{
 						resetUserPass(currentUser);
 					}
-				
+
 				}
-				
+
 			}
 			break;
 		}
@@ -148,9 +154,11 @@ int main()
 			printf("请选择正确的序号！\n");
 			getchar();
 			break;
+
 		}
-		
 		editUserNum();
+
+
 	}
 	return 0;
 }
