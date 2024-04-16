@@ -132,14 +132,7 @@ int main()
 					{
 						resetUserPass(currentUser);
 					}
-					else if (userCmd == 6)
-					{
-						deleteUser(currentUser);
-						system("cls");
-						printf("ÕËºÅ×¢Ïú³É¹¦£¡\n");
-						Sleep(500);
-						break;
-					}
+				
 				}
 				
 			}
