@@ -9,7 +9,7 @@
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum;
 
 /*创建新用户*/
-User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time,bool deleted)
+User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time)
 {
 	User* newUser = (User*)malloc(sizeof(User));
 	//用户数据读入
@@ -19,7 +19,6 @@ User* newUser(unsigned int idx, char username[], char password[], char name[], c
 	strcpy(newUser->name, name);
 	strcpy(newUser->phone, phone);
 	newUser->time = time;
-	newUser->deleted = deleted;
 	//构建二叉树节点
 	newUser->left = NULL;
 	newUser->right = NULL;
@@ -66,24 +65,24 @@ User* leftRotate(User* x)
 }
 
 /*用户注册*/
-User* insertUser(User* node, unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, bool deleted)
+User* insertUser(User* node, unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time)
 {
 	if (node == NULL)
 	{
 		UserNum++;
 		if (UserNum == 1)
-			editUserdata(1, username, password, name, phone, time,deleted);
-		return newUser(idx, username, password, name, phone, time,deleted);
+			editUserdata(1, username, password, name, phone, time);
+		return newUser(idx, username, password, name, phone, time);
 	}
 
 
 	if (strcmp(username, node->username) < 0)
 	{
-		node->left = insertUser(node->left, idx, username, password, name, phone, time,deleted);
+		node->left = insertUser(node->left, idx, username, password, name, phone, time);
 	}
 	else if (strcmp(username, node->username) > 0)
 	{
-		node->right = insertUser(node->right, idx, username, password, name, phone, time,deleted);
+		node->right = insertUser(node->right, idx, username, password, name, phone, time);
 	}
 	else
 		return node;
@@ -117,7 +116,7 @@ User* insertUser(User* node, unsigned int idx, char username[], char password[],
 		return leftRotate(node);
 	}
 
-	editUserdata(idx, username, password, name, phone, time, deleted);
+	editUserdata(idx, username, password, name, phone, time);
 	return node;
 }
 

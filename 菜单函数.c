@@ -156,7 +156,7 @@ User* userRegister(User* userRoot)
 	printf(" 新 账 号：");
 	scanf("%s", username);
 	User* tempUser = findUsername(userRoot, username);
-	if (userRoot != NULL && tempUser != NULL&&!tempUser->deleted)
+	if (userRoot != NULL && tempUser != NULL)
 	{
 		system("cls");
 		printf("该账号已存在，请重新注册！\n");
@@ -270,7 +270,7 @@ void editMessageMenu(User* user)
 			system("cls");
 		}
 	}
-	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time,user->deleted);
+	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time);
 	printf(" ******************************************\n");
 	
 	printf("\n");

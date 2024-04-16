@@ -74,7 +74,7 @@ void inputUserdata(User* userRoot)
 }
 
 /*编辑文件用户信息*/
-void editUserdata(unsigned int idx,char username[], char password[], char name[], char phone[], unsigned int time,bool deleted)
+void editUserdata(unsigned int idx,char username[], char password[], char name[], char phone[], unsigned int time)
 {
 	//向文件中写入用户数据
 	FILE* filePointer;
@@ -96,7 +96,7 @@ void editUserdata(unsigned int idx,char username[], char password[], char name[]
 		return 1;
 	}
 	filePointer = fopen(filePath, "w");
-	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%d",idx,name, phone, username, password, time,deleted);
+	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%d",idx,name, phone, username, password, time);
 }
 
 /*编辑文件场地信息*/
