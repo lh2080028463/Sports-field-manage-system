@@ -112,7 +112,7 @@ int main()
 							reserveMenu();
 							printf("请选择功能：");
 							scanf("%d", &reserveCmd);
-							if (reserveCmd==0)
+							if (reserveCmd == 0)
 							{
 								break;
 							}
@@ -129,7 +129,7 @@ int main()
 
 							}
 						}
-						
+
 					}
 					else if (userCmd == 3)
 					{
@@ -162,6 +162,14 @@ int main()
 					else if (userCmd == 5)
 					{
 						resetUserPass(currentUser);
+					}
+					else if (userCmd == 6)
+					{
+						deleteUser(currentUser);
+						system("cls");
+						printf("账号注销成功！\n");
+						Sleep(500);
+						break;
 					}
 				}
 				
