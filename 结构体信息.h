@@ -50,7 +50,7 @@ typedef struct User
 	char password[20];     //密码
 	unsigned int time;     //总使用时长
 	
-	bool deleted;                 //被删除状态
+	unsigned int deleted;                 //被删除状态
 	struct User* left;            //左节点
 	struct User* right;           //右节点
 	int height;

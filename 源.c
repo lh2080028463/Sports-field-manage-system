@@ -138,6 +138,12 @@ int main()
 					{
 						resetUserPass(currentUser);
 					}
+					else if (userCmd==6)
+					{
+						deleteUser(currentUser);
+						UserRoot=deleteUserNode(UserRoot, currentUser->username);
+						break;
+					}
 
 				}
 

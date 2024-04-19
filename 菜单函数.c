@@ -117,7 +117,7 @@ User* userLogin()
 	printf(" ÕË  ºÅ£º");
 	scanf("%s", username);
 	User* tempUser = findUsername(UserRoot, username);
-	if (tempUser == NULL)
+	if (UserRoot == NULL || (UserRoot != NULL&&(tempUser == NULL||tempUser->deleted)))
 	{
 		system("cls");
 		printf("¸ÃÕËºÅÎ´×¢²á£¬Çë·µ»Øºó×¢²á£¡\n");
@@ -173,7 +173,7 @@ User* userRegister(User* userRoot)
 		scanf("%s", phone);
 		printf(" *******************\n");
 		printf(" ×¢²á³É¹¦£¬Çë·µ»ØµÇÂ¼£¡\n");
-		return insertUser(userRoot,UserNum+1, username, password, name, phone,0);
+		return insertUser(userRoot,UserNum+1, username, password, name, phone,0,0);
 		Sleep(500);
 		userLogin(userRoot,username);
 	}
@@ -270,7 +270,7 @@ void editMessageMenu(User* user)
 			system("cls");
 		}
 	}
-	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time);
+	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time,user->deleted);
 	printf(" ******************************************\n");
 	
 	printf("\n");

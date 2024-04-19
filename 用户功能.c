@@ -5,11 +5,13 @@
 #include"结构体信息.h"
 #include"文件处理.h"
 #include"基础功能.h"
+#include<Windows.h>
 
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum;
+extern User* UserRoot;
 
 /*创建新用户*/
-User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time)
+User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted)
 {
 	User* newUser = (User*)malloc(sizeof(User));
 	//用户数据读入
@@ -19,6 +21,7 @@ User* newUser(unsigned int idx, char username[], char password[], char name[], c
 	strcpy(newUser->name, name);
 	strcpy(newUser->phone, phone);
 	newUser->time = time;
+	newUser->deleted = deleted;
 	//构建二叉树节点
 	newUser->left = NULL;
 	newUser->right = NULL;
@@ -34,13 +37,14 @@ int height(User* node)
 }
 
 /*获取平衡因子*/
-int getBalence(User* node)
+int getBalance(User* node)
 {
 	if (node == NULL) return 0;
 	return height(node->left) - height(node->right);
 }
 
 /*右旋*/
+
 User* rightRotate(User* x)
 {
 	User* y = x->left;
@@ -49,7 +53,7 @@ User* rightRotate(User* x)
 	x->left = t;
 	x->height = max(height(x->left), height(x->right)) + 1;
 	y->height = max(height(y->left), height(y->right)) + 1;
-	return x;
+	return y;
 }
 
 /*左旋*/
@@ -61,28 +65,28 @@ User* leftRotate(User* x)
 	x->right = t;
 	x->height = max(height(x->left), height(x->right)) + 1;
 	y->height = max(height(y->left), height(y->right)) + 1;
-	return x;
+	return y;
 }
 
 /*用户注册*/
-User* insertUser(User* node, unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time)
+User* insertUser(User* node, unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted)
 {
 	if (node == NULL)
 	{
 		UserNum++;
 		if (UserNum == 1)
-			editUserdata(1, username, password, name, phone, time);
-		return newUser(idx, username, password, name, phone, time);
+			editUserdata(1, username, password, name, phone, time, deleted);
+		return newUser(idx, username, password, name, phone, time, deleted);
 	}
 
 
 	if (strcmp(username, node->username) < 0)
 	{
-		node->left = insertUser(node->left, idx, username, password, name, phone, time);
+		node->left = insertUser(node->left, idx, username, password, name, phone, time, deleted);
 	}
 	else if (strcmp(username, node->username) > 0)
 	{
-		node->right = insertUser(node->right, idx, username, password, name, phone, time);
+		node->right = insertUser(node->right, idx, username, password, name, phone, time, deleted);
 	}
 	else
 		return node;
@@ -90,7 +94,7 @@ User* insertUser(User* node, unsigned int idx, char username[], char password[],
 	node->height = max(height(node->left), height(node->right)) + 1;
 
 	//获取平衡因子
-	int balance = getBalence(node);
+	int balance = getBalance(node);
 
 	//不平衡时，调整节点
 	//LL
@@ -116,7 +120,7 @@ User* insertUser(User* node, unsigned int idx, char username[], char password[],
 		return leftRotate(node);
 	}
 
-	editUserdata(idx, username, password, name, phone, time);
+	editUserdata(idx, username, password, name, phone, time, deleted);
 	return node;
 }
 
@@ -221,7 +225,7 @@ void resetUserPass(User* curUser)
 		strcpy(curUser->password, newPass);
 		char path[100] = { '\0' };
 		strcpy(path, getUserdataPath(*curUser));
-		FILE* filePointer = fopen(path, "w");
+		FILE* filePointer = fopen(path, "r+");
 		// 检查文件是否成功打开
 		if (filePointer == NULL)
 		{
@@ -230,10 +234,10 @@ void resetUserPass(User* curUser)
 		}
 		else
 		{
-			fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n", curUser->idx, curUser->name, curUser->phone, curUser->username, curUser->password, curUser->time);
+			fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%u\n", curUser->idx, curUser->name, curUser->phone, curUser->username, curUser->password, curUser->time, curUser->deleted);
 			printf("密码修改成功!\n");
 		}
-		
+
 		// 关闭文件
 		fclose(filePointer);
 	}
@@ -244,8 +248,94 @@ void resetUserPass(User* curUser)
 }
 
 /*注销用户*/
-void deleteUser(User* user)
+void deleteUser(User* curUser)
 {
-	user->deleted = 1;
-	//editUserdata(user->idx, user->username,user-> password,user->name, user->phone,user-> time,user->deleted);
+	editUserdata(curUser->idx, curUser->name, curUser->phone, curUser->username, curUser->password, curUser->time, 1);
+		
+		system("cls");
+		printf("账户注销成功!\n");
+		Sleep(500);
+	
+
+	
+}
+
+/*取树中最小值*/
+User* minValueNode(User* node) {
+	User* current = node;
+	while (current->left != NULL)
+		current = current->left;
+	return current;
+}
+
+/*删除用户树中的节点*/
+User* deleteUserNode(User* root, char username[]) 
+{
+	if (root == NULL)
+		return root;
+
+	if (strcmp(username, root->username) < 0)
+	{
+		root->left = deleteUserNode(root->left, username);
+	}
+		
+	else if (strcmp(username, root->username) > 0)
+	{
+		root->right = deleteUserNode(root->right, username);
+	}
+	else 
+	{
+		if ((root->left == NULL) || (root->right == NULL)) 
+		{
+			User* temp = root->left ? root->left : root->right;
+			if (temp == NULL) 
+			{
+				temp = root;
+				root = NULL;
+			}
+			else
+				*root = *temp;
+			free(temp);
+		}
+		else 
+		{
+			User* temp = minValueNode(root->right);
+			
+			root->idx=temp->idx;
+			strcpy(root->username, temp->username);
+			strcpy(root->password, temp->password);
+			strcpy(root->name, temp->name);
+			strcpy(root->phone, temp->phone);
+			root->time = temp->time;
+
+			root->right = deleteUserNode(root->right, temp->username);
+		}
+	}
+
+	if (root == NULL)
+		return root;
+
+	root->height = 1 + max(height(root->left), height(root->right));
+
+	int balance = getBalance(root);
+
+	if (balance > 1 && getBalance(root->left) >= 0)
+		return rightRotate(root);
+
+	if (balance > 1 && getBalance(root->left) < 0) 
+	{
+		root->left = leftRotate(root->left);
+		return rightRotate(root);
+	}
+
+	if (balance < -1 && getBalance(root->right) <= 0)
+		return leftRotate(root);
+
+	if (balance < -1 && getBalance(root->right) > 0) 
+	{
+		root->right = rightRotate(root->right);
+		return leftRotate(root);
+	}
+
+	return root;
 }
