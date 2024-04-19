@@ -235,9 +235,11 @@ void resetUserPass(User* curUser)
 		else
 		{
 			fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%u\n", curUser->idx, curUser->name, curUser->phone, curUser->username, curUser->password, curUser->time, curUser->deleted);
+			system("cls");
 			printf("密码修改成功!\n");
+			Sleep(500);
 		}
-
+		fflush(filePointer);
 		// 关闭文件
 		fclose(filePointer);
 	}

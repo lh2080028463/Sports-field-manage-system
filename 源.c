@@ -41,16 +41,15 @@ int main()
 				{
 					system("cls");
 
-						}
-					}
-					else
-					{
-						system("cls");
-						printf("请选择正确的序号！\n");
-						Sleep(2000);
-						system("cls");
-					}
+
 				}
+			}
+			else
+			{
+				system("cls");
+				printf("请选择正确的序号！\n");
+				Sleep(2000);
+				system("cls");
 			}
 			break;
 		}

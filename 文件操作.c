@@ -72,6 +72,7 @@ void inputUserdata(User* userRoot)
 			UserRoot = insertUser(UserRoot, newUser->idx, newUser->username, newUser->password, newUser->name, newUser->phone, newUser->time, newUser->deleted);
 			UserNum--;
 		}
+		fflush(filePointer);
 		fclose(filePointer);
 	}
 }
@@ -100,6 +101,8 @@ void editUserdata(unsigned int idx,char username[], char password[], char name[]
 	}
 	filePointer = fopen(filePath, "w");
 	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%u\n",idx,name, phone, username, password, time,deleted);
+	fflush(filePointer);
+	fclose(filePointer);
 }
 
 /*编辑文件场地信息*/
@@ -142,6 +145,7 @@ void initNum()
 	}
 	//读入各对象数量
 	fscanf(filePointer, "UserNum %u\nManagerNum %u\nResponNum %u\nReservationNum %u\nFieldNum %u", &UserNum, &ManagerNum, &ResponNum, &ReservationNum, &FieldNum);
+	fflush(filePointer);
 	// 关闭文件
 	fclose(filePointer);
 }
@@ -173,6 +177,7 @@ void editUserNum()
 		}
 	}
 	// 关闭文件
+	fflush(filePointer);
 	fclose(filePointer);
 }
 
@@ -210,6 +215,7 @@ void inputReservation(Reservation r[])
 		Reservation* tempr = (Reservation*)malloc(sizeof(Reservation));
 		fscanf(filePointer, "%d\n%s\n%d:%d\n%d:%d\n%s",&tempr->idx,tempr->fieldName,&tempr->time.start.hour, &tempr->time.start.minute, &tempr->time.end.hour, &tempr->time.end.minute,tempr->owner);
 		reservations[i-1] = *tempr;
+		fflush(filePointer);
 		fclose(filePointer);
 	}
 }
@@ -267,5 +273,6 @@ void editReservationNum()
 		}
 	}
 	// 关闭文件
+	fflush(filePointer);
 	fclose(filePointer);
 }
