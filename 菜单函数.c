@@ -194,6 +194,10 @@ void magnagerMenu()
 	printf("\n");
 }
 
+void managerFieldMenu()
+{
+
+}
 /*场地负责人功能菜单*/
 void responMenu()
 {
