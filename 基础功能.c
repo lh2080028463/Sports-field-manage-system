@@ -1,6 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include"结构体信息.h"
-
+#include<string.h>
 
 /*预定时间合理*/
 bool checkTime(const Duration reservedTime,const Duration openTime)
@@ -48,4 +49,12 @@ void sort()
 void statistic()
 {
 
+}
+
+void initReservations(Reservation r)
+{
+	r.deleted = 0;
+	strcpy(r.fieldName, "\0");
+	strcpy(r.owner, "\0");
+	r.idx = 0;
 }

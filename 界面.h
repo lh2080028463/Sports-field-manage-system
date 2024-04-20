@@ -9,3 +9,4 @@ void userMenu();
 User* userRegister(User* userRoot);
 void editMessageMenu(User* user);
 void reserveMenu();
+void queryMessageMenu(User* user);

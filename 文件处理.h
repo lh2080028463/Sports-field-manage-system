@@ -9,3 +9,4 @@ void initNum();
 void editUserNum();
 void inputReservation(Reservation r[]);
 void editReservations(unsigned int idx, char fieldName[], Duration time, char owner[]);
+void editFieldData(unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time, unsigned int deleted);

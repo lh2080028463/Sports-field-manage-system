@@ -5,3 +5,4 @@ User* findUsername(User* userRoot, char username[]);
 void find();
 void sort();
 void statistic();
+void initReservations(Reservation r);

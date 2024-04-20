@@ -7,7 +7,7 @@
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 extern User* UserRoot;
 extern Field* FieldRoot;
-extern Reservation reservations[10000];
+extern Reservation Reservations[10000];
 
 /*获取用户数据地址*/
 char* getUserdataPath(const User user)
@@ -128,7 +128,9 @@ void editFielddata(unsigned int idx, char name[], double area, double price[], D
 		return 1;
 	}
 	filePointer = fopen(filePath, "w");
-	fprintf(filePointer, "%u\n%s\n%lf\n%lf %lf %lf\n%d:%d\n%d:%d\n%d\n%u\n%u\n", idx, name, area, price[0], price[1], price[2], openTime.start.hour, openTime.start.minute, openTime.end.hour, openTime.end.minute, rented, time, deleted);
+	fprintf(filePointer, "%u\n%s\n%lf\n%lf\n%lf\n%lf\n%d\n%d\n%d\n%d\n%d\n%u\n%u\n", idx, name, area, price[0], price[1], price[2], openTime.start.hour, openTime.start.minute, openTime.end.hour, openTime.end.minute, rented, time,deleted);
+	fflush(filePointer);
+	fclose(filePointer);
 }
 
 /*初始化时读入对象数量*/
@@ -182,7 +184,7 @@ void editUserNum()
 }
 
 /*读入已有预定信息*/
-void inputReservation(Reservation r[])
+void inputReservation()
 {
 	FILE* filePointer;
 	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
@@ -213,8 +215,9 @@ void inputReservation(Reservation r[])
 			return 1;
 		}
 		Reservation* tempr = (Reservation*)malloc(sizeof(Reservation));
-		fscanf(filePointer, "%d\n%s\n%d:%d\n%d:%d\n%s",&tempr->idx,tempr->fieldName,&tempr->time.start.hour, &tempr->time.start.minute, &tempr->time.end.hour, &tempr->time.end.minute,tempr->owner);
-		reservations[i-1] = *tempr;
+		fscanf(filePointer, "%d\n%s\n%d:%d\n%d:%d\n%s\n%u",&tempr->idx,tempr->fieldName,&tempr->time.start.hour, &tempr->time.start.minute, &tempr->time.end.hour, &tempr->time.end.minute,tempr->owner,&tempr->deleted);
+		if (tempr->deleted) continue;
+		Reservations[i-1] = *tempr;
 		fflush(filePointer);
 		fclose(filePointer);
 	}
@@ -244,6 +247,8 @@ void editReservations(unsigned int idx,char fieldName[],Duration time,char owner
 	}
 	filePointer = fopen(filePath, "w");
 	fprintf(filePointer, "%d\n%s\n%d:%d\n%d:%d\n%s", idx,fieldName,time.start.hour,time.start.minute,time.end.hour,time.end.minute,owner);
+	fflush(filePointer);
+	fclose(filePointer);
 }
 
 /*结束时更新文件中预定信息数量*/
