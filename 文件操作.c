@@ -106,7 +106,7 @@ void editUserdata(unsigned int idx,char username[], char password[], char name[]
 }
 
 /*编辑文件场地信息*/
-void editFielddata(unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time)
+void editFielddata(unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time, unsigned int deleted)
 {
 	//向文件中写入场地数据
 	FILE* filePointer;
@@ -128,7 +128,7 @@ void editFielddata(unsigned int idx, char name[], double area, double price[], D
 		return 1;
 	}
 	filePointer = fopen(filePath, "w");
-	fprintf(filePointer, "%u\n%s\n%lf\n%lf\n%lf\n%lf\n%d\n%d\n%d\n%d\n%d\n%u\n", idx, name, area, price[0], price[1], price[2], openTime.start.hour, openTime.start.minute, openTime.end.hour, openTime.end.minute, rented, time);
+	fprintf(filePointer, "%u\n%s\n%lf\n%lf %lf %lf\n%d:%d\n%d:%d\n%d\n%u\n%u\n", idx, name, area, price[0], price[1], price[2], openTime.start.hour, openTime.start.minute, openTime.end.hour, openTime.end.minute, rented, time, deleted);
 }
 
 /*初始化时读入对象数量*/

@@ -3,6 +3,7 @@
 #include"文件处理.h"
 #include"用户.h"
 #include"界面.h"
+#include"管理员.h"
 #include"结构体信息.h"
 #include<stdbool.h>
 #include <stdio.h>
@@ -16,6 +17,7 @@ Reservation reservations[10000];
 int main()
 {
 	initNum();
+	inputFielddata(FieldRoot);
 	inputUserdata(UserRoot);
 	inputReservation(reservations);
 
@@ -36,12 +38,24 @@ int main()
 			Manager* currentManager = managerLogin();
 			if (currentManager != NULL)
 			{
+				system("cls");
 				int managerCmd;
 				while (true)
 				{
-					system("cls");
+					magnagerMenu();
+					printf("请选择功能：");
+					scanf("%d", &managerCmd);
+					if (managerCmd == 0)
+					{
+						system("cls");
+						break;
+					}
+					if (managerCmd == 1)
+					{
+						system("cls");
+						managerFieldMenu();
 
-
+					}
 				}
 			}
 			else

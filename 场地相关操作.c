@@ -6,6 +6,7 @@
 #include<string.h>
 #include<direct.h>
 #include"结构体信息.h"
+#include"管理员.h"
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 
 /*记录场地使用情况*/
@@ -33,20 +34,7 @@ void deleteField()
 
 }
 
-void createBiTreeField(Field* innerField) 
-{
-	FILE* fp;
-	if ((fp = fopen("name", "w+")) == NULL)
-	{
-		printf("Error!\n");
-		exit(0);
-	}
-	innerField = (Field*)malloc(sizeof(Field));
-	fscanf(fp, "%s %lf %lf %lf %lf %d %d %d %d %d %u", innerField->name, innerField->area, innerField->price[0], innerField->price[1], innerField->price[2], innerField->openTime.start.hour, innerField->openTime.start.minute, innerField->openTime.end.hour, innerField->openTime.end.minute, innerField->rented, innerField->time);
-	createBiTreeField(innerField->left);
-	createBiTreeField(innerField->right);
-}
-
+/*获取场地数据地址*/
 char* getFielddataPath(const Field field)
 {
 	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
@@ -71,8 +59,51 @@ char* getFielddataPath(const Field field)
 	}
 }
 
+/*读入已有场地数据*/
+void inputFielddata(Field* FieldRoot)
+{
+	FILE* filePointer;
+	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+
+	for (int i = 1; i <= FieldNum; i++)
+	{
+		//更新文件路径
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			strcpy(filePath, cwd);
+			strcat(filePath, "\\fielddata\\field");
+			char fieldIdx[10] = { '\0' };
+			_itoa(i, fieldIdx, 10);
+			strcat(filePath, fieldIdx);
+			strcat(filePath, ".txt");
+		}
+		else
+		{
+			perror("getcwd() 错误");
+			return 1;
+		}
+		//读入txt中场地数据
+		filePointer = fopen(filePath, "r");
+		if (filePointer == NULL)
+		{
+			printf("初始化读入数据%d时无法打开文件！\n", i);
+			return 1;
+		}
+		Field* newField = (Field*)malloc(sizeof(Field));
+		fscanf(filePointer, "%u\n%s\n%lf\n%lf %lf %lf\n%d:%d\n%d:%d\n%d\n%u\n", &newField->idx, newField->name, &newField->area, &newField->price[0], &newField->price[1], &newField->price[2], &newField->openTime.start.hour, &newField->openTime.start.minute, &newField->openTime.end.hour, &newField->openTime.end.minute, &newField->rented, &newField->time, &newField->deleted);
+		if (newField->deleted == 0)
+		{
+			FieldRoot = addField(FieldRoot, newField->idx, newField->name, newField->area, newField->price, newField->openTime, newField->rented, newField->time, newField->deleted);
+			FieldNum--;
+		}
+		fflush(filePointer);
+		fclose(filePointer);
+	}
+}
+
 /*新建场地*/
-Field* newField(unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time)
+Field* newField(unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time,unsigned int deleted)
 {
 	Field* newField = (Field*)malloc(sizeof(Field));
 	//场地数据读入
@@ -83,7 +114,8 @@ Field* newField(unsigned int idx, char name[], double area, double price[], Dura
 	newField->openTime = openTime;
 	newField->rented = rented;
 	newField->time = time;
-	//�构建二叉树节点
+	newField->deleted = deleted;
+	//构建二叉树节点
 	newField->left = NULL;
 	newField->right = NULL;
 	newField->Fieldheight = 1;
@@ -113,7 +145,7 @@ Field* FieldrightRotate(Field* x)
 	x->left = t;
 	x->Fieldheight = max(Fieldheight(x->left), Fieldheight(x->right)) + 1;
 	y->Fieldheight = max(Fieldheight(y->left), Fieldheight(y->right)) + 1;
-	return x;
+	return y;
 }
 
 /*左旋*/
@@ -125,27 +157,27 @@ Field* FieldleftRotate(Field* x)
 	x->right = t;
 	x->Fieldheight = max(Fieldheight(x->left), Fieldheight(x->right)) + 1;
 	y->Fieldheight = max(Fieldheight(y->left), Fieldheight(y->right)) + 1;
-	return x;
+	return y;
 }
 
 /*场地添加*/
-Field* addField(Field* node, unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time)
+Field* addField(Field* node, unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time, unsigned int deleted)
 {
 	if (node == NULL)
 	{
 		FieldNum++;
 		if (FieldNum == 1)
-			editFielddata(1, name, area, price, openTime, rented, time);
-		return newField(idx, name, area, price, openTime, rented, time);
+			editFielddata(1, name, area, price, openTime, rented, time, deleted);
+		return newField(idx, name, area, price, openTime, rented, time, deleted);
 	}
 
 	if (strcmp(name, node->name) < 0)
 	{
-		node->left = addField(node->left, idx, name, area, price, openTime, rented, time);
+		node->left = addField(node->left, idx, name, area, price, openTime, rented, time, deleted);
 	}
 	else if (strcmp(name, node->name) > 0)
 	{
-		node->right = addField(node->right, idx, name, area, price, openTime, rented, time);
+		node->right = addField(node->right, idx, name, area, price, openTime, rented, time, deleted);
 	}
 	else //重复
 		return node;
@@ -159,12 +191,12 @@ Field* addField(Field* node, unsigned int idx, char name[], double area, double 
 	//LL
 	if (balance > 1 && strcmp(name, node->left->name) < 0)
 	{
-		return FieldrightRotate(node);
+		return FieldleftRotate(node);
 	}
 	//RR
 	if (balance < -1 && strcmp(name, node->right->name) > 0)
 	{
-		return FieldleftRotate(node);
+		return FieldrightRotate(node);
 	}
 	// LR
 	if (balance > 1 && strcmp(name, node->left->name) > 0)
@@ -178,6 +210,6 @@ Field* addField(Field* node, unsigned int idx, char name[], double area, double 
 		node->right = FieldrightRotate(node->left);
 		return FieldleftRotate(node);
 	}
-	editFielddata(idx, name, area, price, openTime, rented, time);
+	editFielddata(idx, name, area, price, openTime, rented, time, deleted);
 	return node;
 }
