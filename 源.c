@@ -59,7 +59,47 @@ int main()
 					if (managerCmd == 1)
 					{
 						system("cls");
-						managerFieldMenu();
+						while (true)
+						{
+							managerFieldMenu();
+							printf("ÇëÑ¡Ôñ¹¦ÄÜ£º");
+							scanf("%d", &managerCmd);
+							if (managerCmd == 0)
+							{
+								system("cls");
+								break;
+							}
+							if (managerCmd == 1)
+							{
+								system("cls");
+								FieldRegister(FieldRoot);
+							}
+							if (managerCmd == 2)
+							{
+								system("cls");
+
+							}
+							if (managerCmd == 3)
+							{
+								system("cls");
+
+							}
+							
+						}
+					}
+					if (managerCmd == 2)
+					{
+						system("cls");
+
+					}
+					if (managerCmd == 3)
+					{
+						system("cls");
+
+					}
+					if (managerCmd == 4)
+					{
+						system("cls");
 
 					}
 				}

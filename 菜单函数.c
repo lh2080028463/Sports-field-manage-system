@@ -5,8 +5,9 @@
 #include<Windows.h>
 #include"基础功能.h"
 #include"文件处理.h"
+#include"管理员.h"
 
-extern unsigned int ManagerNum, UserNum, ResponNum,ReservationNum;
+extern unsigned int ManagerNum, UserNum, ResponNum, FieldNum, ReservationNum;
 extern User* UserRoot;
 extern Field* FieldRoot;
 extern Reservation Reservations[10000];
@@ -97,6 +98,72 @@ Manager* managerLogin()
 	printf(" **************************\n");
 }
 
+/*管理员功能菜单*/
+void magnagerMenu()
+{
+	printf(" ******************管理员功能****************\n");
+	printf("                 0.退出\n");
+	printf("                 1.场地管理\n");
+	printf("                 2.场地负责人管理\n");
+	printf("                 3.信息查询\n");
+	printf("                 4.信息排序\n");
+	printf("                 5.信息统计\n");
+	printf("                 6.重置密码\n");
+	printf(" ********************************************\n");
+	printf("\n");
+}
+
+void managerFieldMenu()
+{
+	printf(" ******************管理员场地管理****************\n");
+	printf("                 0.退出\n");
+	printf("                 1.场地添加\n");
+	printf("                 2.\n");
+	printf("                 3.\n");
+	printf("                 4.\n");
+	printf("                 5.\n");
+	printf("                 6.\n");
+	printf(" ********************************************\n");
+	printf("\n");
+}
+
+/*添加场地界面及功能*/
+Field* FieldRegister(Field* FieldRoot)
+{
+	Field* newfield = (Field*)malloc(sizeof(Field));
+	printf(" *****添加场地*****|\n");
+	printf("新场地名称：");
+	scanf("%s", &newfield->name);
+	Field* tempField = findFieldname(FieldRoot, newfield->name);
+	if (FieldRoot != NULL && tempField != NULL)
+	{
+		system("cls");
+		printf("该场地已存在，请重新添加！\n");
+		Sleep(2000);
+		system("cls");
+		FieldRegister(FieldRoot);
+	}
+	else
+	{
+		printf("面积：");
+		scanf("%lf", &newfield->area);
+		printf("价格\n早间：");
+		scanf("%lf", &newfield->price[0]);
+		printf("午间：");
+		scanf("%lf", &newfield->price[1]);
+		printf("晚间：");
+		scanf("%lf", &newfield->price[2]);
+		printf("开放时间\n起始时间：");
+		scanf("%d:%d", &newfield->openTime.start.hour, &newfield->openTime.start.minute);
+		printf("结束时间：");
+		scanf("%d:%d", &newfield->openTime.end.hour, &newfield->openTime.end.minute);
+		system("cls");
+		printf(" 场地添加成功！\n");
+		return addField(FieldRoot, FieldNum + 1, newfield->name, newfield->area, newfield->price, newfield->openTime, 0, 0, 0);
+		Sleep(2000);
+	}
+}
+
 /*场地负责人登录界面*/
 void responLogin()
 {
@@ -179,25 +246,6 @@ User* userRegister(User* userRoot)
 	}
 }
 
-/*管理员功能菜单*/
-void magnagerMenu()
-{
-	printf(" ******************管理员功能****************\n");
-	printf("                 0.退出\n");
-	printf("                 1.场地管理\n");
-	printf("                 2.场地负责人管理\n");
-	printf("                 3.信息查询\n");
-	printf("                 4.信息排序\n");
-	printf("                 5.信息统计\n");
-	printf("                 6.重置密码\n");
-	printf(" ********************************************\n");
-	printf("\n");
-}
-
-void managerFieldMenu()
-{
-
-}
 /*场地负责人功能菜单*/
 void responMenu()
 {

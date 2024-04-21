@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include"π‹¿Ì‘±.h"
 
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 extern User* UserRoot;
@@ -127,8 +128,8 @@ void editFielddata(unsigned int idx, char name[], double area, double price[], D
 		perror("getcwd() ¥ÌŒÛ");
 		return 1;
 	}
-	filePointer = fopen(filePath, "w");
-	fprintf(filePointer, "%u\n%s\n%lf\n%lf\n%lf\n%lf\n%d\n%d\n%d\n%d\n%d\n%u\n%u\n", idx, name, area, price[0], price[1], price[2], openTime.start.hour, openTime.start.minute, openTime.end.hour, openTime.end.minute, rented, time,deleted);
+	filePointer = fopen(filePath, "w+");
+	fprintf(filePointer, "%u\n%s\n%lf\n%lf %lf %lf\n%d:%d\n%d:%d\n%d\n%u\n%u\n", idx, name, area, price[0], price[1], price[2], openTime.start.hour, openTime.start.minute, openTime.end.hour, openTime.end.minute, rented, time,deleted);
 	fflush(filePointer);
 	fclose(filePointer);
 }
