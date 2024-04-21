@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include"结构体信息.h"
-
+#include"管理员.h"
 
 /*预定时间合理*/
 bool checkTime(const Duration reservedTime,const Duration openTime)
@@ -12,6 +12,25 @@ bool checkTime(const Duration reservedTime,const Duration openTime)
 		return true;
 	}
 	else return false;
+}
+
+/*场地查询*/
+Field* findFieldname(const Field* FieldRoot, const char name[])
+{
+	printf("123\n");
+	if (FieldRoot == NULL)
+		return FieldRoot;
+	Field* temp = FieldRoot;
+	if (strcmp(name, FieldRoot->name) < 0)
+	{
+		temp = findFieldname(FieldRoot->left, name);
+	}
+	else if (strcmp(name, FieldRoot->name) > 0)
+	{
+		temp = findFieldname(FieldRoot->right, name);
+	}
+	else
+		return temp;
 }
 
 /*账号查询*/

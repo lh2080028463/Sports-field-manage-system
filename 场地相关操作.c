@@ -91,7 +91,7 @@ void inputFielddata(Field* FieldRoot)
 			return 1;
 		}
 		Field* newField = (Field*)malloc(sizeof(Field));
-		fscanf(filePointer, "%u\n%s\n%lf\n%lf %lf %lf\n%d:%d\n%d:%d\n%d\n%u\n", &newField->idx, newField->name, &newField->area, &newField->price[0], &newField->price[1], &newField->price[2], &newField->openTime.start.hour, &newField->openTime.start.minute, &newField->openTime.end.hour, &newField->openTime.end.minute, &newField->rented, &newField->time, &newField->deleted);
+		fscanf(filePointer, "%u\n%s\n%lf\n%lf %lf %lf\n%d:%d\n%d:%d\n%d\n%u", &newField->idx, newField->name, &newField->area, &newField->price[0], &newField->price[1], &newField->price[2], &newField->openTime.start.hour, &newField->openTime.start.minute, &newField->openTime.end.hour, &newField->openTime.end.minute, &newField->rented, &newField->time, &newField->deleted);
 		if (newField->deleted == 0)
 		{
 			FieldRoot = addField(FieldRoot, newField->idx, newField->name, newField->area, newField->price, newField->openTime, newField->rented, newField->time, newField->deleted);
@@ -170,7 +170,6 @@ Field* addField(Field* node, unsigned int idx, char name[], double area, double 
 			editFielddata(1, name, area, price, openTime, rented, time, deleted);
 		return newField(idx, name, area, price, openTime, rented, time, deleted);
 	}
-
 	if (strcmp(name, node->name) < 0)
 	{
 		node->left = addField(node->left, idx, name, area, price, openTime, rented, time, deleted);
