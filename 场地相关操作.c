@@ -5,6 +5,7 @@
 #include<stdbool.h>
 #include<string.h>
 #include<direct.h>
+#include<Windows.h>
 #include"结构体信息.h"
 #include"管理员.h"
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
@@ -17,8 +18,112 @@ void recordUserField()
 }
 
 /*修改场地信息*/
-void editField(Field* innerField)
+void editField(Field* fieldRoot)
 {
+	int temp;
+	char fieldname[20];
+	printf("*****场地信息修改*****\n");
+	printf("请输入想要更改的场地名称：");
+	scanf("%s", fieldname);
+	Field* tempField = findFieldname(fieldRoot, fieldname);
+	if (fieldRoot != NULL && tempField != NULL)
+	{
+		while (true)
+		{
+			printf("请选择想要更改的场地信息：\n");
+			printf("	1.面积\n");
+			printf("	2.价格\n");
+			printf("	3.开放时间\n");
+			printf("请选择：");
+			scanf("%d", &temp);
+			system("cls");
+			if (temp == 1)
+			{
+				printf("请输入新面积：");
+				scanf("%lf", &tempField->area);
+				system("cls");
+			}
+			else if (temp == 2)
+			{
+				while (true)
+				{
+					printf("请输入想更改的价格：\n");
+					printf("	1.早间价格\n");
+					printf("	2.午间价格\n");
+					printf("	3.晚间价格\n");
+					printf("请选择：");
+					scanf("%d", &temp);
+					system("cls");
+					if (temp == 1)
+					{
+						printf("请输入新早间价格：");
+						scanf("%lf", &tempField->price[0]);
+					}
+					if (temp == 2)
+					{
+						printf("请输入新午间价格：");
+						scanf("%lf", &tempField->price[1]);
+					}
+					if (temp == 3)
+					{
+						printf("请输入新晚间价格：");
+						scanf("%lf", &tempField->price[2]);
+					}
+					system("cls");
+					printf("是否更改其他时间的价格？\n");
+					printf("	1.是\n");
+					printf("	2.否\n");
+					printf("请选择：");
+					scanf("%d", &temp);
+					system("cls");
+					if (temp == 2)
+					{
+						break;
+					}
+				}
+				
+			}
+			else if (temp == 3)
+			{
+				printf("请输入新的起始时间（xx:xx)：");
+				scanf("%d:%d", &tempField->openTime.start.hour, &tempField->openTime.start.minute);
+				printf("请输入新的结束时间（xx:xx)：");
+				scanf("%d:%d", &tempField->openTime.end.hour, &tempField->openTime.end.minute);
+				system("cls");
+			}
+			printf("是否更改该场地的其他信息？\n");
+			printf("	1.是\n");
+			printf("	2.否\n");
+			printf("请选择：");
+			scanf("%d", &temp);
+			system("cls");
+			if (temp == 2)
+			{
+				editFielddata(tempField->idx, tempField->name, tempField->area, tempField->price, tempField->openTime, tempField->rented, tempField->time, tempField->deleted);
+				printf("修改成功！");
+				Sleep(2000);
+				break;
+			}
+		}
+		printf("是否更改其他场地的信息？\n");
+		printf("	1.是\n");
+		printf("	2.否\n");
+		printf("请选择：");
+		scanf("%d", &temp);
+		system("cls");
+		if (temp == 1)
+		{
+			editField(fieldRoot);
+		}
+	}
+	else
+	{
+		system("cls");
+		printf("该场地不存在，请重新输入！\n");
+		Sleep(2000);
+		system("cls");
+		editField(fieldRoot);
+	}
 	
 }
 

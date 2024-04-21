@@ -98,7 +98,7 @@ Manager* managerLogin()
 }
 
 /*管理员功能菜单*/
-void magnagerMenu()
+void managerMenu()
 {
 	printf(" ******************管理员功能****************\n");
 	printf("                 0.退出\n");
@@ -117,30 +117,30 @@ void managerFieldMenu()
 	printf(" ******************管理员场地管理****************\n");
 	printf("                 0.退出\n");
 	printf("                 1.场地添加\n");
-	printf("                 2.\n");
-	printf("                 3.\n");
-	printf("                 4.\n");
+	printf("                 2.场地信息修改\n");
+	printf("                 3.场地查询\n");
+	printf("                 4.场地排序\n");
 	printf("                 5.\n");
 	printf("                 6.\n");
 	printf(" ********************************************\n");
 	printf("\n");
 }
 
-/*添加场地界面及功能*/
-Field* FieldRegister(Field* FieldRoot)
+/*场地添加界面*/
+Field* FieldRegister(Field* fieldRoot)
 {
 	Field* newfield = (Field*)malloc(sizeof(Field));
-	printf(" *****添加场地*****|\n");
+	printf(" *****场地添加*****|\n");
 	printf("新场地名称：");
 	scanf("%s", newfield->name);
-	Field* tempField = findFieldname(FieldRoot, newfield->name);
-	if (FieldRoot != NULL && tempField != NULL)
+	Field* tempField = findFieldname(fieldRoot, newfield->name);
+	if (fieldRoot != NULL && tempField != NULL)
 	{
 		system("cls");
 		printf("该场地已存在，请重新添加！\n");
 		Sleep(2000);
 		system("cls");
-		FieldRegister(FieldRoot);
+		FieldRegister(fieldRoot);
 	}
 	else
 	{
@@ -158,7 +158,7 @@ Field* FieldRegister(Field* FieldRoot)
 		scanf("%d:%d", &newfield->openTime.end.hour, &newfield->openTime.end.minute);
 		system("cls");
 		printf(" 场地添加成功！\n");
-		return addField(FieldRoot, FieldNum + 1, newfield->name, newfield->area, newfield->price, newfield->openTime, 0, 0, 0);
+		return addField(fieldRoot, FieldNum + 1, newfield->name, newfield->area, newfield->price, newfield->openTime, 0, 0, 0);
 		Sleep(2000);
 	}
 }

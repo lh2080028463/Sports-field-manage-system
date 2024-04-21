@@ -2,4 +2,4 @@ UserNum 2
 ManagerNum 2
 ResponNum 1
 ReservationNum 1
-FieldNum 2
+FieldNum 5

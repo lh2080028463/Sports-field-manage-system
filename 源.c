@@ -48,7 +48,7 @@ int main()
 				int managerCmd;
 				while (true)
 				{
-					magnagerMenu();
+					managerMenu();
 					printf("ÇëÑ¡Ôñ¹¦ÄÜ£º");
 					scanf("%d", &managerCmd);
 					if (managerCmd == 0)
@@ -73,10 +73,12 @@ int main()
 							{
 								system("cls");
 								FieldRegister(FieldRoot);
+								editFieldNum();
 							}
 							if (managerCmd == 2)
 							{
 								system("cls");
+								editField(FieldRoot);
 
 							}
 							if (managerCmd == 3)
@@ -84,7 +86,6 @@ int main()
 								system("cls");
 
 							}
-
 						}
 					}
 					if (managerCmd == 2)

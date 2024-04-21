@@ -1,6 +1,6 @@
 #pragma once
 void menu();
-void magnagerMenu();
+void managerMenu();
 void managerFieldMenu();
 Manager* managerLogin();
 void responLogin();

@@ -11,7 +11,7 @@ void editFielddata(unsigned int idx, char name[], double area, double price[], D
 Field* newField(unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time, unsigned int deleted);
 Field* findFieldname(const Field* FieldRoot, const char name[]);
 Field* FieldRegister(Field* FieldRoot);
-void editField();
+void editField(Field* fieldRoot);
 void deleteField();
 void addManager();
 void editManager();
