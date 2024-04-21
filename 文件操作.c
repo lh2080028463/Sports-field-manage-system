@@ -216,7 +216,7 @@ void inputReservation()
 		}
 		Reservation* tempr = (Reservation*)malloc(sizeof(Reservation));
 		fscanf(filePointer, "%d\n%s\n%d:%d\n%d:%d\n%s\n%u",&tempr->idx,tempr->fieldName,&tempr->time.start.hour, &tempr->time.start.minute, &tempr->time.end.hour, &tempr->time.end.minute,tempr->owner,&tempr->deleted);
-		if (tempr->deleted) continue;
+		//if (tempr->deleted) continue;
 		Reservations[i-1] = *tempr;
 		fflush(filePointer);
 		fclose(filePointer);
@@ -224,7 +224,7 @@ void inputReservation()
 }
 
 /*编辑文件预定信息*/
-void editReservations(unsigned int idx,char fieldName[],Duration time,char owner[])
+void editReservations(unsigned int idx,char fieldName[],Duration time,char owner[],bool deleted)
 {
 	//向文件中写入预定信息数据
 	FILE* filePointer;
@@ -246,7 +246,7 @@ void editReservations(unsigned int idx,char fieldName[],Duration time,char owner
 		return 1;
 	}
 	filePointer = fopen(filePath, "w");
-	fprintf(filePointer, "%d\n%s\n%d:%d\n%d:%d\n%s", idx,fieldName,time.start.hour,time.start.minute,time.end.hour,time.end.minute,owner);
+	fprintf(filePointer, "%d\n%s\n%02d:%02d\n%02d:%02d\n%s\n%u", idx,fieldName,time.start.hour,time.start.minute,time.end.hour,time.end.minute,owner,deleted);
 	fflush(filePointer);
 	fclose(filePointer);
 }
@@ -273,7 +273,7 @@ void editReservationNum()
 			_itoa(num, tempNum, 10);
 			int len = strlen(tempNum);
 			fseek(filePointer, -len, SEEK_CUR);
-			fprintf(filePointer, "%d", UserNum);
+			fprintf(filePointer, "%d", ReservationNum);
 			break;
 		}
 	}

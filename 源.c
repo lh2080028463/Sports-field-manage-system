@@ -114,7 +114,8 @@ int main()
 							}
 							else if (reserveCmd == 1)
 							{
-								makeReservation(Reservations[ReservationNum++], FieldRoot, currentUser->username);
+								makeReservation(Reservations[ReservationNum], FieldRoot, currentUser->username);
+								
 							}
 							else if (reserveCmd == 2)
 							{
@@ -122,7 +123,7 @@ int main()
 							}
 							else if (reserveCmd == 3)
 							{
-
+								deleteReservation(currentUser->username);
 							}
 						}
 
@@ -147,6 +148,13 @@ int main()
 						UserRoot=deleteUserNode(UserRoot, currentUser->username);
 						break;
 					}
+					else
+					{
+						system("cls");
+						printf("请选择正确的功能！\n");
+						Sleep(500);
+
+					}
 
 				}
 
@@ -166,7 +174,7 @@ int main()
 
 		}
 		editUserNum();
-
+		editReservationNum();
 
 	}
 	return 0;

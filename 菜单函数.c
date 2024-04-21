@@ -312,6 +312,10 @@ void queryMessageMenu(User* user)
 			int flag = 1;
 			for (int i = 0; Reservations[i].idx!=0; i++)
 			{
+				if (Reservations[i].deleted)
+				{
+					continue;
+				}
 				if (strcmp(user->username,Reservations[i].owner)==0)
 				{
 					flag = 0;

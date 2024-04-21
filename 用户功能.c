@@ -10,6 +10,7 @@
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum;
 extern User* UserRoot;
 extern Field* FieldRoot;
+extern Reservation Reservations[10000];
 
 /*创建新用户*/
 User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted)
@@ -125,6 +126,86 @@ User* insertUser(User* node, unsigned int idx, char username[], char password[],
 	return node;
 }
 
+/*取树中最小值*/
+User* minValueNode(User* node) {
+	User* current = node;
+	while (current->left != NULL)
+		current = current->left;
+	return current;
+}
+
+/*删除用户树中的节点*/
+User* deleteUserNode(User* root, char username[])
+{
+	if (root == NULL)
+		return root;
+
+	if (strcmp(username, root->username) < 0)
+	{
+		root->left = deleteUserNode(root->left, username);
+	}
+
+	else if (strcmp(username, root->username) > 0)
+	{
+		root->right = deleteUserNode(root->right, username);
+	}
+	else
+	{
+		if ((root->left == NULL) || (root->right == NULL))
+		{
+			User* temp = root->left ? root->left : root->right;
+			if (temp == NULL)
+			{
+				temp = root;
+				root = NULL;
+			}
+			else
+				*root = *temp;
+			free(temp);
+		}
+		else
+		{
+			User* temp = minValueNode(root->right);
+
+			root->idx = temp->idx;
+			strcpy(root->username, temp->username);
+			strcpy(root->password, temp->password);
+			strcpy(root->name, temp->name);
+			strcpy(root->phone, temp->phone);
+			root->time = temp->time;
+
+			root->right = deleteUserNode(root->right, temp->username);
+		}
+	}
+
+	if (root == NULL)
+		return root;
+
+	root->height = 1 + max(height(root->left), height(root->right));
+
+	int balance = getBalance(root);
+
+	if (balance > 1 && getBalance(root->left) >= 0)
+		return rightRotate(root);
+
+	if (balance > 1 && getBalance(root->left) < 0)
+	{
+		root->left = leftRotate(root->left);
+		return rightRotate(root);
+	}
+
+	if (balance < -1 && getBalance(root->right) <= 0)
+		return leftRotate(root);
+
+	if (balance < -1 && getBalance(root->right) > 0)
+	{
+		root->right = rightRotate(root->right);
+		return leftRotate(root);
+	}
+
+	return root;
+}
+
 /*定位场地指针*/
 Field* findField(Field* root, char fieldName[])
 {
@@ -147,8 +228,13 @@ Field* findField(Field* root, char fieldName[])
 /*用户预订场地*/
 void makeReservation(Reservation reservation, Field* root, char username[])
 {
-	printf("请输入需要预定的场地名称：");
+	reservation.idx = ReservationNum+1;
+	printf("请输入需要预定的场地名称（输入0取消预定）：");
 	scanf("%s", reservation.fieldName);
+	if (strcmp(reservation.fieldName, "0") == 0)
+	{
+		return;
+	}
 	//检查场地是否存在
 	Field* temp = findField(FieldRoot, reservation.fieldName);
 	if (temp == NULL)
@@ -158,13 +244,33 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 	}
 	else
 	{
-		printf("请输入预定时间：");
+
+		printf("请输入起始时间：");
 		scanf("%d:%d", &reservation.time.start.hour, &reservation.time.start.minute);
 		printf("请输入截止时间：");
 		scanf("%d:%d", &reservation.time.end.hour, &reservation.time.end.minute);
-		strcpy(reservation.owner, username);
-		editReservations(ReservationNum, reservation.fieldName, reservation.time, reservation.owner);
-		printf("场地预定成功！\n");
+		if (checkTime(reservation.time,temp->openTime))
+		{
+			if (!rented(reservation))
+			{
+				strcpy(reservation.owner, username);
+				ReservationNum++;
+				editReservations(ReservationNum, reservation.fieldName, reservation.time, reservation.owner, 0);
+				printf("场地预定成功！\n");
+				Sleep(500);
+			}
+			else
+			{
+				printf("该场地目前已被预定！\n请重新选择！\n");
+				makeReservation(reservation, root, username);
+			}
+		}
+		else
+		{
+			printf("该时间段场地未开放！请重新预定！\n");
+			makeReservation(reservation, root, username);
+		}
+		
 	}
 
 }
@@ -201,16 +307,43 @@ void putFieldMessage(Field* tempField[])
 /*输出预定信息*/
 void putReservation(Reservation tempReservation)
 {
-	printf("%02d:%02d~%02d:%02d  ", tempReservation.time.start.hour, tempReservation.time.start.minute, tempReservation.time.end.hour, tempReservation.time.end.minute);
 	printf("%s\n", tempReservation.fieldName);
+	printf("%02d:%02d~%02d:%02d  ", tempReservation.time.start.hour, tempReservation.time.start.minute, tempReservation.time.end.hour, tempReservation.time.end.minute);
+	
 	printf("\n");
 }
 
 /*删除预定场地信息（未完成）*/
-void deleteReservation(Reservation reservation, Field* root, char username[])
+void deleteReservation(char username[])
 {
-	reservation.deleted = 1;
+	for (int i = 0; Reservations[i].idx != 0; i++)
+	{
+		if (strcmp(Reservations[i].owner, username) == 0)
+		{
+			putReservation(Reservations[i]);
+		}
+	}
+	Reservation tempReserve;
 
+	printf("请按照以上格式输入你要删除的预定信息：");
+	scanf("%s %02d:%02d~%02d:%02d", tempReserve.fieldName, &tempReserve.time.start.hour, &tempReserve.time.start.minute, &tempReserve.time.end.hour, &tempReserve.time.end.minute);
+	for (int i = 0; Reservations[i].idx != 0; i++)
+	{
+		if (strcmp(Reservations[i].owner, username) == 0 &&
+			strcmp(tempReserve.fieldName, Reservations[i].fieldName) == 0 &&
+			tempReserve.time.start.hour == Reservations[i].time.start.hour &&
+			tempReserve.time.start.minute == Reservations[i].time.start.minute &&
+			tempReserve.time.end.hour == Reservations[i].time.end.hour &&
+			tempReserve.time.end.minute == Reservations[i].time.end.minute)
+		{
+			Reservations[i].deleted = 1;
+			printf("已成功取消该预定！\n");
+			editReservations(Reservations[i].idx, Reservations[i].fieldName, Reservations[i].time, Reservations[i].owner, Reservations[i].deleted);
+			Sleep(500);
+			
+		}
+	}
+	
 }
 
 /*用户功能：重置密码*/
@@ -255,91 +388,12 @@ void resetUserPass(User* curUser)
 void deleteUser(User* curUser)
 {
 	editUserdata(curUser->idx, curUser->name, curUser->phone, curUser->username, curUser->password, curUser->time, 1);
-		
-		system("cls");
-		printf("账户注销成功!\n");
-		Sleep(500);
-	
 
-	
+	system("cls");
+	printf("账户注销成功!\n");
+	Sleep(500);
+
+
+
 }
 
-/*取树中最小值*/
-User* minValueNode(User* node) {
-	User* current = node;
-	while (current->left != NULL)
-		current = current->left;
-	return current;
-}
-
-/*删除用户树中的节点*/
-User* deleteUserNode(User* root, char username[]) 
-{
-	if (root == NULL)
-		return root;
-
-	if (strcmp(username, root->username) < 0)
-	{
-		root->left = deleteUserNode(root->left, username);
-	}
-		
-	else if (strcmp(username, root->username) > 0)
-	{
-		root->right = deleteUserNode(root->right, username);
-	}
-	else 
-	{
-		if ((root->left == NULL) || (root->right == NULL)) 
-		{
-			User* temp = root->left ? root->left : root->right;
-			if (temp == NULL) 
-			{
-				temp = root;
-				root = NULL;
-			}
-			else
-				*root = *temp;
-			free(temp);
-		}
-		else 
-		{
-			User* temp = minValueNode(root->right);
-			
-			root->idx=temp->idx;
-			strcpy(root->username, temp->username);
-			strcpy(root->password, temp->password);
-			strcpy(root->name, temp->name);
-			strcpy(root->phone, temp->phone);
-			root->time = temp->time;
-
-			root->right = deleteUserNode(root->right, temp->username);
-		}
-	}
-
-	if (root == NULL)
-		return root;
-
-	root->height = 1 + max(height(root->left), height(root->right));
-
-	int balance = getBalance(root);
-
-	if (balance > 1 && getBalance(root->left) >= 0)
-		return rightRotate(root);
-
-	if (balance > 1 && getBalance(root->left) < 0) 
-	{
-		root->left = leftRotate(root->left);
-		return rightRotate(root);
-	}
-
-	if (balance < -1 && getBalance(root->right) <= 0)
-		return leftRotate(root);
-
-	if (balance < -1 && getBalance(root->right) > 0) 
-	{
-		root->right = rightRotate(root->right);
-		return leftRotate(root);
-	}
-
-	return root;
-}
