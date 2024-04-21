@@ -307,13 +307,13 @@ void putFieldMessage(Field* tempField[])
 /*输出预定信息*/
 void putReservation(Reservation tempReservation)
 {
-	printf("%s\n", tempReservation.fieldName);
-	printf("%02d:%02d~%02d:%02d  ", tempReservation.time.start.hour, tempReservation.time.start.minute, tempReservation.time.end.hour, tempReservation.time.end.minute);
+	printf("%s ", tempReservation.fieldName);
+	printf("%02d:%02d~%02d:%02d\n", tempReservation.time.start.hour, tempReservation.time.start.minute, tempReservation.time.end.hour, tempReservation.time.end.minute);
 	
 	printf("\n");
 }
 
-/*删除预定场地信息（未完成）*/
+/*删除预定场地信息*/
 void deleteReservation(char username[])
 {
 	for (int i = 0; Reservations[i].idx != 0; i++)
@@ -388,12 +388,17 @@ void resetUserPass(User* curUser)
 void deleteUser(User* curUser)
 {
 	editUserdata(curUser->idx, curUser->name, curUser->phone, curUser->username, curUser->password, curUser->time, 1);
+	for (int i = 0; Reservations[i].idx != 0; i++)
+	{
+		if (strcmp(Reservations[i].owner, curUser->username) == 0)
+		{
+			Reservations[i].deleted = 1;
+			editReservations(Reservations[i].idx, Reservations[i].fieldName, Reservations[i].time, Reservations[i].owner, Reservations[i].deleted);
+		}
+	}
 
 	system("cls");
 	printf("账户注销成功!\n");
 	Sleep(500);
-
-
-
 }
 

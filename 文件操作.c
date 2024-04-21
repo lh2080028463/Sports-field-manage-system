@@ -129,7 +129,7 @@ void editFielddata(unsigned int idx, char name[], double area, double price[], D
 		return 1;
 	}
 	filePointer = fopen(filePath, "w+");
-	fprintf(filePointer, "%u\n%s\n%lf\n%lf %lf %lf\n%d:%d\n%d:%d\n%d\n%u\n%u\n", idx, name, area, price[0], price[1], price[2], openTime.start.hour, openTime.start.minute, openTime.end.hour, openTime.end.minute, rented, time,deleted);
+	fprintf(filePointer, "%u\n%s\n%.2lf\n%.2lf %.2lf %.2lf\n%02d:%02d\n%02d:%02d\n%d\n%u\n%u\n", idx, name, area, price[0], price[1], price[2], openTime.start.hour, openTime.start.minute, openTime.end.hour, openTime.end.minute, rented, time,deleted);
 	fflush(filePointer);
 	fclose(filePointer);
 }
@@ -275,6 +275,37 @@ void editReservationNum()
 			int len = strlen(tempNum);
 			fseek(filePointer, -len, SEEK_CUR);
 			fprintf(filePointer, "%d", ReservationNum);
+			break;
+		}
+	}
+	// 关闭文件
+	fflush(filePointer);
+	fclose(filePointer);
+}
+
+/*结束时更新文件中场地数量*/
+void editFieldNum()
+{
+	FILE* filePointer; // 文件指针
+	// 打开文件以进行读取
+	filePointer = fopen("data.txt", "r+");
+	// 检查文件是否成功打开
+	if (filePointer == NULL)
+	{
+		printf("无法打开文件。\n");
+		return 1;
+	}
+	char numName[50];
+	int num;
+	while (fscanf(filePointer, "%s %d", numName, &num) != EOF)
+	{
+		if (strcmp(numName, "FieldNum") == 0)
+		{
+			char tempNum[64] = { '\0' };
+			_itoa(num, tempNum, 10);
+			int len = strlen(tempNum);
+			fseek(filePointer, -len, SEEK_CUR);
+			fprintf(filePointer, "%d", FieldNum);
 			break;
 		}
 	}
