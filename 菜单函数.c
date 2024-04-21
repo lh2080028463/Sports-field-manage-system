@@ -7,7 +7,7 @@
 #include"文件处理.h"
 #include"管理员.h"
 
-extern unsigned int ManagerNum, UserNum, ResponNum, FieldNum;
+extern unsigned int ManagerNum, UserNum, ResponNum, FieldNum, ReservationNum;
 extern User* UserRoot;
 extern Field* FieldRoot;
 extern Reservation Reservations[10000];
@@ -139,7 +139,7 @@ Field* FieldRegister(Field* FieldRoot)
 	{
 		system("cls");
 		printf("该场地已存在，请重新添加！\n");
-		Sleep(500);
+		Sleep(2000);
 		system("cls");
 		FieldRegister(FieldRoot);
 	}
@@ -160,7 +160,7 @@ Field* FieldRegister(Field* FieldRoot)
 		system("cls");
 		printf(" 场地添加成功！\n");
 		return addField(FieldRoot, FieldNum + 1, newfield->name, newfield->area, newfield->price, newfield->openTime, 0, 0, 0);
-		Sleep(500);
+		Sleep(2000);
 	}
 }
 

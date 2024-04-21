@@ -19,14 +19,7 @@ void recordUserField()
 /*修改场地信息*/
 void editField(Field* innerField)
 {
-	FILE* fp;
-	char name[150];
-	if ((fp = fopen("name", "w+")) == NULL)
-	{
-		printf("Error!\n");
-		exit(0);
-	}
-	fscanf(fp, "%s %lf %lf %lf %lf %d %d %d %d %d %u", innerField->name, innerField->area, innerField->price[0], innerField->price[1], innerField->price[2], innerField->openTime.start.hour, innerField->openTime.start.minute, innerField->openTime.end.hour, innerField->openTime.end.minute, innerField->rented, innerField->time);
+	
 }
 
 /*删除场地信息*/

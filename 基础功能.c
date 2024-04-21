@@ -19,7 +19,6 @@ bool checkTime(const Duration reservedTime,const Duration openTime)
 /*≥°µÿ≤È—Ø*/
 Field* findFieldname(const Field* FieldRoot, const char name[])
 {
-	printf("123\n");
 	if (FieldRoot == NULL)
 		return FieldRoot;
 	Field* temp = FieldRoot;
