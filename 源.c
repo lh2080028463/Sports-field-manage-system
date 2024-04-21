@@ -54,11 +54,21 @@ int main()
 				{
 					case 1:
 					{
-						registration();
-						break;
+						int j = registration();
+						if (j == 0)
+						{
+							printf("未找到该预定者预订信息\n");
+							Sleep(2000); break;
+						}
+						else
+						{
+							printf("预定场地类型为%c\n", j);
+							Sleep(2000);
+						}
 					}
 					case 2:
 					{
+
 						break;
 					}
 					case 3:
