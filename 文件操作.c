@@ -128,7 +128,7 @@ void editFielddata(unsigned int idx, char name[], double area, double price[], D
 		perror("getcwd() ´íÎó");
 		return 1;
 	}
-	filePointer = fopen(filePath, "w+");
+	filePointer = fopen(filePath, "w");
 	fprintf(filePointer, "%u\n%s\n%lf\n%lf %lf %lf\n%d:%d\n%d:%d\n%d\n%u\n%u\n", idx, name, area, price[0], price[1], price[2], openTime.start.hour, openTime.start.minute, openTime.end.hour, openTime.end.minute, rented, time,deleted);
 	fflush(filePointer);
 	fclose(filePointer);

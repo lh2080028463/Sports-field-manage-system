@@ -54,7 +54,7 @@ char* getFielddataPath(const Field field)
 }
 
 /*读入已有场地数据*/
-void inputFielddata(Field* root)
+void inputFielddata(Field* fieldRoot)
 {
 	FILE* filePointer;
 	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
@@ -94,6 +94,7 @@ void inputFielddata(Field* root)
 		fflush(filePointer);
 		fclose(filePointer);
 	}
+	
 }
 
 /*新建场地*/
@@ -174,7 +175,7 @@ Field* addField(Field* node, unsigned int idx, char name[], double area, double 
 	{
 		node->right = addField(node->right, idx, name, area, price, openTime, rented, time, deleted);
 	}
-	else //重复
+	else
 		return node;
 	//更新节点高度
 	node->Fieldheight = max(Fieldheight(node->left), Fieldheight(node->right)) + 1;
@@ -186,12 +187,12 @@ Field* addField(Field* node, unsigned int idx, char name[], double area, double 
 	//LL
 	if (balance > 1 && strcmp(name, node->left->name) < 0)
 	{
-		return FieldleftRotate(node);
+		return FieldrightRotate(node);
 	}
 	//RR
 	if (balance < -1 && strcmp(name, node->right->name) > 0)
 	{
-		return FieldrightRotate(node);
+		return FieldleftRotate(node);
 	}
 	// LR
 	if (balance > 1 && strcmp(name, node->left->name) > 0)

@@ -63,7 +63,6 @@ Manager* managerLogin()
 		if (strcmp(manager->name, managername) != 0)
 		{
 			temp = 1;
-			system("cls");
 		}
 		else
 		{
@@ -133,7 +132,7 @@ Field* FieldRegister(Field* FieldRoot)
 	Field* newfield = (Field*)malloc(sizeof(Field));
 	printf(" *****添加场地*****|\n");
 	printf("新场地名称：");
-	scanf("%s", &newfield->name);
+	scanf("%s", newfield->name);
 	Field* tempField = findFieldname(FieldRoot, newfield->name);
 	if (FieldRoot != NULL && tempField != NULL)
 	{

@@ -1,5 +1,5 @@
 UserNum 3
-ManagerNum 1
+ManagerNum 2
 ResponNum 1
 ReservationNum 1
-FieldNum 1
+FieldNum 3
