@@ -10,7 +10,7 @@
 extern unsigned int ManagerNum, UserNum, ResponNum, FieldNum;
 extern User* UserRoot;
 extern Field* FieldRoot;
-extern Reservation reservations[10000];
+extern Reservation Reservations[10000];
 /*初始界面*/
 void menu()
 {
@@ -329,7 +329,7 @@ void editMessageMenu(User* user)
 }
 
 /*用户功能：信息查询*/
-void queryMessageMenu()
+void queryMessageMenu(User* user)
 {
 	int querycmd;
 	printf(" ******************信息查询****************\n");
@@ -357,9 +357,18 @@ void queryMessageMenu()
 		}
 		else if (querycmd == 2)
 		{
-			for (int i = 0; reservations[i].owner!=NULL; i++)
+			int flag = 1;
+			for (int i = 0; Reservations[i].idx!=0; i++)
 			{
-				putReservation(reservations[i]);
+				if (strcmp(user->username,Reservations[i].owner)==0)
+				{
+					flag = 0;
+					putReservation(Reservations[i]);
+				}
+			}
+			if (flag)
+			{
+				printf("当前暂无预定场地！\n");
 			}
 		}
 		else

@@ -10,3 +10,4 @@ Field* FieldRegister(Field* FieldRoot);
 User* userRegister(User* userRoot);
 void editMessageMenu(User* user);
 void reserveMenu();
+void queryMessageMenu(User* user);

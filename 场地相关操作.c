@@ -8,6 +8,7 @@
 #include"结构体信息.h"
 #include"管理员.h"
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
+extern Field* FieldRoot;
 
 /*记录场地使用情况*/
 void recordUserField()
@@ -60,7 +61,7 @@ char* getFielddataPath(const Field field)
 }
 
 /*读入已有场地数据*/
-void inputFielddata(Field* FieldRoot)
+void inputFielddata(Field* root)
 {
 	FILE* filePointer;
 	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
@@ -91,7 +92,7 @@ void inputFielddata(Field* FieldRoot)
 			return 1;
 		}
 		Field* newField = (Field*)malloc(sizeof(Field));
-		fscanf(filePointer, "%u\n%s\n%lf\n%lf %lf %lf\n%d:%d\n%d:%d\n%d\n%u", &newField->idx, newField->name, &newField->area, &newField->price[0], &newField->price[1], &newField->price[2], &newField->openTime.start.hour, &newField->openTime.start.minute, &newField->openTime.end.hour, &newField->openTime.end.minute, &newField->rented, &newField->time, &newField->deleted);
+		fscanf(filePointer, "%u\n%s\n%lf\n%lf %lf %lf\n%d:%d\n%d:%d\n%d\n%u\n%u\n", &newField->idx, newField->name, &newField->area, &newField->price[0], &newField->price[1], &newField->price[2], &newField->openTime.start.hour, &newField->openTime.start.minute, &newField->openTime.end.hour, &newField->openTime.end.minute, &newField->rented, &newField->time, &newField->deleted);
 		if (newField->deleted == 0)
 		{
 			FieldRoot = addField(FieldRoot, newField->idx, newField->name, newField->area, newField->price, newField->openTime, newField->rented, newField->time, newField->deleted);
@@ -110,7 +111,9 @@ Field* newField(unsigned int idx, char name[], double area, double price[], Dura
 	newField->idx = idx;
 	strcpy(newField->name, name);
 	newField->area = area;
-	newField->price[3] = price[3];
+	newField->price[0] = price[0];
+	newField->price[1] = price[1];
+	newField->price[2] = price[2];
 	newField->openTime = openTime;
 	newField->rented = rented;
 	newField->time = time;

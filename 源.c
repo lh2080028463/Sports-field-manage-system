@@ -8,18 +8,24 @@
 #include<stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include<Windows.h>
 
 unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 User* UserRoot;
 Field* FieldRoot;
-Reservation reservations[10000];
+Reservation Reservations[10000];
 
 int main()
 {
 	initNum();
 	inputFielddata(FieldRoot);
 	inputUserdata(UserRoot);
-	inputReservation(reservations);
+	
+	for (int i = 0; i < 10000; i++)
+	{
+		initReservations(Reservations[i]);
+	}
+	inputReservation(Reservations);
 
 	while (true)
 	{
@@ -148,7 +154,7 @@ int main()
 							}
 							else if (reserveCmd == 1)
 							{
-								makeReservation(reservations[ReservationNum++], FieldRoot, currentUser->username);
+								makeReservation(Reservations[ReservationNum++], FieldRoot, currentUser->username);
 							}
 							else if (reserveCmd == 2)
 							{
@@ -163,27 +169,9 @@ int main()
 					}
 					else if (userCmd == 3)
 					{
-						if (ReservationNum > 0)
-						{
-							bool flag = true;
-							for (int i = 0; i < ReservationNum; i++)
-							{
-								if (strcmp(reservations[i].owner, currentUser->username) == 0)
-								{
-									putReservation(reservations[i]);
-									flag = false;
-								}
-							}
-							if (flag)
-							{
-								printf("目前暂无预订信息！\n");
-							}
-						}
-						else
-						{
-							printf("目前暂无预订信息！\n");
-						}
-
+						
+						queryMessageMenu(currentUser);
+						
 					}
 					else if (userCmd == 4)
 					{

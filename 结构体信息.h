@@ -25,6 +25,7 @@ typedef struct Field
 	bool rented;       //租用状态
 	unsigned int time; //计费时长(min)
 	unsigned int deleted;                 //被删除状态
+
 	struct Field* left;            //左节点
 	struct Field* right;           //右节点
 	int Fieldheight;
@@ -62,6 +63,7 @@ typedef struct Reservation
 	char fieldName[50];  //预定场地
 	Duration time;      //预定时间
 	char owner[50];    //预订者 
+	bool deleted;     //删除情况
 }Reservation;
 
 /*管理员结构体*/

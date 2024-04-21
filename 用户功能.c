@@ -9,6 +9,7 @@
 
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum;
 extern User* UserRoot;
+extern Field* FieldRoot;
 
 /*创建新用户*/
 User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted)
@@ -149,7 +150,7 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 	printf("请输入需要预定的场地名称：");
 	scanf("%s", reservation.fieldName);
 	//检查场地是否存在
-	Field* temp = findField(root, reservation.fieldName);
+	Field* temp = findField(FieldRoot, reservation.fieldName);
 	if (temp == NULL)
 	{
 		printf("无该场地名称！请重新预定！\n");
@@ -191,8 +192,8 @@ void putFieldMessage(Field* tempField[])
 	for (int i = 0; tempField[i] != NULL; i++)
 	{
 		printf("场地名称：%s\n", tempField[i]->name);
-		printf("早晨价格：%lf 中午价格：%lf 晚上价格：%lf\n", tempField[i]->price[0], tempField[i]->price[1], tempField[i]->price[2]);
-		printf("开放时间：%d:%d~%d:%d\n", tempField[i]->openTime.start.hour, tempField[i]->openTime.start.minute, tempField[i]->openTime.end.hour, tempField[i]->openTime.end.minute);
+		printf("早晨价格：%.2lf 中午价格：%.2lf 晚上价格：%.2lf\n", tempField[i]->price[0], tempField[i]->price[1], tempField[i]->price[2]);
+		printf("开放时间：%02d:%02d~%02d:%02d\n", tempField[i]->openTime.start.hour, tempField[i]->openTime.start.minute, tempField[i]->openTime.end.hour, tempField[i]->openTime.end.minute);
 		printf("\n");
 	}
 }
@@ -200,7 +201,7 @@ void putFieldMessage(Field* tempField[])
 /*输出预定信息*/
 void putReservation(Reservation tempReservation)
 {
-	printf("%d:%d~%d:%d  ", tempReservation.time.start.hour, tempReservation.time.start.minute, tempReservation.time.end.hour, tempReservation.time.end.minute);
+	printf("%02d:%02d~%02d:%02d  ", tempReservation.time.start.hour, tempReservation.time.start.minute, tempReservation.time.end.hour, tempReservation.time.end.minute);
 	printf("%s\n", tempReservation.fieldName);
 	printf("\n");
 }
@@ -208,6 +209,7 @@ void putReservation(Reservation tempReservation)
 /*删除预定场地信息（未完成）*/
 void deleteReservation(Reservation reservation, Field* root, char username[])
 {
+	reservation.deleted = 1;
 
 }
 
