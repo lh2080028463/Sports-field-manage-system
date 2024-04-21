@@ -8,5 +8,7 @@ void editUserdata(unsigned int idx, char username[], char password[], char name[
 void initNum();
 void editUserNum();
 void inputReservation(Reservation r[]);
-void editReservations(unsigned int idx, char fieldName[], Duration time, char owner[]);
+void editReservations(unsigned int idx, char fieldName[], Duration time, char owner[],bool deleted);
 void editFieldData(unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time, unsigned int deleted);
+void editFieldNum();
+void editReservationNum();

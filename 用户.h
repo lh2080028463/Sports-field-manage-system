@@ -8,3 +8,5 @@ void putReservation(Reservation tempReservation);
 void resetUserPass(User* curUser);
 void deleteUser(User* user);
 User* deleteUserNode(User* root, char username[]);
+void deleteReservation(char username[]);
+Field* findField(Field* root, char fieldName[]);

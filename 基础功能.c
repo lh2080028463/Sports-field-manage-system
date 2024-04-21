@@ -4,6 +4,8 @@
 #include"管理员.h"
 #include<string.h>
 
+extern Reservation Reservations[10000];
+
 /*预定时间合理*/
 bool checkTime(const Duration reservedTime,const Duration openTime)
 {
@@ -52,10 +54,26 @@ User* findUsername(const User* userRoot,const char username[])
 		return temp;
 }
 
-/*信息查询*/
-void find()
+/*检查是否被预定*/
+bool rented(Reservation newReservation)
 {
-
+	for (int i = 0; i < Reservations[i].idx!=0; i++)
+	{
+		if (strcmp(newReservation.fieldName, Reservations[i].fieldName) != 0||Reservations[i].deleted)
+		{
+			continue;
+		}
+		if ((newReservation.time.start.hour < Reservations[i].time.end.hour ||
+			(newReservation.time.start.hour == Reservations[i].time.end.hour &&
+				newReservation.time.start.minute < Reservations[i].time.end.minute)) &&
+			(newReservation.time.end.hour > Reservations[i].time.start.hour ||
+				(newReservation.time.end.hour == Reservations[i].time.start.hour &&
+					newReservation.time.end.minute > Reservations[i].time.start.minute)))
+		{
+			return true; 
+		}
+	}
+	return false; 
 }
 
 /*信息排序*/
@@ -70,6 +88,7 @@ void statistic()
 
 }
 
+/*初始化预定信息数组*/
 void initReservations(Reservation r)
 {
 	r.deleted = 0;

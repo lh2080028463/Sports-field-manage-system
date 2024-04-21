@@ -359,6 +359,10 @@ void queryMessageMenu(User* user)
 			int flag = 1;
 			for (int i = 0; Reservations[i].idx!=0; i++)
 			{
+				if (Reservations[i].deleted)
+				{
+					continue;
+				}
 				if (strcmp(user->username,Reservations[i].owner)==0)
 				{
 					flag = 0;
@@ -392,4 +396,114 @@ void reserveMenu()
 	printf("                 3.取消预定\n");
 	printf(" ******************************************\n");
 	printf("\n");
+}
+
+/*用户预订信息修改*/
+void editReservationMenu(char username[])
+{
+	int cnt = 0;
+	Reservation* reservationp[100];
+	for (int i = 0; Reservations[i].idx != 0; i++)
+	{
+		if (strcmp(Reservations[i].owner, username) == 0)
+		{
+			printf("%d. ", cnt+1);
+			reservationp[cnt++] = &Reservations[i];
+			putReservation(Reservations[i]);
+		}
+	}
+	
+	printf("请输入要修改的预定编号：");
+	int idx;
+	while (true)
+	{
+		scanf("%d", &idx);
+		if (idx > cnt)
+		{
+			printf("请输入正确的编号：");
+			continue;
+		}
+		else
+		{
+			printf(" ******************修改预定信息****************\n");
+			printf("                 0.退出\n");
+			printf("                 1.修改预定场地\n");
+			printf("                 2.修改预定时间\n");
+			printf(" ******************************************\n");
+			printf("\n");
+
+			break;
+		}
+	}
+	
+	while (true)
+	{
+
+		Reservation newReservation = *reservationp[idx - 1];
+		int cmd;
+		printf("请选择功能：");
+		scanf("%d", &cmd);
+		if (cmd == 0)
+		{
+			break;
+		}
+		else if (cmd==1)
+		{
+			printf("请输入新的场地名：");
+			scanf("%s", newReservation.fieldName);
+			Field* temp = findField(FieldRoot, newReservation.fieldName);
+			if (checkTime(newReservation.time,temp->openTime))
+			{
+				if (!rented(newReservation))
+				{
+					*reservationp[idx - 1] = newReservation;
+					printf("预订信息修改成功！");
+					editReservations(reservationp[idx - 1]->idx, reservationp[idx - 1]->fieldName, reservationp[idx - 1]->time, reservationp[idx - 1]->owner, reservationp[idx - 1]->deleted);
+					Sleep(500);
+					system("cls");
+					break;
+				}
+				else
+				{
+					printf("该场地已被预定！请重新选择！\n");
+					Sleep(500);
+					system("cls");
+				}
+			}
+			else
+			{
+				printf("该时间段场地未开放！请重新预定！\n");
+			}
+			
+		}
+		else if (cmd==2)
+		{
+			printf("请输入新的时间段：");
+			scanf("%02d:%02d~%02d:%02d",&newReservation.time.start.hour,&newReservation.time.start.minute,&newReservation.time.end.hour,&newReservation.time.end.minute );
+
+			Field* temp = findField(FieldRoot, newReservation.fieldName);
+			if (checkTime(newReservation.time, temp->openTime))
+			{
+				if (!rented(newReservation))
+				{
+					*reservationp[idx - 1] = newReservation;
+					printf("预订信息修改成功！");
+					editReservations(reservationp[idx - 1]->idx, reservationp[idx - 1]->fieldName, reservationp[idx - 1]->time, reservationp[idx - 1]->owner, reservationp[idx - 1]->deleted);
+					Sleep(500);
+					system("cls");
+					break;
+				}
+			}
+			else
+			{
+				printf("该时间段场地未开放！请重新预定！\n");
+			}
+			
+		}
+		else
+		{
+			printf("请输入正确的编号:");
+		}
+	}
+	
 }

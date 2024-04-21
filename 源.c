@@ -20,7 +20,7 @@ int main()
 	initNum();
 	inputFielddata(FieldRoot);
 	inputUserdata(UserRoot);
-	
+
 	for (int i = 0; i < 10000; i++)
 	{
 		initReservations(Reservations[i]);
@@ -84,7 +84,7 @@ int main()
 								system("cls");
 
 							}
-							
+
 						}
 					}
 					if (managerCmd == 2)
@@ -154,24 +154,25 @@ int main()
 							}
 							else if (reserveCmd == 1)
 							{
-								makeReservation(Reservations[ReservationNum++], FieldRoot, currentUser->username);
+								makeReservation(Reservations[ReservationNum], FieldRoot, currentUser->username);
+
 							}
 							else if (reserveCmd == 2)
 							{
-
+								editReservationMenu(currentUser->username);
 							}
 							else if (reserveCmd == 3)
 							{
-
+								deleteReservation(currentUser->username);
 							}
 						}
 
 					}
 					else if (userCmd == 3)
 					{
-						
+
 						queryMessageMenu(currentUser);
-						
+
 					}
 					else if (userCmd == 4)
 					{
@@ -181,11 +182,19 @@ int main()
 					{
 						resetUserPass(currentUser);
 					}
-					else if (userCmd==6)
+					else if (userCmd == 6)
 					{
 						deleteUser(currentUser);
-						UserRoot=deleteUserNode(UserRoot, currentUser->username);
+						UserRoot = deleteUserNode(UserRoot, currentUser->username);
+						
 						break;
+					}
+					else
+					{
+						system("cls");
+						printf("请选择正确的功能！\n");
+						Sleep(500);
+
 					}
 
 				}
@@ -206,8 +215,8 @@ int main()
 
 		}
 		editUserNum();
-
-
+		editFieldNum();
+		editReservationNum();
 	}
 	return 0;
 }

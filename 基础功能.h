@@ -6,3 +6,5 @@ void find();
 void sort();
 void statistic();
 void initReservations(Reservation r);
+bool rented(Reservation newReservation);
+bool checkTime(const Duration reservedTime, const Duration openTime);
