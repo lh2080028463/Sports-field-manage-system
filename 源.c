@@ -116,13 +116,60 @@ int main()
 		}
 		case 2:
 		{
+			system("cls");
+			Respondent* currentrespon = responLogin(); 
+			if (currentrespon != NULL)
+			{
+				responMenu();
+				int i;
+				scanf("%d", &i);
+				switch (i)
+				{
+					case 1:
+					{
+						int j = registration();
+						if (j == 0)
+						{
+							printf("未找到该预定者预订信息\n");
+							Sleep(2000); break;
+						}
+						else
+						{
+							printf("预定场地类型为%c\n", j);
+							Sleep(2000);
+						}
+					}
+					case 2:
+					{
 
+						break;
+					}
+					case 3:
+					{
+						break;
+					}
+					case 4:
+					{
+						break;
+					}
+					case 5:
+					{
+						break;
+					}
+					default:
+					{
+						system("cls");
+					}
+				}
+			}
+			else
+				system("cls");
 			break;
 		}
 		case 3:
 		{
-			User* currentUser = userLogin();
-			if (currentUser != NULL)
+			User* currentUser=userLogin();
+			if (currentUser!=NULL)
 			{
 
 				int userCmd;
