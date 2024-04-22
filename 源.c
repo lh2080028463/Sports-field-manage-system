@@ -9,17 +9,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<Windows.h>
+#include"场地负责人.h"
 
 unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 User* UserRoot;
 Field* FieldRoot;
+Respondent* RespondentsHead;
 Reservation Reservations[10000];
 
 int main()
 {
 	initNum();
 	inputFielddata(FieldRoot);
-	inputUserdata(UserRoot);
+	inputUserdata();
+	inputRespondata();
 
 	for (int i = 0; i < 10000; i++)
 	{
@@ -91,6 +94,27 @@ int main()
 					if (managerCmd == 2)
 					{
 						system("cls");
+						
+						int cmd;
+						
+						while (true)
+						{
+							responManageMenu();
+							printf("请选择功能：");
+							scanf("%d", &cmd);
+							if (cmd==0)
+							{
+								break;
+							}
+							else if (cmd==1)
+							{
+								addRespondent();
+							}
+							else if (cmd==2)
+							{
+
+							}
+						}
 
 					}
 					if (managerCmd == 3)
@@ -117,7 +141,7 @@ int main()
 		case 2:
 		{
 			system("cls");
-			Respondent* currentrespon = responLogin(); 
+			Respondent* currentrespon =  responLogin(); 
 			if (currentrespon != NULL)
 			{
 				responMenu();
@@ -127,8 +151,11 @@ int main()
 				{
 					case 1:
 					{
-						int j = registration();
-						if (j == 0)
+						printf("请输入用户名:");
+						char tempUsername[50];
+						scanf("%s", tempUsername);
+						makeReservation(Reservations[ReservationNum], FieldRoot, tempUsername);
+						/*if (j == 0)
 						{
 							printf("未找到该预定者预订信息\n");
 							Sleep(2000); break;
@@ -137,7 +164,7 @@ int main()
 						{
 							printf("预定场地类型为%c\n", j);
 							Sleep(2000);
-						}
+						}*/
 					}
 					case 2:
 					{
@@ -265,6 +292,7 @@ int main()
 		editUserNum();
 		editFieldNum();
 		editReservationNum();
+		editResponNum();
 	}
 	return 0;
 }

@@ -34,13 +34,19 @@ typedef struct Field
 /*场地负责人结构体*/
 typedef struct Respondent
 {
+	unsigned int idx;
 	char username[20];     //账号
 	char password[20];     //密码
 	char name[10];		   //姓名
 	char phone[20];        //联系方式
+	Field* responFields[10];//管理的场地（不超过10个）
+
 	int managedField[10];  //管理场地编号
-	char username[20];     //账号
-	char password[20];     //密码
+	bool deleted;          //删除情况
+
+	
+
+	struct Respondent* next;
 }Respondent;
 
 /*用户结构体*/
@@ -52,7 +58,7 @@ typedef struct User
 	char username[20];     //账号
 	char password[20];     //密码
 	unsigned int time;     //总使用时长
-	unsigned int deleted;                 //被删除状态
+	unsigned int deleted;                 //删除情况
 	struct User* left;            //左节点
 	struct User* right;           //右节点
 	int height;

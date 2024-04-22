@@ -6,10 +6,12 @@
 #include"基础功能.h"
 #include"文件处理.h"
 #include"管理员.h"
+#include"场地负责人.h"
 
 extern unsigned int ManagerNum, UserNum, ResponNum, FieldNum, ReservationNum;
 extern User* UserRoot;
 extern Field* FieldRoot;
+extern Respondent* RespondentsHead;
 extern Reservation Reservations[10000];
 /*初始界面*/
 void menu()
@@ -112,6 +114,7 @@ void managerMenu()
 	printf("\n");
 }
 
+/*管理员功能：场地管理*/
 void managerFieldMenu()
 {
 	printf(" ******************管理员场地管理****************\n");
@@ -125,6 +128,51 @@ void managerFieldMenu()
 	printf(" ********************************************\n");
 	printf("\n");
 }
+
+/*管理员功能：场地负责人管理*/
+void responManageMenu()
+{
+	printf(" ******************管理员功能****************\n");
+	printf("                 0.退出\n");
+	printf("                 1.添加场地负责人\n");
+	printf("                 2.修改场地负责人信息\n");
+	printf("                 3.删除场地负责人\n");
+	printf(" ********************************************\n");
+	printf("\n");
+}
+
+/*管理员添加场地负责人*/
+void addRespondent()
+{
+	char username[50];
+	char password[50];
+	char name[20];
+	char phone[20];
+
+	printf("用户名：");
+	scanf("%s", username);
+	if (findRespondentNode(RespondentsHead, username) == NULL)
+	{
+		printf("密码：");
+		scanf("%s", password);
+		printf("姓名：");
+		scanf("%s", name);
+		printf("联系方式：");
+		scanf("%s", phone);
+		ResponNum++;
+		insertRespondentNode(RespondentsHead, createRespondentNode(ResponNum, username, password, name, phone, 0));
+		system("cls");
+		printf("场地负责人添加成功！\n");
+		Sleep(500);
+	}
+	else
+	{
+		printf("该用户名已存在，请重新添加！\n");
+		addRespondent();
+	}
+
+	
+}	
 
 /*场地添加界面*/
 Field* FieldRegister(Field* fieldRoot)
@@ -163,84 +211,121 @@ Field* FieldRegister(Field* fieldRoot)
 	}
 }
 
+
+//Respondent* responLogin()
+//{
+//	char responname[10] = { '\0' };
+//	char password[20] = { '\0' };
+//	int temp = 0;
+//	printf(" ********场地负责人登录*********\n");
+//	printf(" ***在账号中输入 0 返回上一级***\n");
+//	printf(" 账  号：");
+//	scanf("%s", responname);
+//	if (strcmp(responname, "0") == 0)
+//	{
+//		return NULL;
+//	}
+//	FILE* responPointer;
+//	char cwd[100] = { '\0' };
+//	char filePath[100] = { '\0' };
+//	for (int i = 0; i <= ResponNum; i++)
+//	{
+//		if (getcwd(cwd, sizeof(cwd)) != NULL)
+//		{
+//			strcpy(filePath, cwd);
+//			strcat(filePath, "\\respondata\\respon");
+//			char Idx[10] = { '\0' };
+//			_itoa(i, Idx, 10);
+//			strcat(filePath, Idx);
+//			strcat(filePath, ".txt");
+//		}
+//		else
+//		{
+//			perror("getcwd() 错误");
+//			return 1;
+//		}
+//		responPointer = fopen(filePath, "r");
+//		if (responPointer == NULL)
+//		{
+//			printf("初始化读入数据%d时无法打开文件！\n", i);
+//			return 1;
+//		}
+//		Respondent* respon = (Respondent*)malloc(sizeof(Respondent));
+//		fscanf(responPointer, "%s\n%s\n", &respon->name, &respon->password);
+//		if (strcmp(respon->name, responname) != 0)
+//		{
+//			temp = 1;
+//			system("cls");
+//		}
+//		else
+//		{
+//			printf(" 密  码：");
+//			scanf("%s", password);
+//			if (strcmp(respon->password, password) != 0)
+//			{
+//				temp = 1;
+//				fclose(responPointer);
+//				break;
+//			}
+//			else
+//			{
+//				temp = 0;
+//				system("cls");
+//				printf("登录成功！\n");
+//				Sleep(2000);
+//				fclose(responPointer);
+//				return respon;
+//				
+//			}
+//		}
+//
+//		if (temp = 1)
+//		{
+//			system("cls");
+//			printf("账号或密码错误，请重新输入！");
+//			Sleep(2000);
+//			system("cls");
+//			responLogin();
+//		}
+//		printf(" **************************\n");
+//	}
+//}
 /*场地负责人登录界面*/
 Respondent* responLogin()
 {
-	char responname[10] = { '\0' };
-	char password[20] = { '\0' };
-	int temp = 0;
-	printf(" ********场地负责人登录*********\n");
-	printf(" ***在账号中输入 0 返回上一级***\n");
+	char username[20] = { '\0' };  //账号
+	char password[20] = { '\0' };  //密码
+	printf(" ******场地负责人登录******\n");
 	printf(" 账  号：");
-	scanf("%s", responname);
-	if (strcmp(responname, "0") == 0)
+	scanf("%s", username);
+	Respondent* tempRespon = findRespondentNode(RespondentsHead, username);
+	if (RespondentsHead == NULL || (RespondentsHead != NULL && (tempRespon == NULL || tempRespon->deleted)))
 	{
+		system("cls");
+		printf("该账号未注册，请返回后注册！\n");
+		Sleep(500);
+		system("cls");
 		return NULL;
 	}
-	FILE* responPointer;
-	char cwd[100] = { '\0' };
-	char filePath[100] = { '\0' };
-	for (int i = 0; i <= ResponNum; i++)
-	{
-		if (getcwd(cwd, sizeof(cwd)) != NULL)
-		{
-			strcpy(filePath, cwd);
-			strcat(filePath, "\\respondata\\respon");
-			char Idx[10] = { '\0' };
-			_itoa(i, Idx, 10);
-			strcat(filePath, Idx);
-			strcat(filePath, ".txt");
-		}
-		else
-		{
-			perror("getcwd() 错误");
-			return 1;
-		}
-		responPointer = fopen(filePath, "r");
-		if (responPointer == NULL)
-		{
-			printf("初始化读入数据%d时无法打开文件！\n", i);
-			return 1;
-		}
-		Respondent* respon = (Respondent*)malloc(sizeof(Respondent));
-		fscanf(responPointer, "%s\n%s\n", &respon->name, &respon->password);
-		if (strcmp(respon->name, responname) != 0)
-		{
-			temp = 1;
-			system("cls");
-		}
-		else
-		{
-			printf(" 密  码：");
-			scanf("%s", password);
-			if (strcmp(respon->password, password) != 0)
-			{
-				temp = 1;
-				fclose(responPointer);
-				break;
-			}
-			else
-			{
-				temp = 0;
-				system("cls");
-				printf("登录成功！\n");
-				Sleep(2000);
-				fclose(responPointer);
-				return respon;
-				break;
-			}
-		}
+	printf(" 密  码：");
+	scanf("%s", password);
+	printf(" ********************\n");
+	system("cls");
 
-		if (temp = 1)
-		{
-			system("cls");
-			printf("账号或密码错误，请重新输入！");
-			Sleep(2000);
-			system("cls");
-			responLogin();
-		}
-		printf(" **************************\n");
+	if (strcmp(tempRespon->password, password) == 0)
+	{
+		printf("登录成功！\n");
+		Sleep(500);
+		return tempRespon;
 	}
+	else
+	{
+		printf("用户名或密码错误，请重新登录！\n");
+		Sleep(500);
+		system("cls");
+		responLogin();
+	}
+
 }
 
 /*用户登录界面*/

@@ -133,30 +133,7 @@ void deleteField()
 
 }
 
-/*获取场地数据地址*/
-char* getFielddataPath(const Field field)
-{
-	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
-	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
 
-	// 获取当前工作目录
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		// 将当前工作目录与文件名拼接成完整的文件路径
-		strcpy(filePath, cwd);
-		strcat(filePath, "\\fielddata\\field");
-		char fieldIdx[10] = { '\0' };
-		_itoa(field.idx, fieldIdx, 10);
-		strcat(filePath, fieldIdx);
-		strcat(filePath, ".txt");
-		return filePath;
-	}
-	else
-	{
-		perror("getcwd() 错误");
-		return 1;
-	}
-}
 
 /*读入已有场地数据*/
 void inputFielddata(Field* fieldRoot)

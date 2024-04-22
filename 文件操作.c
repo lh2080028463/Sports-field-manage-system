@@ -4,10 +4,12 @@
 #include<stdlib.h>
 #include<string.h>
 #include"管理员.h"
+#include"场地负责人.h"
 
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 extern User* UserRoot;
 extern Field* FieldRoot;
+extern Respondent* RespondentsHead;
 extern Reservation Reservations[10000];
 
 /*获取用户数据地址*/
@@ -35,46 +37,28 @@ char* getUserdataPath(const User user)
 	}
 }
 
-/*读入已有用户数据*/
-void inputUserdata(User* userRoot)
+/*获取场地数据地址*/
+char* getFielddataPath(const Field field)
 {
-	FILE* filePointer;
 	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
 	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
 
-	for (int i = 1; i <= UserNum; i++)
+	// 获取当前工作目录
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		//更新文件路径
-		if (getcwd(cwd, sizeof(cwd)) != NULL)
-		{
-			strcpy(filePath, cwd);
-			strcat(filePath, "\\userdata\\user");
-			char userIdx[10] = { '\0' };
-			_itoa(i, userIdx, 10);
-			strcat(filePath, userIdx);
-			strcat(filePath, ".txt");
-		}
-		else
-		{
-			perror("getcwd() 错误");
-			return 1;
-		}
-		//读入txt中用户数据
-		filePointer = fopen(filePath, "r");
-		if (filePointer == NULL)
-		{
-			printf("初始化读入数据%d时无法打开文件！\n",i);
-			return 1;
-		}
-		User* newUser = (User*)malloc(sizeof(User));
-		fscanf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%u\n",&newUser->idx, newUser->name, newUser->phone, newUser->username, newUser->password, &newUser->time,&newUser->deleted);
-		if (newUser->deleted == 0)
-		{
-			UserRoot = insertUser(UserRoot, newUser->idx, newUser->username, newUser->password, newUser->name, newUser->phone, newUser->time, newUser->deleted);
-			UserNum--;
-		}
-		fflush(filePointer);
-		fclose(filePointer);
+		// 将当前工作目录与文件名拼接成完整的文件路径
+		strcpy(filePath, cwd);
+		strcat(filePath, "\\fielddata\\field");
+		char fieldIdx[10] = { '\0' };
+		_itoa(field.idx, fieldIdx, 10);
+		strcat(filePath, fieldIdx);
+		strcat(filePath, ".txt");
+		return filePath;
+	}
+	else
+	{
+		perror("getcwd() 错误");
+		return 1;
 	}
 }
 
@@ -134,6 +118,34 @@ void editFielddata(unsigned int idx, char name[], double area, double price[], D
 	fclose(filePointer);
 }
 
+/*编辑场地负责人信息*/
+void editRespondents(unsigned int idx, char username[], char password[], char name[], char phone[], bool deleted)
+{
+	//向文件中写入用户数据
+	FILE* filePointer;
+	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+	//更新文件路径
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		strcpy(filePath, cwd);
+		strcat(filePath, "\\respondata\\respondent");
+		char respondentIdx[10] = { '\0' };
+		_itoa(idx, respondentIdx, 10);
+		strcat(filePath, respondentIdx);
+		strcat(filePath, ".txt");
+	}
+	else
+	{
+		perror("getcwd() 错误");
+		return 1;
+	}
+	filePointer = fopen(filePath, "w");
+	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n", idx, name, phone, username, password, deleted);
+	fflush(filePointer);
+	fclose(filePointer);
+}
+
 /*初始化时读入对象数量*/
 void initNum()
 {
@@ -184,6 +196,49 @@ void editUserNum()
 	fclose(filePointer);
 }
 
+/*读入已有用户数据*/
+void inputUserdata()
+{
+	FILE* filePointer;
+	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+
+	for (int i = 1; i <= UserNum; i++)
+	{
+		//更新文件路径
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			strcpy(filePath, cwd);
+			strcat(filePath, "\\userdata\\user");
+			char userIdx[10] = { '\0' };
+			_itoa(i, userIdx, 10);
+			strcat(filePath, userIdx);
+			strcat(filePath, ".txt");
+		}
+		else
+		{
+			perror("getcwd() 错误");
+			return 1;
+		}
+		//读入txt中用户数据
+		filePointer = fopen(filePath, "r");
+		if (filePointer == NULL)
+		{
+			printf("初始化读入数据%d时无法打开文件！\n", i);
+			return 1;
+		}
+		User* newUser = (User*)malloc(sizeof(User));
+		fscanf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%u\n", &newUser->idx, newUser->name, newUser->phone, newUser->username, newUser->password, &newUser->time, &newUser->deleted);
+		if (newUser->deleted == 0)
+		{
+			UserRoot = insertUser(UserRoot, newUser->idx, newUser->username, newUser->password, newUser->name, newUser->phone, newUser->time, newUser->deleted);
+			UserNum--;
+		}
+		fflush(filePointer);
+		fclose(filePointer);
+	}
+}
+
 /*读入已有预定信息*/
 void inputReservation()
 {
@@ -223,6 +278,8 @@ void inputReservation()
 		fclose(filePointer);
 	}
 }
+
+
 
 /*编辑文件预定信息*/
 void editReservations(unsigned int idx,char fieldName[],Duration time,char owner[],bool deleted)
@@ -306,6 +363,79 @@ void editFieldNum()
 			int len = strlen(tempNum);
 			fseek(filePointer, -len, SEEK_CUR);
 			fprintf(filePointer, "%d", FieldNum);
+			break;
+		}
+	}
+	// 关闭文件
+	fflush(filePointer);
+	fclose(filePointer);
+}
+
+/*读入已有场地负责人信息*/
+void inputRespondata()
+{
+	FILE* filePointer;
+	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+
+	for (int i = 1; i <= ResponNum; i++)
+	{
+		//更新文件路径
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			strcpy(filePath, cwd);
+			strcat(filePath, "\\respondata\\respondent");
+			char responIdx[10] = { '\0' };
+			_itoa(i, responIdx, 10);
+			strcat(filePath, responIdx);
+			strcat(filePath, ".txt");
+		}
+		else
+		{
+			perror("getcwd() 错误");
+			return 1;
+		}
+		//读入txt中用户数据
+		filePointer = fopen(filePath, "r");
+		if (filePointer == NULL)
+		{
+			printf("初始化读入数据%d时无法打开文件！\n", i);
+			return 1;
+		}
+		Respondent* newRespondent = (Respondent*)malloc(sizeof(Respondent));
+		fscanf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n",&newRespondent->idx, newRespondent->name, newRespondent->phone, newRespondent->username, newRespondent->password, &newRespondent->deleted);
+		if (newRespondent->deleted == 0)
+		{
+			insertRespondentNode(&RespondentsHead, createRespondentNode(newRespondent->idx,newRespondent->username, newRespondent->password, newRespondent->name, newRespondent->phone, newRespondent->deleted));
+		}
+		fflush(filePointer);
+		fclose(filePointer);
+	}
+}
+
+/*结束时更新文件中场地负责人数量*/
+void editResponNum()
+{
+	FILE* filePointer; // 文件指针
+	// 打开文件以进行读取
+	filePointer = fopen("data.txt", "r+");
+	// 检查文件是否成功打开
+	if (filePointer == NULL)
+	{
+		printf("无法打开文件。\n");
+		return 1;
+	}
+	char numName[50];
+	int num;
+	while (fscanf(filePointer, "%s %d", numName, &num) != EOF)
+	{
+		if (strcmp(numName, "ResponNum") == 0)
+		{
+			char tempNum[64] = { '\0' };
+			_itoa(num, tempNum, 10);
+			int len = strlen(tempNum);
+			fseek(filePointer, -len, SEEK_CUR);
+			fprintf(filePointer, "%d", ResponNum);
 			break;
 		}
 	}
