@@ -331,14 +331,15 @@ void editMessageMenu(User* user)
 void queryMessageMenu(User* user)
 {
 	int querycmd;
-	printf(" ******************信息查询****************\n");
-	printf("                 0.退出\n");
-	printf("                 1.场地信息查询\n");
-	printf("                 2.个人预定信息查询\n");
-	printf(" ******************************************\n");
-	printf("\n");
+
 	while (true)
 	{
+		printf(" ******************信息查询****************\n");
+		printf("                 0.退出\n");
+		printf("                 1.场地信息查询\n");
+		printf("                 2.个人预定信息查询\n");
+		printf(" ******************************************\n");
+		printf("\n");
 		printf("请选择信息查询功能：");
 		scanf("%d", &querycmd);
 		if (querycmd == 0)
@@ -355,27 +356,37 @@ void queryMessageMenu(User* user)
 			sortFields(tempField, num, 0);
 			putFieldMessage(tempField);
 
-			printf(" ******************场地信息排序****************\n");
-			printf("                 0.取消排序\n");
-			printf("                 1.名称\n");
-			printf("                 2.面积\n");
-			printf("                 3.早上价格\n");
-			printf("                 4.下午价格\n");
-			printf("                 5.晚上价格\n");
-			printf(" ******************************************\n");
+		
 			int conditon;
 			while (true)
 			{
+				printf(" ******************场地信息排序****************\n");
+				printf("                 0.取消排序\n");
+				printf("                 1.名称\n");
+				printf("                 2.面积\n");
+				printf("                 3.早上价格\n");
+				printf("                 4.下午价格\n");
+				printf("                 5.晚上价格\n");
+				printf("                 6.开放时间\n");
+				printf("                 7.关闭时间\n");
+				printf(" ******************************************\n");
 				printf("请选择场地信息排序功能：");
 				scanf("%d", &conditon);
 				if (conditon == 0)
 				{
 					break;
 				}
-				else 
+				else if(conditon>0&&conditon<8)
 				{
 					sortFields(tempField, num, conditon);
 					putFieldMessage(tempField);
+				}
+				else
+				{
+					system("cls");
+					printf("请输入正确的序号!");
+					Sleep(500);
+					system("cls");
 				}
 			}
 			

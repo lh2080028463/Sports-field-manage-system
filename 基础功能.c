@@ -98,6 +98,16 @@ int compareFields(const void* a, const void* b, int conditon)
 		return fieldA->price[1] - fieldB->price[1];
 	case 5://按晚上价格排序
 		return fieldA->price[2] - fieldB->price[2];
+	case 6://按开放时间排序
+		if (fieldA->openTime.start.hour < fieldB->openTime.start.hour) return -1;
+		if (fieldA->openTime.start.hour > fieldB->openTime.start.hour) return 1;
+		if (fieldA->openTime.start.minute < fieldB->openTime.start.minute) return -1;
+		if (fieldA->openTime.start.minute > fieldB->openTime.start.minute) return 1;
+	case 7://按照结束时间排序
+		if (fieldA->openTime.end.hour < fieldB->openTime.end.hour) return -1;
+		if (fieldA->openTime.end.hour > fieldB->openTime.end.hour) return 1;
+		if (fieldA->openTime.end.minute < fieldB->openTime.end.minute) return -1;
+		if (fieldA->openTime.end.minute > fieldB->openTime.end.minute) return 1;
 	default:
 		return 0;
 	}
