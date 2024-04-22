@@ -128,9 +128,31 @@ void editField(Field* fieldRoot)
 }
 
 /*删除场地信息*/
-void deleteField()
+void deleteField(Field* fieldRoot)
 {
-
+	int temp;
+	char fieldname[20];
+	printf("*****场地删除*****\n");
+	printf("请输入想要删除的场地名称：");
+	scanf("%s", fieldname);
+	Field* tempField = findFieldname(fieldRoot, fieldname);
+	if (fieldRoot != NULL && tempField != NULL)
+	{
+		tempField->deleted = 1;
+		editFielddata(tempField->idx, tempField->name, tempField->area, tempField->price, tempField->openTime, tempField->rented, tempField->time, tempField->deleted);
+		system("cls");
+		printf("已成功删除！\n");
+		Sleep(2000);
+		system("cls");
+	}
+	else
+	{
+		system("cls");
+		printf("该场地不存在，请重新输入！\n");
+		Sleep(2000);
+		system("cls");
+		deleteField(fieldRoot);
+	}
 }
 
 

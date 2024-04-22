@@ -1,6 +1,7 @@
 #pragma once
 #include"结构体信息.h"
 
+void editManagerpassword();
 Field* addField(Field* node, unsigned int idx, char name[], double area, double price[], Duration openTime, bool rented, unsigned int time, unsigned int deleted);
 Field* FieldleftRotate(Field* x);
 Field* FieldrightRotate(Field* x);

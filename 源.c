@@ -82,12 +82,11 @@ int main()
 							{
 								system("cls");
 								editField(FieldRoot);
-
 							}
 							if (managerCmd == 3)
 							{
 								system("cls");
-
+								deleteField(FieldRoot);
 							}
 						}
 					}
@@ -125,7 +124,7 @@ int main()
 					if (managerCmd == 4)
 					{
 						system("cls");
-
+						editManagerpassword();
 					}
 				}
 			}
@@ -285,6 +284,8 @@ int main()
 		default:
 			system("cls");
 			printf("请选择正确的序号！\n");
+			Sleep(1000);
+			system("cls");
 			getchar();
 			break;
 

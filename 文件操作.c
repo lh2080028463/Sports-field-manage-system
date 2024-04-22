@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<Windows.h>
 #include"管理员.h"
 #include"场地负责人.h"
 
@@ -11,6 +12,91 @@ extern User* UserRoot;
 extern Field* FieldRoot;
 extern Respondent* RespondentsHead;
 extern Reservation Reservations[10000];
+
+/*编辑文件管理员密码*/
+void editManagerpassword()
+{
+	char managername[10] = { '\0' };
+	char password[20] = { '\0' };
+	int temp = 0;
+	printf(" ********管理员密码更改********|\n");
+	printf("请输入账号：");
+	scanf("%s", managername);
+	FILE* managerPointer;
+	char cwd[100] = { '\0' };
+	char filePath[100] = { '\0' };
+	for (int i = 1; i <= ManagerNum; i++)
+	{
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			strcpy(filePath, cwd);
+			strcat(filePath, "\\managerdata\\manager");
+			char Idx[10] = { '\0' };
+			_itoa(i, Idx, 10);
+			strcat(filePath, Idx);
+			strcat(filePath, ".txt");
+		}
+		else
+		{
+			perror("getcwd() 错误");
+			return 1;
+		}
+		managerPointer = fopen(filePath, "r");
+		if (managerPointer == NULL)
+		{
+			printf("初始化读入数据%d时无法打开文件！\n", i);
+			return 1;
+		}
+		Manager* manager = (Manager*)malloc(sizeof(Manager));
+		fscanf(managerPointer, "%s\n%s\n", &manager->name, &manager->password);
+		if (strcmp(manager->name, managername) != 0)
+		{
+			temp = 1;
+		}
+		else
+		{
+			temp = 0;
+			while (true)
+			{
+				system("cls");
+				printf("请输入旧密码：");
+				scanf("%s", password);
+				if (strcmp(manager->password, password) != 0)
+				{
+					printf("密码错误，请重新输入！\n");
+					Sleep(1000);
+					system("cls");
+					fclose(managerPointer);
+				}
+				else
+				{
+					printf("请输入新密码：");
+					scanf("%s", password);
+					managerPointer = fopen(filePath, "w+");
+					fprintf(managerPointer, "%s\n%s\n", &manager->name, password);
+					system("cls");
+					printf("修改成功！\n");
+					Sleep(2000);
+					system("cls");
+					fclose(managerPointer);
+					break;
+				}
+			}
+			break;
+		}
+	}
+	if (temp == 1)
+	{
+		system("cls");
+		printf("不存在该账号，请重新输入！");
+		Sleep(1000);
+		system("cls");
+		editManagerpassword();
+	}
+}
+
+
+
 
 /*获取用户数据地址*/
 char* getUserdataPath(const User user)

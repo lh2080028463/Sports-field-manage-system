@@ -38,7 +38,7 @@ Manager* managerLogin()
 	FILE* managerPointer;
 	char cwd[100] = { '\0' };
 	char filePath[100] = { '\0' };
-	for (int i = 0; i <= ManagerNum; i++)
+	for (int i = 1; i <= ManagerNum; i++)
 	{
 		if (getcwd(cwd, sizeof(cwd)) != NULL)
 		{
@@ -96,7 +96,6 @@ Manager* managerLogin()
 		system("cls");
 		managerLogin();
 	}
-	printf(" **************************\n");
 }
 
 /*管理员功能菜单*/
@@ -106,10 +105,10 @@ void managerMenu()
 	printf("                 0.退出\n");
 	printf("                 1.场地管理\n");
 	printf("                 2.场地负责人管理\n");
-	printf("                 3.信息查询\n");
-	printf("                 4.信息排序\n");
-	printf("                 5.信息统计\n");
-	printf("                 6.重置密码\n");
+	printf("                 3.用户管理\n");
+	printf("                 4.重置密码\n");
+	printf("                 5.\n");
+	printf("                 6.\n");
 	printf(" ********************************************\n");
 	printf("\n");
 }
@@ -121,9 +120,9 @@ void managerFieldMenu()
 	printf("                 0.退出\n");
 	printf("                 1.场地添加\n");
 	printf("                 2.场地信息修改\n");
-	printf("                 3.场地查询\n");
-	printf("                 4.场地排序\n");
-	printf("                 5.\n");
+	printf("                 3.场地删除\n");
+	printf("                 4.场地查询\n");
+	printf("                 5.场地排序\n");
 	printf("                 6.\n");
 	printf(" ********************************************\n");
 	printf("\n");

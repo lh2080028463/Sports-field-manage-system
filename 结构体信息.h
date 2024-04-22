@@ -40,7 +40,6 @@ typedef struct Respondent
 	char name[10];		   //姓名
 	char phone[20];        //联系方式
 	Field* responFields[10];//管理的场地（不超过10个）
-
 	int managedField[10];  //管理场地编号
 	bool deleted;          //删除情况
 
