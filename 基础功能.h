@@ -8,3 +8,5 @@ void statistic();
 void initReservations(Reservation r);
 bool rented(Reservation newReservation);
 bool checkTime(const Duration reservedTime, const Duration openTime);
+int compareFields(const void* a, const void* b, int conditon);
+void sortFields(Field** fields, int numFields, int conditon);

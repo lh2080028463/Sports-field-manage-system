@@ -276,7 +276,7 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 }
 
 /*按照名称查询场地信息（模糊查询）并保存在fields中*/
-void queryField(Field* root, const char* query, Field* fields[])
+int queryField(Field* root, const char* query, Field* fields[])
 {
 	static int i = 0;
 	if (root == NULL) return;
@@ -290,6 +290,7 @@ void queryField(Field* root, const char* query, Field* fields[])
 	// 递归查询左子树和右子树
 	queryField(root->left, query, fields);
 	queryField(root->right, query, fields);
+	return i;
 }
 
 /*输出场地信息*/
@@ -298,7 +299,7 @@ void putFieldMessage(Field* tempField[])
 	for (int i = 0; tempField[i] != NULL; i++)
 	{
 		printf("场地名称：%s\n", tempField[i]->name);
-		printf("场地面积：%lf平方米", tempField[i]->area);
+		printf("场地面积：%.2lf平方米\n", tempField[i]->area);
 		printf("早晨价格：%.2lf元 中午价格：%.2lf元 晚上价格：%.2lf元\n", tempField[i]->price[0], tempField[i]->price[1], tempField[i]->price[2]);
 		printf("开放时间：%02d:%02d~%02d:%02d\n", tempField[i]->openTime.start.hour, tempField[i]->openTime.start.minute, tempField[i]->openTime.end.hour, tempField[i]->openTime.end.minute);
 

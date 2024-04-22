@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
+#include<stdlib.h>
 #include"结构体信息.h"
 #include"管理员.h"
 #include<string.h>
@@ -76,10 +77,36 @@ bool rented(Reservation newReservation)
 	return false; 
 }
 
-/*信息排序*/
-void sort()
+/*比较函数根据排序条件进行比较*/
+int compareFields(const void* a, const void* b, int conditon) 
 {
+	const Field* fieldA = (const Field*)a;
+	const Field* fieldB = (const Field*)b;
 
+	switch (conditon) {
+	case 0:  // 按编号排序
+		return fieldB->idx - fieldA->idx;
+	case 1:  // 按名称排序
+		return strcmp(fieldA->name, fieldB->name);
+	case 2:  // 按面积排序
+		if (fieldA->area < fieldB->area) return -1;
+		if (fieldA->area > fieldB->area) return 1;
+		return 0;
+	case 3://按早晨价格排序
+		return fieldA->price[0] - fieldB->price[0];
+	case 4://按下午价格排序
+		return fieldA->price[1] - fieldB->price[1];
+	case 5://按晚上价格排序
+		return fieldA->price[2] - fieldB->price[2];
+	default:
+		return 0;
+	}
+}
+
+/*场地信息排序函数*/
+void sortFields(Field** fields, int numFields, int conditon) 
+{
+	qsort(fields, numFields, sizeof(Field*),(int (*)(const void*, const void*))compareFields, conditon);
 }
 
 /*信息统计*/
