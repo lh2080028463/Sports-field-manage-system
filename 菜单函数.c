@@ -22,6 +22,7 @@ void menu()
 	printf("       2.场地负责人\n");
 	printf("       3.用户登录\n");
 	printf("       4.新用户注册\n");
+	printf("       5.找回密码\n");
 	printf("****************************************\n");
 	printf("\n");
 }
@@ -81,7 +82,7 @@ Manager* managerLogin()
 				temp = 0;
 				system("cls");
 				printf("登录成功！\n");
-				Sleep(2000);
+				Sleep(500);
 				fclose(managerPointer);
 				return manager;
 				break;
@@ -92,7 +93,7 @@ Manager* managerLogin()
 	{
 		system("cls");
 		printf("账号或密码错误，请重新输入！");
-		Sleep(2000);
+		Sleep(500);
 		system("cls");
 		managerLogin();
 	}
@@ -185,7 +186,7 @@ Field* FieldRegister(Field* fieldRoot)
 	{
 		system("cls");
 		printf("该场地已存在，请重新添加！\n");
-		Sleep(2000);
+		Sleep(500);
 		system("cls");
 		FieldRegister(fieldRoot);
 	}
@@ -206,89 +207,10 @@ Field* FieldRegister(Field* fieldRoot)
 		system("cls");
 		printf(" 场地添加成功！\n");
 		return addField(fieldRoot, FieldNum + 1, newfield->name, newfield->area, newfield->price, newfield->openTime, 0, 0, 0);
-		Sleep(2000);
+		Sleep(500);
 	}
 }
 
-
-//Respondent* responLogin()
-//{
-//	char responname[10] = { '\0' };
-//	char password[20] = { '\0' };
-//	int temp = 0;
-//	printf(" ********场地负责人登录*********\n");
-//	printf(" ***在账号中输入 0 返回上一级***\n");
-//	printf(" 账  号：");
-//	scanf("%s", responname);
-//	if (strcmp(responname, "0") == 0)
-//	{
-//		return NULL;
-//	}
-//	FILE* responPointer;
-//	char cwd[100] = { '\0' };
-//	char filePath[100] = { '\0' };
-//	for (int i = 0; i <= ResponNum; i++)
-//	{
-//		if (getcwd(cwd, sizeof(cwd)) != NULL)
-//		{
-//			strcpy(filePath, cwd);
-//			strcat(filePath, "\\respondata\\respon");
-//			char Idx[10] = { '\0' };
-//			_itoa(i, Idx, 10);
-//			strcat(filePath, Idx);
-//			strcat(filePath, ".txt");
-//		}
-//		else
-//		{
-//			perror("getcwd() 错误");
-//			return 1;
-//		}
-//		responPointer = fopen(filePath, "r");
-//		if (responPointer == NULL)
-//		{
-//			printf("初始化读入数据%d时无法打开文件！\n", i);
-//			return 1;
-//		}
-//		Respondent* respon = (Respondent*)malloc(sizeof(Respondent));
-//		fscanf(responPointer, "%s\n%s\n", &respon->name, &respon->password);
-//		if (strcmp(respon->name, responname) != 0)
-//		{
-//			temp = 1;
-//			system("cls");
-//		}
-//		else
-//		{
-//			printf(" 密  码：");
-//			scanf("%s", password);
-//			if (strcmp(respon->password, password) != 0)
-//			{
-//				temp = 1;
-//				fclose(responPointer);
-//				break;
-//			}
-//			else
-//			{
-//				temp = 0;
-//				system("cls");
-//				printf("登录成功！\n");
-//				Sleep(2000);
-//				fclose(responPointer);
-//				return respon;
-//				
-//			}
-//		}
-//
-//		if (temp = 1)
-//		{
-//			system("cls");
-//			printf("账号或密码错误，请重新输入！");
-//			Sleep(2000);
-//			system("cls");
-//			responLogin();
-//		}
-//		printf(" **************************\n");
-//	}
-//}
 /*场地负责人登录界面*/
 Respondent* responLogin()
 {
@@ -697,4 +619,16 @@ void editReservationMenu(char username[])
 		}
 	}
 	
+}
+
+/*找回密码*/
+void forgetPassMenu()
+{
+	printf(" ******************找回密码****************\n");
+	printf("                 0.退出\n");
+	printf("                 1.管理员\n");
+	printf("                 2.场地负责人\n");
+	printf("                 3.用户\n");
+	printf(" ******************************************\n");
+	printf("\n");
 }

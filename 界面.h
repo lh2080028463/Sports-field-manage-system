@@ -14,3 +14,4 @@ void queryMessageMenu(User* user);
 void editReservationMenu(char username[]);
 void responManageMenu();
 void addRespondent();
+void forgetPassMenu();

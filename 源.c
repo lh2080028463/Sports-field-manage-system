@@ -132,7 +132,7 @@ int main()
 			{
 				system("cls");
 				printf("请选择正确的序号！\n");
-				Sleep(2000);
+				Sleep(500);
 				system("cls");
 			}
 			break;
@@ -217,7 +217,7 @@ int main()
 							else if (reserveCmd == 1)
 							{
 								makeReservation(Reservations[ReservationNum], FieldRoot, currentUser->username);
-
+								
 							}
 							else if (reserveCmd == 2)
 							{
@@ -242,14 +242,12 @@ int main()
 					}
 					else if (userCmd == 5)
 					{
-						resetUserPass(currentUser);
+						resetUserPass(currentUser,0);
 					}
 					else if (userCmd == 6)
 					{
 						deleteUser(currentUser);
 						UserRoot = deleteUserNode(UserRoot, currentUser->username);
-						
-						break;
 					}
 					else
 					{
@@ -269,10 +267,37 @@ int main()
 			UserRoot = userRegister(UserRoot);
 			break;
 		}
+		case 5:
+		{
+			int forget;
+			while (true)
+			{
+				forgetPassMenu();
+				printf("请输入身份：");
+				scanf("%d", &forget);
+				if (forget==0)
+				{
+					break;
+				}
+				else if(forget==1)
+				{
+
+				}
+				else if (forget == 2)
+				{
+
+				}
+				else if (forget==3)
+				{
+					userForget();
+				}
+			}
+			break;
+		}
 		default:
 			system("cls");
 			printf("请选择正确的序号！\n");
-			Sleep(1000);
+			Sleep(500);
 			system("cls");
 			getchar();
 			break;
