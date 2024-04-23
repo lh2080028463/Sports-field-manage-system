@@ -148,6 +148,31 @@ char* getFielddataPath(const Field field)
 	}
 }
 
+/*获取场地负责人数据地址*/
+char* getRespondataPath(const Respondent* respondent)
+{
+	char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+	char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+
+	// 获取当前工作目录
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		// 将当前工作目录与文件名拼接成完整的文件路径
+		strcpy(filePath, cwd);
+		strcat(filePath, "\\respondata\\respondent");
+		char responIdx[10] = { '\0' };
+		_itoa(respondent->idx, responIdx, 10);
+		strcat(filePath, responIdx);
+		strcat(filePath, ".txt");
+		return filePath;
+	}
+	else
+	{
+		perror("getcwd() 错误");
+		return 1;
+	}
+}
+
 /*编辑文件用户信息*/
 void editUserdata(unsigned int idx,char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted)
 {

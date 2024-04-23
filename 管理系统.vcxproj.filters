@@ -24,7 +24,7 @@
     <ClCompile Include="场地相关操作.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="场地负责人相关操作.c">
+    <ClCompile Include="管理员功能.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="用户功能.c">
@@ -37,6 +37,9 @@
       <Filter>头文件</Filter>
     </ClCompile>
     <ClCompile Include="文件操作.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="场地负责人功能.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

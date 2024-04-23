@@ -139,57 +139,45 @@ int main()
 		}
 		case 2:
 		{
-			system("cls");
 			Respondent* currentrespon =  responLogin(); 
 			if (currentrespon != NULL)
 			{
-				responMenu();
+				
 				int i;
-				scanf("%d", &i);
-				switch (i)
+				while (true)
 				{
-					case 1:
+					responMenu();
+					scanf("%d", &i);
+					if (i==0)
 					{
-						printf("请输入用户名:");
-						char tempUsername[50];
-						scanf("%s", tempUsername);
-						makeReservation(Reservations[ReservationNum], FieldRoot, tempUsername);
-						/*if (j == 0)
-						{
-							printf("未找到该预定者预订信息\n");
-							Sleep(2000); break;
-						}
-						else
-						{
-							printf("预定场地类型为%c\n", j);
-							Sleep(2000);
-						}*/
+						break;
 					}
-					case 2:
+					if (i == 1)
+					{
+						registerUser();
+					}
+					else if (i == 2)
+					{
+						responQueryMessage();
+					}
+					else if (i==3)
 					{
 
-						break;
 					}
-					case 3:
+					else if (i==4)
 					{
-						break;
+						resetResponPass(currentrespon);
 					}
-					case 4:
+					else
 					{
-						break;
+						printf("请选择正确的序号：");
 					}
-					case 5:
-					{
-						break;
-					}
-					default:
-					{
-						system("cls");
-					}
-				}
+				}		
 			}
 			else
-				system("cls");
+			{
+				
+			}
 			break;
 		}
 		case 3:
@@ -288,7 +276,6 @@ int main()
 			system("cls");
 			getchar();
 			break;
-
 		}
 		editUserNum();
 		editFieldNum();

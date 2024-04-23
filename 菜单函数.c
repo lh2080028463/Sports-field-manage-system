@@ -301,7 +301,7 @@ Respondent* responLogin()
 	if (RespondentsHead == NULL || (RespondentsHead != NULL && (tempRespon == NULL || tempRespon->deleted)))
 	{
 		system("cls");
-		printf("该账号未注册，请返回后注册！\n");
+		printf("该账号未注册，请联系管理员注册！\n");
 		Sleep(500);
 		system("cls");
 		return NULL;
@@ -402,12 +402,11 @@ User* userRegister(User* userRoot)
 void  responMenu()
 {
 	printf(" ******************场地负责人功能****************\n");
-	printf("                 1.登记\n");
-	printf("                 2.分配场地\n");
-	printf("                 3.信息查询\n");
-	printf("                 4.信息统计\n");
-	printf("                 5.重置密码\n");
-	printf("                 其他数字：退出\n");
+	printf("                 0.退出\n");
+	printf("                 1.登记用户\n");
+	printf("                 2.信息查询\n");
+	printf("                 3.信息统计\n");
+	printf("                 4.重置密码\n");
 	printf(" ************************************************\n");
 	printf("请输入功能数字：");
 	printf("\n");

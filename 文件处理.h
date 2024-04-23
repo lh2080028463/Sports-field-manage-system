@@ -17,3 +17,4 @@ void inputRespondata();
 char* getFielddataPath(const Field field);
 void editRespondents(unsigned int idx, char username[], char password[], char name[], char phone[], bool deleted);
 void editResponNum();
+char* getRespondataPath(const Respondent* respondent);
