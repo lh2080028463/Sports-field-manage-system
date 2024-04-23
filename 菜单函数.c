@@ -107,8 +107,6 @@ void managerMenu()
 	printf("                 2.场地负责人管理\n");
 	printf("                 3.用户管理\n");
 	printf("                 4.重置密码\n");
-	printf("                 5.\n");
-	printf("                 6.\n");
 	printf(" ********************************************\n");
 	printf("\n");
 }
@@ -117,13 +115,12 @@ void managerMenu()
 void managerFieldMenu()
 {
 	printf(" ******************管理员场地管理****************\n");
-	printf("                 0.退出\n");
+	printf("                 0.返回\n");
 	printf("                 1.场地添加\n");
 	printf("                 2.场地信息修改\n");
 	printf("                 3.场地删除\n");
 	printf("                 4.场地查询\n");
 	printf("                 5.场地排序\n");
-	printf("                 6.\n");
 	printf(" ********************************************\n");
 	printf("\n");
 }
@@ -131,8 +128,8 @@ void managerFieldMenu()
 /*管理员功能：场地负责人管理*/
 void responManageMenu()
 {
-	printf(" ******************管理员功能****************\n");
-	printf("                 0.退出\n");
+	printf(" ******************管理员负责人管理****************\n");
+	printf("                 0.返回\n");
 	printf("                 1.添加场地负责人\n");
 	printf("                 2.修改场地负责人信息\n");
 	printf("                 3.删除场地负责人\n");

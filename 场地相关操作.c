@@ -8,6 +8,8 @@
 #include<Windows.h>
 #include"结构体信息.h"
 #include"管理员.h"
+#include"基础功能.h"
+#include"用户.h"
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 extern Field* FieldRoot;
 
@@ -120,7 +122,7 @@ void editField(Field* fieldRoot)
 	{
 		system("cls");
 		printf("该场地不存在，请重新输入！\n");
-		Sleep(2000);
+		Sleep(1000);
 		system("cls");
 		editField(fieldRoot);
 	}
@@ -149,7 +151,7 @@ void deleteField(Field* fieldRoot)
 	{
 		system("cls");
 		printf("该场地不存在，请重新输入！\n");
-		Sleep(2000);
+		Sleep(1000);
 		system("cls");
 		deleteField(fieldRoot);
 	}
@@ -312,4 +314,43 @@ Field* addField(Field* node, unsigned int idx, char name[], double area, double 
 	}
 	editFielddata(idx, name, area, price, openTime, rented, time, deleted);
 	return node;
+}
+
+/*管理员查询场地信息*/
+void mangerqueryfield()
+{
+	Field* tempField[100] = { NULL };
+	char query[100];
+	printf("请输入查询场地名称：");
+	scanf("%s", query);
+	int num = queryField(FieldRoot, query, tempField);
+	sortFields(tempField, num, 0);
+	putFieldMessage(tempField);
+	while (true)
+	{
+		int temp2 = 0;
+		printf("\n\n	1.查询其他场地信息\n");
+		printf("	2.返回场地信息管理界面\n");
+		printf("请选择：");
+		scanf("%d", &temp2);
+		if (temp2 == 1)
+		{
+			system("cls");
+			mangerqueryfield();
+			break;
+		}
+		else if (temp2 == 2)
+		{
+			system("cls");
+			break;
+		}
+		else
+		{
+			system("cls");
+			printf("请输入正确的序号!");
+			Sleep(1000);
+			system("cls");
+		}
+	}
+			
 }
