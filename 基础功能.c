@@ -8,15 +8,18 @@
 extern Reservation Reservations[10000];
 
 /*预定时间合理*/
-bool checkTime(const Duration reservedTime,const Duration openTime)
+bool checkTime(const Duration reservedTime, const Duration openTime) 
 {
-	if (reservedTime.start.hour >= openTime.start.hour && reservedTime.end.hour <= openTime.end.hour)
+	if (reservedTime.start.hour > openTime.start.hour ||
+		(reservedTime.start.hour == openTime.start.hour && reservedTime.start.minute >= openTime.start.minute)) 
 	{
-		if (reservedTime.start.minute<openTime.start.minute || reservedTime.end.minute > openTime.end.minute) 
-			return false;
-		return true;
+		if (reservedTime.end.hour < openTime.end.hour ||
+			(reservedTime.end.hour == openTime.end.hour && reservedTime.end.minute <= openTime.end.minute)) 
+		{
+			return true;
+		}
 	}
-	else return false;
+	return false;
 }
 
 /*场地查询*/
