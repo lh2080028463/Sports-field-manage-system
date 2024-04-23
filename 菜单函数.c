@@ -571,7 +571,7 @@ void editReservationMenu(char username[])
 				{
 					*reservationp[idx - 1] = newReservation;
 					printf("预订信息修改成功！");
-					editReservations(reservationp[idx - 1]->idx, reservationp[idx - 1]->fieldName, reservationp[idx - 1]->time, reservationp[idx - 1]->owner, reservationp[idx - 1]->deleted);
+					editReservations(reservationp[idx - 1]->idx, reservationp[idx - 1]->fieldName, reservationp[idx - 1]->time, reservationp[idx - 1]->owner, reservationp[idx - 1]->deleted,reservationp[idx-1]->cost);
 					Sleep(500);
 					system("cls");
 					break;
@@ -601,7 +601,7 @@ void editReservationMenu(char username[])
 				{
 					*reservationp[idx - 1] = newReservation;
 					printf("预订信息修改成功！");
-					editReservations(reservationp[idx - 1]->idx, reservationp[idx - 1]->fieldName, reservationp[idx - 1]->time, reservationp[idx - 1]->owner, reservationp[idx - 1]->deleted);
+					editReservations(reservationp[idx - 1]->idx, reservationp[idx - 1]->fieldName, reservationp[idx - 1]->time, reservationp[idx - 1]->owner, reservationp[idx - 1]->deleted,reservationp[idx-1]->cost);
 					Sleep(500);
 					system("cls");
 					break;

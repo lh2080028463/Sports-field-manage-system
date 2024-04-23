@@ -70,6 +70,7 @@ typedef struct Reservation
 	char fieldName[50];  //预定场地
 	Duration time;      //预定时间
 	char owner[50];    //预订者 
+	unsigned int cost; //预定价格
 	bool deleted;     //删除情况
 }Reservation;
 

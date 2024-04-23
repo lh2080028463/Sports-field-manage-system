@@ -255,7 +255,8 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 			{
 				strcpy(reservation.owner, username);
 				ReservationNum++;
-				editReservations(ReservationNum, reservation.fieldName, reservation.time, reservation.owner, 0);
+				reservation.cost = calculatePrice(reservation);
+				editReservations(ReservationNum, reservation.fieldName, reservation.time, reservation.owner, 0,reservation.cost);
 				printf("场地预定成功！\n");
 				Sleep(500);
 			}
@@ -341,7 +342,7 @@ void deleteReservation(char username[])
 		{
 			Reservations[i].deleted = 1;
 			printf("已成功取消该预定！\n");
-			editReservations(Reservations[i].idx, Reservations[i].fieldName, Reservations[i].time, Reservations[i].owner, Reservations[i].deleted);
+			editReservations(Reservations[i].idx, Reservations[i].fieldName, Reservations[i].time, Reservations[i].owner, Reservations[i].deleted,Reservations[i].cost);
 			Sleep(500);
 			
 		}
@@ -400,7 +401,7 @@ void deleteUser(User* curUser)
 		if (strcmp(Reservations[i].owner, curUser->username) == 0)
 		{
 			Reservations[i].deleted = 1;
-			editReservations(Reservations[i].idx, Reservations[i].fieldName, Reservations[i].time, Reservations[i].owner, Reservations[i].deleted);
+			editReservations(Reservations[i].idx, Reservations[i].fieldName, Reservations[i].time, Reservations[i].owner, Reservations[i].deleted,Reservations[i].cost);
 		}
 	}
 
