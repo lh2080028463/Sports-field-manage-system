@@ -259,6 +259,10 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 				printf("场地预定成功！\n");
 				Sleep(500);
 			}
+			else if ()
+			{
+
+			}
 			else
 			{
 				printf("该场地目前已被预定！\n请重新选择！\n");

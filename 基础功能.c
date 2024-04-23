@@ -69,13 +69,14 @@ bool rented(Reservation newReservation)
 		}
 		if ((newReservation.time.start.hour < Reservations[i].time.end.hour ||
 			(newReservation.time.start.hour == Reservations[i].time.end.hour &&
-				newReservation.time.start.minute < Reservations[i].time.end.minute)) &&
+				newReservation.time.start.minute <= Reservations[i].time.end.minute)) &&
 			(newReservation.time.end.hour > Reservations[i].time.start.hour ||
 				(newReservation.time.end.hour == Reservations[i].time.start.hour &&
-					newReservation.time.end.minute > Reservations[i].time.start.minute)))
+					newReservation.time.end.minute >= Reservations[i].time.start.minute)))
 		{
 			return true; 
 		}
+		
 	}
 	return false; 
 }
