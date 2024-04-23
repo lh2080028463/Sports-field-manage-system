@@ -4,19 +4,24 @@
 #include"结构体信息.h"
 #include"管理员.h"
 #include<string.h>
+#include<math.h>
 
 extern Reservation Reservations[10000];
+extern Field* FieldRoot;
 
 /*预定时间合理*/
-bool checkTime(const Duration reservedTime,const Duration openTime)
+bool checkTime(const Duration reservedTime, const Duration openTime) 
 {
-	if (reservedTime.start.hour >= openTime.start.hour && reservedTime.end.hour <= openTime.end.hour)
+	if (reservedTime.start.hour > openTime.start.hour ||
+		(reservedTime.start.hour == openTime.start.hour && reservedTime.start.minute >= openTime.start.minute)) 
 	{
-		if (reservedTime.start.minute<openTime.start.minute || reservedTime.end.minute > openTime.end.minute) 
-			return false;
-		return true;
+		if (reservedTime.end.hour < openTime.end.hour ||
+			(reservedTime.end.hour == openTime.end.hour && reservedTime.end.minute <= openTime.end.minute)) 
+		{
+			return true;
+		}
 	}
-	else return false;
+	return false;
 }
 
 /*场地查询*/
@@ -66,13 +71,14 @@ bool rented(Reservation newReservation)
 		}
 		if ((newReservation.time.start.hour < Reservations[i].time.end.hour ||
 			(newReservation.time.start.hour == Reservations[i].time.end.hour &&
-				newReservation.time.start.minute < Reservations[i].time.end.minute)) &&
+				newReservation.time.start.minute <= Reservations[i].time.end.minute)) &&
 			(newReservation.time.end.hour > Reservations[i].time.start.hour ||
 				(newReservation.time.end.hour == Reservations[i].time.start.hour &&
-					newReservation.time.end.minute > Reservations[i].time.start.minute)))
+					newReservation.time.end.minute >= Reservations[i].time.start.minute)))
 		{
 			return true; 
 		}
+		
 	}
 	return false; 
 }
@@ -132,4 +138,35 @@ void initReservations(Reservation r)
 	strcpy(r.fieldName, "\0");
 	strcpy(r.owner, "\0");
 	r.idx = 0;
+}
+
+/*计算使用时长(min)*/
+unsigned int calculateTime(Duration dur)
+{
+	return (dur.end.hour - dur.start.hour) * 60 + dur.end.minute - dur.start.minute;
+}
+
+/*计算预定信息的价格*/
+unsigned int calculatePrice(Reservation reservation)
+{
+	Duration morning = { {0,0},{12,0} };
+	Duration afternoon= { {12,0},{18,0} };
+	Duration night = { {18,0} ,{23,59} };
+	Field* tempField = findFieldname(FieldRoot, reservation.fieldName);
+
+	unsigned int cost = 0;
+	unsigned int x = ceil(calculateTime(reservation.time) / 30.0);
+	if (checkTime(reservation.time, morning))
+	{
+		cost = x * tempField->price[0];
+	}
+	else if (checkTime(reservation.time, afternoon))
+	{
+		cost = x * tempField->price[1];
+	}
+	else if (checkTime(reservation.time, night))
+	{
+		cost = x * tempField->price[2];
+	}
+	return cost;
 }

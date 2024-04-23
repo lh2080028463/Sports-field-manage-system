@@ -255,7 +255,8 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 			{
 				strcpy(reservation.owner, username);
 				ReservationNum++;
-				editReservations(ReservationNum, reservation.fieldName, reservation.time, reservation.owner, 0);
+				reservation.cost = calculatePrice(reservation);
+				editReservations(ReservationNum, reservation.fieldName, reservation.time, reservation.owner, 0,reservation.cost);
 				printf("场地预定成功！\n");
 				Sleep(500);
 			}
@@ -356,7 +357,7 @@ void deleteReservation(char username[])
 		{
 			Reservations[i].deleted = 1;
 			printf("已成功取消该预定！\n");
-			editReservations(Reservations[i].idx, Reservations[i].fieldName, Reservations[i].time, Reservations[i].owner, Reservations[i].deleted);
+			editReservations(Reservations[i].idx, Reservations[i].fieldName, Reservations[i].time, Reservations[i].owner, Reservations[i].deleted,Reservations[i].cost);
 			Sleep(500);
 			
 		}
@@ -365,15 +366,19 @@ void deleteReservation(char username[])
 }
 
 /*用户功能：重置密码*/
-void resetUserPass(User* curUser)
+void resetUserPass(User* curUser,bool forget)
 {
 	char password0[20];
 	char newPass[20];
-	printf("请输入旧密码：");
-	scanf("%s", password0);
+	if (!forget)
+	{
+		printf("请输入旧密码：");
+		scanf("%s", password0);
+	}
+	
 	printf("请输入新密码：");
 	scanf("%s", newPass);
-	if (strcmp(curUser->password, password0) == 0)
+	if (forget||strcmp(curUser->password, password0) == 0)
 	{
 		strcpy(curUser->password, newPass);
 		char path[100] = { '\0' };
@@ -411,7 +416,7 @@ void deleteUser(User* curUser)
 		if (strcmp(Reservations[i].owner, curUser->username) == 0)
 		{
 			Reservations[i].deleted = 1;
-			editReservations(Reservations[i].idx, Reservations[i].fieldName, Reservations[i].time, Reservations[i].owner, Reservations[i].deleted);
+			editReservations(Reservations[i].idx, Reservations[i].fieldName, Reservations[i].time, Reservations[i].owner, Reservations[i].deleted,Reservations[i].cost);
 		}
 	}
 
@@ -420,3 +425,50 @@ void deleteUser(User* curUser)
 	Sleep(500);
 }
 
+/*用户忘记密码*/
+void userForget()
+{
+	char username[20];
+	while (true)
+	{
+		printf("请输入账号（输入0退出）:");
+		scanf("%s", username);
+		if (strcmp(username, "0") == 0)
+		{
+			break;
+		}
+		User* currentUser = findUsername(UserRoot, username);
+		if (currentUser != NULL)
+		{
+			char currentPhone[20];
+			while (true)
+			{
+				printf("请输入你的联系方式（输入0退出）：");
+				scanf("%s", &currentPhone);
+				if (strcmp(currentPhone, "0") == 0)
+				{
+					break;
+				}
+				else
+				{
+					if (strcmp(currentPhone, currentUser->phone) == 0)
+					{
+						resetUserPass(currentUser, 1);
+						break;
+					}
+					else
+					{
+						printf("联系方式输入错误！\n");
+						Sleep(1000);
+						system("cls");
+					}
+				}
+			}
+
+		}
+		else
+		{
+			printf("未查询到该账号信息！请重新输入！\n");
+		}
+	}
+}

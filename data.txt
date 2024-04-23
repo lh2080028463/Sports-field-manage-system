@@ -1,4 +1,4 @@
-UserNum 2
+UserNum 3
 ManagerNum 3
 ResponNum 1
 ReservationNum 1

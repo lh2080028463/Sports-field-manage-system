@@ -137,64 +137,52 @@ int main()
 			{
 				system("cls");
 				printf("请选择正确的序号！\n");
-				Sleep(2000);
+				Sleep(500);
 				system("cls");
 			}
 			break;
 		}
 		case 2:
 		{
-			system("cls");
 			Respondent* currentrespon =  responLogin(); 
 			if (currentrespon != NULL)
 			{
-				responMenu();
+				
 				int i;
-				scanf("%d", &i);
-				switch (i)
+				while (true)
 				{
-					case 1:
+					responMenu();
+					scanf("%d", &i);
+					if (i==0)
 					{
-						printf("请输入用户名:");
-						char tempUsername[50];
-						scanf("%s", tempUsername);
-						makeReservation(Reservations[ReservationNum], FieldRoot, tempUsername);
-						/*if (j == 0)
-						{
-							printf("未找到该预定者预订信息\n");
-							Sleep(2000); break;
-						}
-						else
-						{
-							printf("预定场地类型为%c\n", j);
-							Sleep(2000);
-						}*/
+						break;
 					}
-					case 2:
+					if (i == 1)
+					{
+						registerUser();
+					}
+					else if (i == 2)
+					{
+						responQueryMessage();
+					}
+					else if (i==3)
 					{
 
-						break;
 					}
-					case 3:
+					else if (i==4)
 					{
-						break;
+						resetResponPass(currentrespon);
 					}
-					case 4:
+					else
 					{
-						break;
+						printf("请选择正确的序号：");
 					}
-					case 5:
-					{
-						break;
-					}
-					default:
-					{
-						system("cls");
-					}
-				}
+				}		
 			}
 			else
-				system("cls");
+			{
+				
+			}
 			break;
 		}
 		case 3:
@@ -234,7 +222,7 @@ int main()
 							else if (reserveCmd == 1)
 							{
 								makeReservation(Reservations[ReservationNum], FieldRoot, currentUser->username);
-
+								
 							}
 							else if (reserveCmd == 2)
 							{
@@ -259,14 +247,12 @@ int main()
 					}
 					else if (userCmd == 5)
 					{
-						resetUserPass(currentUser);
+						resetUserPass(currentUser,0);
 					}
 					else if (userCmd == 6)
 					{
 						deleteUser(currentUser);
 						UserRoot = deleteUserNode(UserRoot, currentUser->username);
-						
-						break;
 					}
 					else
 					{
@@ -286,14 +272,40 @@ int main()
 			UserRoot = userRegister(UserRoot);
 			break;
 		}
+		case 5:
+		{
+			int forget;
+			while (true)
+			{
+				forgetPassMenu();
+				printf("请输入身份：");
+				scanf("%d", &forget);
+				if (forget==0)
+				{
+					break;
+				}
+				else if(forget==1)
+				{
+
+				}
+				else if (forget == 2)
+				{
+
+				}
+				else if (forget==3)
+				{
+					userForget();
+				}
+			}
+			break;
+		}
 		default:
 			system("cls");
 			printf("请选择正确的序号！\n");
-			Sleep(1000);
+			Sleep(500);
 			system("cls");
 			getchar();
 			break;
-
 		}
 		editUserNum();
 		editFieldNum();

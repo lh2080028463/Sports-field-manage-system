@@ -7,3 +7,7 @@ void insertRespondentNode(Respondent** head, Respondent* newNode);
 void deleteRespondentNode(Respondent** head, const char* username);
 Respondent* findRespondentNode(Respondent* head, const char* username);
 void printRespondentList(Respondent* head);
+
+void registerUser();
+void responQueryMessage();
+void resetResponPass(Respondent* curRespondent);
