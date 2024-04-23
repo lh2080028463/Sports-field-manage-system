@@ -277,10 +277,8 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 }
 
 /*按照名称查询场地信息（模糊查询）并保存在fields中*/
-int queryField(Field* root, const char* query, Field* fields[])
+int queryField(const Field* root, const char* query, Field* fields[])
 {
-	Field* temproot= (Field*)malloc(sizeof(Field));
-	temproot = root;
 	static int i = 0;
 	if (root == NULL) return;
 
@@ -292,7 +290,6 @@ int queryField(Field* root, const char* query, Field* fields[])
 	// 递归查询左子树和右子树
 	queryField(root->left, query, fields);
 	queryField(root->right, query, fields);
-	root = temproot;
 	return i;
 }
 
