@@ -323,7 +323,8 @@ void mangerqueryfield()
 	char query[100];
 	printf("请输入查询场地名称：");
 	scanf("%s", query);
-	int num = queryField(FieldRoot, query, tempField);
+	int num = 0;
+	queryField(FieldRoot, query, tempField,num);
 	sortFields(tempField, num, 0);
 	putFieldMessage(tempField);
 	while (true)
