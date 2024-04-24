@@ -294,7 +294,7 @@ int queryField(const Field* root, const char* query, Field* fields[])
 }
 
 /*输出场地信息*/
-void putFieldMessage(Field* tempField[])
+void putFieldMessage(const Field* tempField[])
 {
 	for (int i = 0; tempField[i] != NULL; i++)
 	{
