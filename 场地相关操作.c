@@ -355,6 +355,7 @@ void managerqueryfield()
 	}	
 }
 
+/*场地排序*/
 void managersortfield()
 {
 	Field tempField[100] = { NULL };

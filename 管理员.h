@@ -17,3 +17,4 @@ void deleteField();
 void managerqueryfield();
 void managersortfield();
 void traverseField(Field* root, Field fields[], int* count);
+void deleteRespondent();
