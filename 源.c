@@ -132,7 +132,28 @@ int main()
 					if (managerCmd == 3)
 					{
 						system("cls");
-
+						while (true)
+						{
+							userManageMenu();
+							printf("ÇëÑ¡Ôñ¹¦ÄÜ£º");
+							scanf("%d", &managerCmd);
+							if (managerCmd == 0)
+							{
+								break;
+							}
+							else if (managerCmd == 1)
+							{
+								system("cls");
+							}
+							else if (managerCmd == 2)
+							{
+								system("cls");
+							}
+							else if (managerCmd == 3)
+							{
+								system("cls");
+							}
+						}
 					}
 					if (managerCmd == 4)
 					{

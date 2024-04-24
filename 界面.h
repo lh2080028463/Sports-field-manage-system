@@ -13,6 +13,7 @@ void reserveMenu();
 void queryMessageMenu(User* user);
 void editReservationMenu(char username[]);
 void responManageMenu();
+void userManageMenu();
 void addRespondent();
 void forgetPassMenu();
 void statisticMenu();

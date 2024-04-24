@@ -138,6 +138,18 @@ void responManageMenu()
 	printf("\n");
 }
 
+/*管理员功能：用户管理*/
+void userManageMenu()
+{
+	printf(" ******************管理员用户管理****************\n");
+	printf("                 0.返回\n");
+	printf("                 1.添加场地负责人\n");
+	printf("                 2.修改场地负责人信息\n");
+	printf("                 3.删除场地负责人\n");
+	printf(" ********************************************\n");
+	printf("\n");
+}
+
 /*管理员添加场地负责人*/
 void addRespondent()
 {
