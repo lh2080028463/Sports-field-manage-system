@@ -88,6 +88,11 @@ int main()
 								system("cls");
 								deleteField(FieldRoot);
 							}
+							if (managerCmd == 4)
+							{
+								system("cls");
+								mangerqueryfield();
+							}
 						}
 					}
 					if (managerCmd == 2)
@@ -111,7 +116,7 @@ int main()
 							}
 							else if (cmd==2)
 							{
-
+								 
 							}
 						}
 

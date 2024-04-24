@@ -14,6 +14,4 @@ Field* findFieldname(const Field* FieldRoot, const char name[]);
 Field* FieldRegister(Field* FieldRoot);
 void editField(Field* fieldRoot);
 void deleteField();
-void addManager();
-void editManager();
-void deleteManager();
+void mangerqueryfield();
