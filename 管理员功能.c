@@ -193,33 +193,33 @@ Respondent* createRespondentNode(unsigned int idx, const char* username, const c
 }
 
 // 插入场地负责人节点到链表中
-void insertRespondentNode(Respondent** head, Respondent* newNode)
+void insertRespondentNode(Respondent* head, Respondent* newNode)
 {
-	if (*head == NULL) {
-		*head = newNode;
+	if (head == NULL) {
+		head = newNode;
 	}
 	else {
-		newNode->next = *head;
-		*head = newNode;
+		newNode->next = head;
+		head = newNode;
 	}
 }
 
 // 删除场地负责人节点
-void deleteRespondentNode(Respondent** head, const char* username)
+void deleteRespondentNode(Respondent* head, const char* username)
 {
-	if (*head == NULL)
+	if (head == NULL)
 	{
 		return;
 	}
 
-	Respondent* current = *head;
+	Respondent* current = head;
 	Respondent* prev = NULL;
 
 	while (current != NULL) {
 		if (strcmp(current->username, username) == 0)
 		{
 			if (prev == NULL) {
-				*head = current->next;
+				head = current->next;
 			}
 			else {
 				prev->next = current->next;
