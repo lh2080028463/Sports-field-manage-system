@@ -13,3 +13,5 @@ User* deleteUserNode(User* root, char username[]);
 void deleteReservation(char username[]);
 Field* findField(Field* root, char fieldName[]);
 void userForget();
+unsigned int countAllCost(char username[]);
+void periodCost(char username[]);

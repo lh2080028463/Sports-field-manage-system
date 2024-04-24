@@ -248,7 +248,26 @@ int main()
 					}
 					else if (userCmd == 4)
 					{
-
+						statisticMenu();
+						int cmd;
+						
+						while (true)
+						{
+							printf("请选择功能：");
+							scanf("%d", &cmd);
+							if (cmd==0)
+							{
+								break;
+							}
+							if (cmd==1)
+							{
+								printf("当前总支出金额为：%u元\n", countAllCost(currentUser->username));
+							}
+							else if (cmd==2)
+							{
+								periodCost(currentUser->username);
+							}
+						}
 					}
 					else if (userCmd == 5)
 					{

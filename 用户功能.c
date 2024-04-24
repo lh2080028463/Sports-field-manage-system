@@ -314,20 +314,8 @@ void putFieldMessage(Field tempField[])
 }
 
 
-int managerputFieldMessage(Field* tempField[], int temp)
-{
-	for (int i = 0; tempField[i] != NULL; i++)
-	{
-		printf("场地名称：%s\n", tempField[i]->name);
-		printf("场地面积：%.2lf平方米\n", tempField[i]->area);
-		printf("早上价格：%.2lf元 下午价格：%.2lf元 晚上价格：%.2lf元\n", tempField[i]->price[0], tempField[i]->price[1], tempField[i]->price[2]);
-		printf("开放时间段：%02d:%02d~%02d:%02d\n", tempField[i]->openTime.start.hour, tempField[i]->openTime.start.minute, tempField[i]->openTime.end.hour, tempField[i]->openTime.end.minute);
-		printf("\n");
-		temp++;
 	}
-	return temp;
 }
-
 /*输出预定信息*/
 void putReservation(Reservation tempReservation)
 {
@@ -476,4 +464,44 @@ void userForget()
 			printf("未查询到该账号信息！请重新输入！\n");
 		}
 	}
+}
+
+/*统计：用户总支出金额*/
+unsigned int countAllCost(char username[])
+{
+	unsigned int allCost = 0;
+	for (int i = 0; Reservations[i].idx != 0; i++)
+	{
+		if (strcmp(Reservations[i].owner, username) == 0&&!Reservations[i].deleted)
+		{
+			allCost += Reservations[i].cost;
+		}
+	}
+	return allCost;
+}
+
+/*统计：用户某时间段支出金额*/
+void periodCost(char username[])
+{
+	unsigned int cost = 0;
+	Duration tempd;
+	printf("请输入需要查询的起始时间:");
+	scanf("%02d:%02d", &tempd.start.hour, &tempd.start.minute);
+	printf("请输入需要查询的结束时间:");
+	scanf("%02d:%02d", &tempd.end.hour, &tempd.end.minute);
+	for (int i = 0; Reservations[i].idx != 0; i++)
+	{
+		if (strcmp(Reservations[i].owner, username) == 0 && !Reservations[i].deleted)
+		{
+			if (checkTime(Reservations[i].time, tempd))
+			{
+				cost += Reservations[i].cost;
+			}
+		}
+	}
+	
+	
+	printf("该时间段内消费：%u元\n", cost);
+	
+	
 }

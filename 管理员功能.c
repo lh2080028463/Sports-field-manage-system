@@ -260,5 +260,17 @@ void printRespondentList(Respondent* head)
 	}
 }
 
-
+int managerputFieldMessage(Field* tempField[], int temp)
+{
+	for (int i = 0; tempField[i] != NULL; i++)
+	{
+		printf("场地名称：%s\n", tempField[i]->name);
+		printf("场地面积：%.2lf平方米\n", tempField[i]->area);
+		printf("早上价格：%.2lf元 下午价格：%.2lf元 晚上价格：%.2lf元\n", tempField[i]->price[0], tempField[i]->price[1], tempField[i]->price[2]);
+		printf("开放时间段：%02d:%02d~%02d:%02d\n", tempField[i]->openTime.start.hour, tempField[i]->openTime.start.minute, tempField[i]->openTime.end.hour, tempField[i]->openTime.end.minute);
+		printf("\n");
+		temp++;
+	}
+	return temp;
+}
 

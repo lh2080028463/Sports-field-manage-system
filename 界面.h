@@ -15,3 +15,4 @@ void editReservationMenu(char username[]);
 void responManageMenu();
 void addRespondent();
 void forgetPassMenu();
+void statisticMenu();
