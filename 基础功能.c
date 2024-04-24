@@ -120,9 +120,9 @@ int compareFields(const void* a, const void* b, int conditon)
 }
 
 /*场地信息排序函数*/
-void sortFields(Field** fields, int numFields, int conditon) 
+void sortFields(Field* fields, int numFields, int conditon) 
 {
-	qsort(fields, numFields, sizeof(Field*),(int (*)(const void*, const void*))compareFields, conditon);
+	qsort(fields, numFields, sizeof(Field),(int (*)(const void*, const void*))compareFields, conditon);
 }
 
 /*信息统计*/
