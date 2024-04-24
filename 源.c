@@ -91,7 +91,12 @@ int main()
 							if (managerCmd == 4)
 							{
 								system("cls");
-								mangerqueryfield();
+								managerqueryfield();
+							}
+							if (managerCmd == 5)
+							{
+								system("cls");
+								managersortfield();
 							}
 						}
 					}

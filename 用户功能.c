@@ -290,6 +290,17 @@ void queryField(Field* root, const char* query, Field fields[], int* count)
 	queryField(root->right, query, fields, count);
 }
 
+/*遍历场地*/
+void traverseField(Field* root, Field fields[], int* count)
+{
+	if (root == NULL) return;
+		fields[*count] = *root;
+	(*count)++;
+	traverseField(root->left, fields, count);
+	traverseField(root->right, fields, count);
+}
+
+
 /*输出场地信息*/
 void putFieldMessage(Field tempField[])
 {
@@ -299,6 +310,9 @@ void putFieldMessage(Field tempField[])
 		printf("场地面积：%.2lf平方米\n", tempField[i].area);
 		printf("早上价格：%.2lf元 下午价格：%.2lf元 晚上价格：%.2lf元\n", tempField[i].price[0], tempField[i].price[1], tempField[i].price[2]);
 		printf("开放时间段：%02d:%02d~%02d:%02d\n", tempField[i].openTime.start.hour, tempField[i].openTime.start.minute, tempField[i].openTime.end.hour, tempField[i].openTime.end.minute);
+	}
+}
+
 
 int managerputFieldMessage(Field* tempField[], int temp)
 {

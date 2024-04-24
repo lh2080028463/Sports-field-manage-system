@@ -14,4 +14,6 @@ Field* findFieldname(const Field* FieldRoot, const char name[]);
 Field* FieldRegister(Field* FieldRoot);
 void editField(Field* fieldRoot);
 void deleteField();
-void mangerqueryfield();
+void managerqueryfield();
+void managersortfield();
+void traverseField(Field* root, Field fields[], int* count);
