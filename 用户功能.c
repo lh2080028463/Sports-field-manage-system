@@ -276,35 +276,29 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 
 }
 
-/*按照名称查询场地信息（模糊查询）并保存在fields中*/
-int queryField(const Field* root, const char* query, Field* fields[])
+void queryField(Field* root, const char* query, Field fields[], int* count) 
 {
-	static int i = 0;
 	if (root == NULL) return;
 
 	// 如果场地名称包含查询条件字符串，则将该场地加入结果数组中
-	if (strstr(root->name, query) != NULL)
-	{
-		fields[i++] = root;
+	if (strstr(root->name, query) != NULL) {
+		fields[*count] = *root;
+		(*count)++;
 	}
 	// 递归查询左子树和右子树
-	queryField(root->left, query, fields);
-	queryField(root->right, query, fields);
-	return i;
+	queryField(root->left, query, fields, count);
+	queryField(root->right, query, fields, count);
 }
 
 /*输出场地信息*/
-void putFieldMessage(const Field* tempField[])
+void putFieldMessage(Field tempField[])
 {
-	for (int i = 0; tempField[i] != NULL; i++)
+	for (int i = 0; tempField[i].idx != NULL; i++)
 	{
-		printf("场地名称：%s\n", tempField[i]->name);
-		printf("场地面积：%.2lf平方米\n", tempField[i]->area);
-		printf("早上价格：%.2lf元 下午价格：%.2lf元 晚上价格：%.2lf元\n", tempField[i]->price[0], tempField[i]->price[1], tempField[i]->price[2]);
-		printf("开放时间段：%02d:%02d~%02d:%02d\n", tempField[i]->openTime.start.hour, tempField[i]->openTime.start.minute, tempField[i]->openTime.end.hour, tempField[i]->openTime.end.minute);
-		printf("\n");
-	}
-}
+		printf("场地名称：%s\n", tempField[i].name);
+		printf("场地面积：%.2lf平方米\n", tempField[i].area);
+		printf("早上价格：%.2lf元 下午价格：%.2lf元 晚上价格：%.2lf元\n", tempField[i].price[0], tempField[i].price[1], tempField[i].price[2]);
+		printf("开放时间段：%02d:%02d~%02d:%02d\n", tempField[i].openTime.start.hour, tempField[i].openTime.start.minute, tempField[i].openTime.end.hour, tempField[i].openTime.end.minute);
 
 int managerputFieldMessage(Field* tempField[], int temp)
 {

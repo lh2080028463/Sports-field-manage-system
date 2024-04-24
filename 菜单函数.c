@@ -420,11 +420,12 @@ void queryMessageMenu(User* user)
 		}
 		else if (querycmd == 1)
 		{
-			Field* tempField[100] = { NULL };
+			Field tempField[100] = { NULL };
 			char query[100];
 			printf("请输入查询场地名：");
 			scanf("%s", query);
-			int num=queryField(FieldRoot, query, tempField);
+			int num = 0;
+			queryField(FieldRoot, query, tempField,&num);
 			sortFields(tempField, num, 0);
 			putFieldMessage(tempField);
 
