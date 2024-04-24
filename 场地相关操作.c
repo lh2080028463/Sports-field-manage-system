@@ -317,30 +317,30 @@ Field* addField(Field* node, unsigned int idx, char name[], double area, double 
 }
 
 /*管理员查询场地信息*/
-void mangerqueryfield()
+void managerqueryfield()
 {
 	Field* tempField[100] = { NULL };
 	char query[100];
 	printf("请输入查询场地名称：");
 	scanf("%s", query);
 	int num = 0;
-	queryField(FieldRoot, query, tempField,num);
+	queryField(FieldRoot, query, tempField, &num);
 	sortFields(tempField, num, 0);
 	putFieldMessage(tempField);
 	while (true)
 	{
-		int temp2 = 0;
+		int temp = 0;
 		printf("\n\n	1.查询其他场地信息\n");
 		printf("	2.返回场地信息管理界面\n");
 		printf("请选择：");
-		scanf("%d", &temp2);
-		if (temp2 == 1)
+		scanf("%d", &temp);
+		if (temp == 1)
 		{
 			system("cls");
-			mangerqueryfield();
+			managerqueryfield();
 			break;
 		}
-		else if (temp2 == 2)
+		else if (temp == 2)
 		{
 			system("cls");
 			break;
@@ -352,6 +352,73 @@ void mangerqueryfield()
 			Sleep(1000);
 			system("cls");
 		}
+	}	
+}
+
+/*场地排序*/
+void managersortfield()
+{
+	Field tempField[100] = { NULL };
+	int num = 0;
+	int temp = 0;
+	while (true)
+	{
+		printf(" ******************场地信息排序****************\n");
+		printf("                 0.取消排序\n");
+		printf("                 1.名称\n");
+		printf("                 2.面积\n");
+		printf("                 3.早上价格\n");
+		printf("                 4.下午价格\n");
+		printf("                 5.晚上价格\n");
+		printf("                 6.开放时间\n");
+		printf("                 7.关闭时间\n");
+		printf(" ******************************************\n");
+		printf("请选择场地信息排序功能：");
+		scanf("%d", &temp);
+		if (temp == 0)
+		{
+			system("cls");
+			break;
+		}
+		else if (temp > 0 && temp < 8)
+		{
+			system("cls");
+			traverseField(FieldRoot, tempField, &num);
+			sortFields(tempField, num, temp);
+			putFieldMessage(tempField);
+			while (true)
+			{
+				printf("\n\n1.再次进行排序\n");
+				printf("2.退出排序\n");
+				printf("请选择：");
+				scanf("%d", &temp);
+				if (temp == 1)
+				{
+					system("cls");
+					managersortfield();
+					break;
+				}
+				if (temp == 2)
+				{
+					system("cls");
+					break;
+				}
+				else
+				{
+					system("cls");
+					printf("请输入正确的序号!");
+					Sleep(1000);
+					system("cls");
+				}
+			}
+			break;
+		}
+		else
+		{
+			system("cls");
+			printf("请输入正确的序号!");
+			Sleep(1000);
+			system("cls");
+		}
 	}
-			
 }

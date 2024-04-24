@@ -290,6 +290,17 @@ void queryField(Field* root, const char* query, Field fields[], int* count)
 	queryField(root->right, query, fields, count);
 }
 
+/*遍历场地*/
+void traverseField(Field* root, Field fields[], int* count)
+{
+	if (root == NULL) return;
+		fields[*count] = *root;
+	(*count)++;
+	traverseField(root->left, fields, count);
+	traverseField(root->right, fields, count);
+}
+
+
 /*输出场地信息*/
 void putFieldMessage(Field tempField[])
 {
@@ -306,7 +317,6 @@ void putReservation(Reservation tempReservation)
 {
 	printf("%s ", tempReservation.fieldName);
 	printf("%02d:%02d~%02d:%02d\n", tempReservation.time.start.hour, tempReservation.time.start.minute, tempReservation.time.end.hour, tempReservation.time.end.minute);
-	
 	printf("\n");
 }
 

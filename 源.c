@@ -91,32 +91,40 @@ int main()
 							if (managerCmd == 4)
 							{
 								system("cls");
-								mangerqueryfield();
+								managerqueryfield();
+							}
+							if (managerCmd == 5)
+							{
+								system("cls");
+								managersortfield();
 							}
 						}
 					}
 					if (managerCmd == 2)
 					{
 						system("cls");
-						
-						int cmd;
-						
 						while (true)
 						{
 							responManageMenu();
 							printf("ÇëÑ¡Ôñ¹¦ÄÜ£º");
-							scanf("%d", &cmd);
-							if (cmd==0)
+							scanf("%d", &managerCmd);
+							if (managerCmd == 0)
 							{
 								break;
 							}
-							else if (cmd==1)
+							else if (managerCmd == 1)
 							{
+								system("cls");
 								addRespondent();
 							}
-							else if (cmd==2)
+							else if (managerCmd == 2)
 							{
 								 
+							}
+							else if (managerCmd == 3)
+							{
+								system("cls");
+								deleteRespondent();
 							}
 						}
 
