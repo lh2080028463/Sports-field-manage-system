@@ -312,16 +312,11 @@ void putFieldMessage(Field tempField[])
 		printf("开放时间段：%02d:%02d~%02d:%02d\n", tempField[i].openTime.start.hour, tempField[i].openTime.start.minute, tempField[i].openTime.end.hour, tempField[i].openTime.end.minute);
 	}
 }
-
-
-	}
-}
 /*输出预定信息*/
 void putReservation(Reservation tempReservation)
 {
 	printf("%s ", tempReservation.fieldName);
 	printf("%02d:%02d~%02d:%02d\n", tempReservation.time.start.hour, tempReservation.time.start.minute, tempReservation.time.end.hour, tempReservation.time.end.minute);
-	
 	printf("\n");
 }
 
