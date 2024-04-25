@@ -304,13 +304,13 @@ void traverseField(Field* root, Field fields[], int* count)
 /*输出场地信息*/
 void putFieldMessage(Field tempField[])
 {
+	printf("   场地名称             场地面积             早上价格             下午价格             晚上价格              开放时间段\n");
 	for (int i = 0; tempField[i].idx != NULL; i++)
 	{
-		printf("场地名称：%s\n", tempField[i].name);
-		printf("场地面积：%.2lf平方米\n", tempField[i].area);
-		printf("早上价格：%.2lf元 下午价格：%.2lf元 晚上价格：%.2lf元\n", tempField[i].price[0], tempField[i].price[1], tempField[i].price[2]);
-		printf("开放时间段：%02d:%02d~%02d:%02d\n", tempField[i].openTime.start.hour, tempField[i].openTime.start.minute, tempField[i].openTime.end.hour, tempField[i].openTime.end.minute);
+		printf("%12s %13.2lf平方米 %18.2lf元 %18.2lf元 %18.2lf元            %02d:%02d~%02d:%02d\n", tempField[i].name, tempField[i].area, tempField[i].price[0], tempField[i].price[1], tempField[i].price[2], tempField[i].openTime.start.hour, tempField[i].openTime.start.minute, tempField[i].openTime.end.hour, tempField[i].openTime.end.minute);
+
 	}
+	printf("\n");
 }
 /*输出预定信息*/
 void putReservation(Reservation tempReservation)

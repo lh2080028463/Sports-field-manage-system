@@ -180,8 +180,8 @@ void addRespondent()
 		addRespondent();
 	}
 
-	
-}	
+
+}
 
 /*场地添加界面*/
 Field* FieldRegister(Field* fieldRoot)
@@ -267,7 +267,7 @@ User* userLogin()
 	printf(" 账  号：");
 	scanf("%s", username);
 	User* tempUser = findUsername(UserRoot, username);
-	if (UserRoot == NULL || (UserRoot != NULL&&(tempUser == NULL||tempUser->deleted)))
+	if (UserRoot == NULL || (UserRoot != NULL && (tempUser == NULL || tempUser->deleted)))
 	{
 		system("cls");
 		printf("该账号未注册，请返回后注册！\n");
@@ -279,8 +279,8 @@ User* userLogin()
 	scanf("%s", password);
 	printf(" ********************\n");
 	system("cls");
-	
-	if (strcmp(tempUser->password,password)==0)
+
+	if (strcmp(tempUser->password, password) == 0)
 	{
 		printf("登录成功！\n");
 		Sleep(500);
@@ -323,9 +323,9 @@ User* userRegister(User* userRoot)
 		scanf("%s", phone);
 		printf(" *******************\n");
 		printf(" 注册成功，请返回登录！\n");
-		return insertUser(userRoot,UserNum+1, username, password, name, phone,0,0);
-		Sleep(500);
-		userLogin(userRoot,username);
+		return insertUser(userRoot, UserNum + 1, username, password, name, phone, 0, 0);
+		/*Sleep(500);
+		userLogin(userRoot,username);*/
 	}
 }
 
@@ -354,7 +354,7 @@ void userMenu()
 	printf("                 4.信息统计\n");
 	printf("                 5.重置密码\n");
 	printf("                 6.注销账户\n");
-	
+
 	printf(" ******************************************\n");
 	printf("\n");
 }
@@ -362,15 +362,16 @@ void userMenu()
 /*用户个人信息管理*/
 void editMessageMenu(User* user)
 {
-	printf(" ******************用户个人信息管理****************\n");
-	printf("                 0.退出\n");
-	printf("                 1.姓名：");
-	printf("%s\n", user->name);
-	printf("                 2.联系方式：");
-	printf("%s\n", user->phone);
-	
+
+
 	while (true)
 	{
+		printf(" ******************用户个人信息管理****************\n");
+		printf("                 0.退出\n");
+		printf("                 1.姓名：");
+		printf("%s\n", user->name);
+		printf("                 2.联系方式：");
+		printf("%s\n", user->phone);
 		printf("请输入要修改的序号：");
 		int cmd;
 		scanf("%d", &cmd);
@@ -399,15 +400,17 @@ void editMessageMenu(User* user)
 		}
 		else
 		{
+			getchar();
 			system("cls");
-			printf("请输入正确的序号!");
+			printf("请选择正确的功能！\n");
 			Sleep(500);
 			system("cls");
+
 		}
 	}
-	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time,user->deleted);
+	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time, user->deleted);
 	printf(" ******************************************\n");
-	
+
 	printf("\n");
 }
 
@@ -437,11 +440,11 @@ void queryMessageMenu(User* user)
 			printf("请输入查询场地名：");
 			scanf("%s", query);
 			int num = 0;
-			queryField(FieldRoot, query, tempField,&num);
+			queryField(FieldRoot, query, tempField, &num);
 			sortFields(tempField, num, 0);
 			putFieldMessage(tempField);
 
-		
+
 			int conditon;
 			while (true)
 			{
@@ -461,7 +464,7 @@ void queryMessageMenu(User* user)
 				{
 					break;
 				}
-				else if(conditon>0&&conditon<8)
+				else if (conditon > 0 && conditon < 8)
 				{
 					sortFields(tempField, num, conditon);
 					putFieldMessage(tempField);
@@ -474,19 +477,19 @@ void queryMessageMenu(User* user)
 					system("cls");
 				}
 			}
-			
+
 
 		}
 		else if (querycmd == 2)
 		{
 			int flag = 1;
-			for (int i = 0; Reservations[i].idx!=0; i++)
+			for (int i = 0; Reservations[i].idx != 0; i++)
 			{
 				if (Reservations[i].deleted)
 				{
 					continue;
 				}
-				if (strcmp(user->username,Reservations[i].owner)==0)
+				if (strcmp(user->username, Reservations[i].owner) == 0)
 				{
 					flag = 0;
 					putReservation(Reservations[i]);
@@ -499,14 +502,14 @@ void queryMessageMenu(User* user)
 		}
 		else
 		{
+			getchar();
 			system("cls");
-			printf("请输入正确的序号!");
+			printf("请选择正确的功能！\n");
 			Sleep(500);
-			system("cls");
 		}
-		
+
 	}
-	
+
 }
 
 /*用户功能：场地预定*/
@@ -530,12 +533,12 @@ void editReservationMenu(char username[])
 	{
 		if (strcmp(Reservations[i].owner, username) == 0&&!Reservations[i].deleted)
 		{
-			printf("%d. ", cnt+1);
+			printf("%d. ", cnt + 1);
 			reservationp[cnt++] = &Reservations[i];
 			putReservation(Reservations[i]);
 		}
 	}
-	
+
 	printf("请输入要修改的预定编号：");
 	int idx;
 	while (true)
@@ -557,8 +560,9 @@ void editReservationMenu(char username[])
 
 			break;
 		}
+		getchar();
 	}
-	
+
 	while (true)
 	{
 
@@ -570,18 +574,18 @@ void editReservationMenu(char username[])
 		{
 			break;
 		}
-		else if (cmd==1)
+		else if (cmd == 1)
 		{
 			printf("请输入新的场地名：");
 			scanf("%s", newReservation.fieldName);
 			Field* temp = findField(FieldRoot, newReservation.fieldName);
-			if (checkTime(newReservation.time,temp->openTime))
+			if (checkTime(newReservation.time, temp->openTime))
 			{
 				if (!rented(newReservation))
 				{
 					*reservationp[idx - 1] = newReservation;
 					printf("预订信息修改成功！");
-					editReservations(reservationp[idx - 1]->idx, reservationp[idx - 1]->fieldName, reservationp[idx - 1]->time, reservationp[idx - 1]->owner, reservationp[idx - 1]->deleted,reservationp[idx-1]->cost);
+					editReservations(reservationp[idx - 1]->idx, reservationp[idx - 1]->fieldName, reservationp[idx - 1]->time, reservationp[idx - 1]->owner, reservationp[idx - 1]->deleted, reservationp[idx - 1]->cost);
 					Sleep(500);
 					system("cls");
 					break;
@@ -597,12 +601,12 @@ void editReservationMenu(char username[])
 			{
 				printf("该时间段场地未开放！请重新预定！\n");
 			}
-			
+
 		}
-		else if (cmd==2)
+		else if (cmd == 2)
 		{
 			printf("请输入新的时间段：");
-			scanf("%02d:%02d~%02d:%02d",&newReservation.time.start.hour,&newReservation.time.start.minute,&newReservation.time.end.hour,&newReservation.time.end.minute );
+			scanf("%02d:%02d~%02d:%02d", &newReservation.time.start.hour, &newReservation.time.start.minute, &newReservation.time.end.hour, &newReservation.time.end.minute);
 
 			Field* temp = findField(FieldRoot, newReservation.fieldName);
 			if (checkTime(newReservation.time, temp->openTime))
@@ -611,7 +615,7 @@ void editReservationMenu(char username[])
 				{
 					*reservationp[idx - 1] = newReservation;
 					printf("预订信息修改成功！");
-					editReservations(reservationp[idx - 1]->idx, reservationp[idx - 1]->fieldName, reservationp[idx - 1]->time, reservationp[idx - 1]->owner, reservationp[idx - 1]->deleted,reservationp[idx-1]->cost);
+					editReservations(reservationp[idx - 1]->idx, reservationp[idx - 1]->fieldName, reservationp[idx - 1]->time, reservationp[idx - 1]->owner, reservationp[idx - 1]->deleted, reservationp[idx - 1]->cost);
 					Sleep(500);
 					system("cls");
 					break;
@@ -621,14 +625,14 @@ void editReservationMenu(char username[])
 			{
 				printf("该时间段场地未开放！请重新预定！\n");
 			}
-			
+
 		}
 		else
 		{
 			printf("请输入正确的编号:");
 		}
 	}
-	
+
 }
 
 /*找回密码*/
