@@ -143,9 +143,9 @@ void userManageMenu()
 {
 	printf(" ******************管理员用户管理****************\n");
 	printf("                 0.返回\n");
-	printf("                 1.添加场地负责人\n");
-	printf("                 2.修改场地负责人信息\n");
-	printf("                 3.删除场地负责人\n");
+	printf("                 1.查询用户预订情况\n");
+	printf("                 2.\n");
+	printf("                 3.删除用户\n");
 	printf(" ********************************************\n");
 	printf("\n");
 }
@@ -528,7 +528,7 @@ void editReservationMenu(char username[])
 	Reservation* reservationp[100];
 	for (int i = 0; Reservations[i].idx != 0; i++)
 	{
-		if (strcmp(Reservations[i].owner, username) == 0)
+		if (strcmp(Reservations[i].owner, username) == 0&&!Reservations[i].deleted)
 		{
 			printf("%d. ", cnt+1);
 			reservationp[cnt++] = &Reservations[i];
