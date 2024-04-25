@@ -171,7 +171,7 @@ extern Reservation Reservations[10000];
 //	remove(Text);//删除txet文件
 //}
 
-// 创建场地负责人节点
+/*创建场地负责人节点*/
 Respondent* createRespondentNode(unsigned int idx, const char* username, const char* password, const char* name, const char* phone, bool deleted)
 {
 	Respondent* newNode = (Respondent*)malloc(sizeof(Respondent));
@@ -192,7 +192,7 @@ Respondent* createRespondentNode(unsigned int idx, const char* username, const c
 
 }
 
-// 插入场地负责人节点到链表中
+/*插入场地负责人节点到链表中*/
 void insertRespondentNode(Respondent* head, Respondent* newNode)
 {
 	if (head == NULL) {
@@ -204,7 +204,7 @@ void insertRespondentNode(Respondent* head, Respondent* newNode)
 	}
 }
 
-// 删除场地负责人节点
+/*删除场地负责人节点*/
 void deleteRespondentNode(Respondent* head, const char* username)
 {
 	if (head == NULL)
@@ -232,7 +232,7 @@ void deleteRespondentNode(Respondent* head, const char* username)
 	}
 }
 
-// 查找场地负责人节点
+/*查找场地负责人节点*/
 Respondent* findRespondentNode(Respondent* head, const char* username)
 {
 	Respondent* current = head;
@@ -247,7 +247,7 @@ Respondent* findRespondentNode(Respondent* head, const char* username)
 	return NULL;
 }
 
-// 打印场地负责人链表
+/*打印场地负责人链表*/
 void printRespondentList(Respondent* head)
 {
 	printf("场地负责人信息：\n");
@@ -260,6 +260,7 @@ void printRespondentList(Respondent* head)
 	}
 }
 
+/*管理员：场地查询*/
 int managerputFieldMessage(Field* tempField[], int temp)
 {
 	for (int i = 0; tempField[i] != NULL; i++)
@@ -274,3 +275,8 @@ int managerputFieldMessage(Field* tempField[], int temp)
 	return temp;
 }
 
+/*管理员功能：删除场地负责人*/
+void deleteRespondant()
+{
+
+}

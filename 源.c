@@ -59,7 +59,7 @@ int main()
 						system("cls");
 						break;
 					}
-					if (managerCmd == 1)
+					else if (managerCmd == 1)
 					{
 						system("cls");
 						while (true)
@@ -100,7 +100,7 @@ int main()
 							}
 						}
 					}
-					if (managerCmd == 2)
+					else if (managerCmd == 2)
 					{
 						system("cls");
 						while (true)
@@ -124,20 +124,27 @@ int main()
 							else if (managerCmd == 3)
 							{
 								system("cls");
-								deleteRespondent();
+								//deleteRespondent();
 							}
 						}
 
 					}
-					if (managerCmd == 3)
+					else if (managerCmd == 3)
 					{
 						system("cls");
 
 					}
-					if (managerCmd == 4)
+					else if (managerCmd == 4)
 					{
 						system("cls");
 						editManagerpassword();
+					}
+					else
+					{
+						getchar();
+						system("cls");
+						printf("请选择正确的功能！\n");
+						Sleep(500);
 					}
 				}
 			}
@@ -183,14 +190,14 @@ int main()
 					}
 					else
 					{
-						printf("请选择正确的序号：");
+						getchar();
+						system("cls");
+						printf("请选择正确的功能！\n");
+						Sleep(500);
 					}
 				}		
 			}
-			else
-			{
-				
-			}
+		
 			break;
 		}
 		case 3:
@@ -270,6 +277,14 @@ int main()
 							{
 								periodCost(currentUser->username);
 							}
+							else
+							{
+								getchar();
+								system("cls");
+								printf("请选择正确的功能！\n");
+								Sleep(500);
+
+							}
 						}
 					}
 					else if (userCmd == 5)
@@ -283,6 +298,7 @@ int main()
 					}
 					else
 					{
+						getchar();
 						system("cls");
 						printf("请选择正确的功能！\n");
 						Sleep(500);
@@ -322,6 +338,13 @@ int main()
 				else if (forget==3)
 				{
 					userForget();
+				}
+				else
+				{
+					getchar();
+					system("cls");
+					printf("请选择正确的功能！\n");
+					Sleep(500);
 				}
 			}
 			break;
