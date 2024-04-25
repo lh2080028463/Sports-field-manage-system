@@ -43,8 +43,6 @@ typedef struct Respondent
 	int managedField[10];  //管理场地编号
 	bool deleted;          //删除情况
 
-	
-
 	struct Respondent* next;
 }Respondent;
 

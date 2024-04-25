@@ -17,4 +17,6 @@ void deleteField();
 void managerqueryfield();
 void managersortfield();
 void traverseField(Field* root, Field fields[], int* count);
+void editRespondent();
 void deleteRespondent();
+void queryUserReservation();

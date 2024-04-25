@@ -106,7 +106,7 @@ void managerMenu()
 	printf("                 0.退出\n");
 	printf("                 1.场地管理\n");
 	printf("                 2.场地负责人管理\n");
-	printf("                 3.用户管理\n");
+	printf("                 3.查询用户预订情况\n");
 	printf("                 4.重置密码\n");
 	printf(" ********************************************\n");
 	printf("\n");
@@ -134,18 +134,6 @@ void responManageMenu()
 	printf("                 1.添加场地负责人\n");
 	printf("                 2.修改场地负责人信息\n");
 	printf("                 3.删除场地负责人\n");
-	printf(" ********************************************\n");
-	printf("\n");
-}
-
-/*管理员功能：用户管理*/
-void userManageMenu()
-{
-	printf(" ******************管理员用户管理****************\n");
-	printf("                 0.返回\n");
-	printf("                 1.查询用户预订情况\n");
-	printf("                 2.\n");
-	printf("                 3.删除用户\n");
 	printf(" ********************************************\n");
 	printf("\n");
 }
@@ -179,8 +167,6 @@ void addRespondent()
 		printf("该用户名已存在，请重新添加！\n");
 		addRespondent();
 	}
-
-
 }
 
 /*场地添加界面*/

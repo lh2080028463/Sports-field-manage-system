@@ -110,6 +110,7 @@ int main()
 							scanf("%d", &managerCmd);
 							if (managerCmd == 0)
 							{
+								system("cls");
 								break;
 							}
 							else if (managerCmd == 1)
@@ -119,12 +120,13 @@ int main()
 							}
 							else if (managerCmd == 2)
 							{
-								 
+								system("cls");
+								editRespondent();
 							}
 							else if (managerCmd == 3)
 							{
 								system("cls");
-								//deleteRespondent();
+								deleteRespondent();
 							}
 						}
 
@@ -132,28 +134,7 @@ int main()
 					else if (managerCmd == 3)
 					{
 						system("cls");
-						while (true)
-						{
-							userManageMenu();
-							printf("ÇëÑ¡Ôñ¹¦ÄÜ£º");
-							scanf("%d", &managerCmd);
-							if (managerCmd == 0)
-							{
-								break;
-							}
-							else if (managerCmd == 1)
-							{
-								system("cls");
-							}
-							else if (managerCmd == 2)
-							{
-								system("cls");
-							}
-							else if (managerCmd == 3)
-							{
-								system("cls");
-							}
-						}
+						queryUserReservation();
 					}
 					else if (managerCmd == 4)
 					{

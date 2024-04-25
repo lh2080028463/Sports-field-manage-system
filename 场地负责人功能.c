@@ -135,6 +135,8 @@ void responQueryMessage()
 					if (flag)
 					{
 						printf("当前暂无预定场地！\n");
+						Sleep(1000);
+						break;
 					}
 				}
 			}
