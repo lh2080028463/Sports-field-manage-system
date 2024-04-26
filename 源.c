@@ -329,15 +329,11 @@ int main()
 				{
 					break;
 				}
-				else if(forget==1)
+				else if (forget == 1)
 				{
-
+					responForget();
 				}
-				else if (forget == 2)
-				{
-
-				}
-				else if (forget==3)
+				else if (forget==2)
 				{
 					userForget();
 				}

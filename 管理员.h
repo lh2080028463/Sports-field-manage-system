@@ -20,3 +20,4 @@ void traverseField(Field* root, Field fields[], int* count);
 void editRespondent();
 void deleteRespondent();
 void queryUserReservation();
+Respondent* findRespondentNode(Respondent* head, const char* username);

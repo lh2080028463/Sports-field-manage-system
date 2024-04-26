@@ -10,10 +10,13 @@
 #include"管理员.h"
 #include"用户.h"
 #include"文件处理.h"
+#include"基础功能.h"
+#include"管理员.h"
 
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 extern User* UserRoot;
 extern Field* FieldRoot;
+extern Respondent* RespondentsHead;
 extern Reservation Reservations[10000];
 
 /*场地负责人功能：登记用户*/
@@ -41,16 +44,15 @@ void registerUser()
 void responQueryMessage()
 {
 	int querycmd;
-	printf(" ******************信息查询****************\n");
-	printf("                 0.退出\n");
-	printf("                 1.场地信息查询\n");
-	printf("                 2.个人预定信息查询\n");
-	printf(" ******************************************\n");
-	printf("\n");
-	printf("请选择信息查询功能：");
-
 	while (true)
 	{
+		printf(" ******************信息查询****************\n");
+		printf("                 0.退出\n");
+		printf("                 1.场地信息查询\n");
+		printf("                 2.个人预定信息查询\n");
+		printf(" ******************************************\n");
+		printf("\n");
+		printf("请选择信息查询功能：");
 		scanf("%d", &querycmd);
 		if (querycmd == 0)
 		{
@@ -58,50 +60,14 @@ void responQueryMessage()
 		}
 		else if (querycmd == 1)
 		{
-			Field* tempField[100] = { NULL };
+			Field tempField[100] = { NULL };
 			char query[100];
 			printf("请输入查询场地名：");
 			scanf("%s", query);
 			int num = 0;
 			queryField(FieldRoot, query, tempField,&num);
-			sortFields(tempField, num, 0);
 			putFieldMessage(tempField);
-
-
-			int conditon;
-			while (true)
-			{
-				printf(" ******************场地信息排序****************\n");
-				printf("                 0.取消排序\n");
-				printf("                 1.名称\n");
-				printf("                 2.面积\n");
-				printf("                 3.早上价格\n");
-				printf("                 4.下午价格\n");
-				printf("                 5.晚上价格\n");
-				printf("                 6.开放时间\n");
-				printf("                 7.关闭时间\n");
-				printf(" ******************************************\n");
-				printf("请选择场地信息排序功能：");
-				scanf("%d", &conditon);
-				if (conditon == 0)
-				{
-					break;
-				}
-				else if (conditon > 0 && conditon < 8)
-				{
-					sortFields(tempField, num, conditon);
-					putFieldMessage(tempField);
-				}
-				else
-				{
-					system("cls");
-					printf("请输入正确的序号!");
-					Sleep(500);
-					system("cls");
-				}
-			}
-
-
+			sortFields(tempField, num);
 		}
 		else if (querycmd == 2)
 		{
@@ -190,3 +156,50 @@ void resetResponPass(Respondent* curRespondent)
 	}
 }
 
+/*场地负责人忘记密码*/
+void responForget()
+{
+	char username[20];
+	while (true)
+	{
+		printf("请输入账号（输入0退出）:");
+		scanf("%s", username);
+		if (strcmp(username, "0") == 0)
+		{
+			break;
+		}
+		Respondent* currentRespon = findRespondentNode(RespondentsHead, username);
+		if (currentRespon != NULL)
+		{
+			char currentPhone[20];
+			while (true)
+			{
+				printf("请输入你的联系方式（输入0退出）：");
+				scanf("%s", &currentPhone);
+				if (strcmp(currentPhone, "0") == 0)
+				{
+					break;
+				}
+				else
+				{
+					if (strcmp(currentPhone, currentRespon->phone) == 0)
+					{
+						resetUserPass(currentRespon, 1);
+						break;
+					}
+					else
+					{
+						printf("联系方式输入错误！\n");
+						Sleep(1000);
+						system("cls");
+					}
+				}
+			}
+
+		}
+		else
+		{
+			printf("未查询到该账号信息！请重新输入！\n");
+		}
+	}
+}
