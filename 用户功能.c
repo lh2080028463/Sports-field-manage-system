@@ -226,8 +226,9 @@ Field* findField(Field* root, char fieldName[])
 }
 
 /*用户预订场地*/
-void makeReservation(Reservation reservation, Field* root, char username[])
+void makeReservation(Reservation* reserv, Field* root, char username[])
 {
+	Reservation reservation;
 	reservation.idx = ReservationNum+1;
 	printf("请输入需要预定的场地名称（输入0取消预定）：");
 	scanf("%s", reservation.fieldName);
@@ -240,7 +241,7 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 	if (temp == NULL)
 	{
 		printf("无该场地名称！请重新预定！\n");
-		makeReservation(reservation, root, username);
+		makeReservation(reserv, root, username);
 	}
 	else
 	{
@@ -253,9 +254,15 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 		{
 			if (!rented(reservation))
 			{
-				strcpy(reservation.owner, username);
-				ReservationNum++;
 				reservation.cost = calculatePrice(reservation);
+				strcpy(reservation.owner, username);
+				reserv[ReservationNum].idx = reservation.idx;
+				reserv[ReservationNum].time = reservation.time;
+				strcpy(reserv[ReservationNum].owner, reservation.owner);
+				reserv[ReservationNum].cost = reservation.cost;
+				strcpy(reserv[ReservationNum].fieldName, reservation.fieldName);
+				ReservationNum++;
+				
 				editReservations(ReservationNum, reservation.fieldName, reservation.time, reservation.owner, 0,reservation.cost);
 				printf("场地预定成功！\n");
 				Sleep(500);
@@ -263,13 +270,13 @@ void makeReservation(Reservation reservation, Field* root, char username[])
 			else
 			{
 				printf("该场地目前已被预定！\n请重新选择！\n");
-				makeReservation(reservation, root, username);
+				makeReservation(reserv, root, username);
 			}
 		}
 		else
 		{
 			printf("该时间段场地未开放！请重新预定！\n");
-			makeReservation(reservation, root, username);
+			makeReservation(reserv, root, username);
 		}
 		
 	}

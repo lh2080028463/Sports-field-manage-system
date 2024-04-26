@@ -238,7 +238,7 @@ int main()
 							}
 							else if (reserveCmd == 1)
 							{
-								makeReservation(Reservations[ReservationNum], FieldRoot, currentUser->username);
+								makeReservation(Reservations, FieldRoot, currentUser->username);
 								
 							}
 							else if (reserveCmd == 2)

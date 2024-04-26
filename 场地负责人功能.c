@@ -34,7 +34,7 @@ void registerUser()
 		}
 		else
 		{
-			makeReservation(Reservations[ReservationNum], FieldRoot, tempUsername);
+			makeReservation(&Reservations[ReservationNum], FieldRoot, tempUsername);
 			break;
 		}
 	}
