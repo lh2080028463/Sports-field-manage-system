@@ -21,3 +21,4 @@ void editRespondent();
 void deleteRespondent();
 void queryUserReservation();
 Respondent* findRespondentNode(Respondent* head, const char* username);
+void FieldtoRespondent(Field* fieldRoot);
