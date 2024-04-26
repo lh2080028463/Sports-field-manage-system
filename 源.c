@@ -193,7 +193,7 @@ int main()
 					}
 					else if (i==4)
 					{
-						resetResponPass(currentrespon);
+						resetResponPass(currentrespon,0);
 					}
 					else
 					{
@@ -302,6 +302,7 @@ int main()
 					{
 						deleteUser(currentUser);
 						UserRoot = deleteUserNode(UserRoot, currentUser->username);
+						break;
 					}
 					else
 					{

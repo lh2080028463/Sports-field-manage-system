@@ -119,15 +119,19 @@ void responQueryMessage()
 }
 
 /*场地负责人功能：重置密码*/
-void resetResponPass(Respondent* curRespondent)
+void resetResponPass(Respondent* curRespondent,bool forget)
 {
 	char password0[20];
 	char newPass[20];
-	printf("请输入旧密码：");
-	scanf("%s", password0);
+	if (!forget)
+	{
+		printf("请输入旧密码：");
+		scanf("%s", password0);
+	}
+	
 	printf("请输入新密码：");
 	scanf("%s", newPass);
-	if (strcmp(curRespondent->password, password0) == 0)
+	if (forget||strcmp(curRespondent->password, password0) == 0)
 	{
 		strcpy(curRespondent->password, newPass);
 		char path[100] = { '\0' };
@@ -184,7 +188,7 @@ void responForget()
 				{
 					if (strcmp(currentPhone, currentRespon->phone) == 0)
 					{
-						resetUserPass(currentRespon, 1);
+						resetResponPass(currentRespon,1);
 						break;
 					}
 					else

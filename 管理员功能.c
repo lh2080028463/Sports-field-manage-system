@@ -333,7 +333,7 @@ void deleteRespondent()
 	{
 		filePointer = fopen(filePath, "w");
 		queryRespondent->deleted = 1;
-		deleteRespondentNode(RespondentsHead, queryRespondent->username);
+		deleteRespondentNode(&RespondentsHead, queryRespondent->username);
 		fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%d\n", queryRespondent->idx, queryRespondent->name, queryRespondent->phone, queryRespondent->username, queryRespondent->password, queryRespondent->deleted);
 		fclose(filePointer);
 		system("cls");
