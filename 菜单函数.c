@@ -423,47 +423,29 @@ void queryMessageMenu(User* user)
 		{
 			Field tempField[100] = { NULL };
 			char query[100];
-			printf("请输入查询场地名：");
-			scanf("%s", query);
 			int num = 0;
-			queryField(FieldRoot, query, tempField, &num);
-			sortFields(tempField, num, 0);
-			putFieldMessage(tempField);
-
-
-			int conditon;
 			while (true)
 			{
-				printf(" ******************场地信息排序****************\n");
-				printf("                 0.取消排序\n");
-				printf("                 1.名称\n");
-				printf("                 2.面积\n");
-				printf("                 3.早上价格\n");
-				printf("                 4.下午价格\n");
-				printf("                 5.晚上价格\n");
-				printf("                 6.开放时间\n");
-				printf("                 7.关闭时间\n");
-				printf(" ******************************************\n");
-				printf("请选择场地信息排序功能：");
-				scanf("%d", &conditon);
-				if (conditon == 0)
+				printf("请输入查询场地名：");
+				scanf("%s", query);
+				
+				queryField(FieldRoot, query, tempField, &num);
+				qsort(tempField, num, sizeof(Field), compareFields1);
+				if (num > 0)
 				{
-					break;
-				}
-				else if (conditon > 0 && conditon < 8)
-				{
-					sortFields(tempField, num, conditon);
 					putFieldMessage(tempField);
+					break;
 				}
 				else
 				{
 					system("cls");
-					printf("请输入正确的序号!");
+					printf("未查询到含该关键词的场地!请重新输入！\n");
 					Sleep(500);
 					system("cls");
 				}
 			}
-
+			
+			sortFields(tempField, num);
 
 		}
 		else if (querycmd == 2)
