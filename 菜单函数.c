@@ -579,7 +579,7 @@ void editReservationMenu(char username[])
 			Field* temp = findField(FieldRoot, newReservation.fieldName);
 			if (checkTime(newReservation.time, temp->openTime))
 			{
-				if (!rented(newReservation))
+				if (!rented(newReservation)||(rented(newReservation)&&strcmp(newReservation.owner,username)==0))
 				{
 					*reservationp[idx - 1] = newReservation;
 					printf("预订信息修改成功！");
