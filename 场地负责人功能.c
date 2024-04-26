@@ -207,3 +207,38 @@ void responForget()
 		}
 	}
 }
+
+/*统计某用户总使用时长*/
+void TotalUseTime()
+{
+	char username[20];
+
+	unsigned int total = 0;
+	while (true)
+	{
+		printf("请选择查询的用户名(输入-1退出)：");
+		scanf("%s", username);
+		if (strcmp(username,"-1")==0)
+		{
+			break;
+		}
+		if (findUsername(UserRoot,username)!=NULL)
+		{
+			for (int i = 0; Reservations[i].idx != 0; i++)
+			{
+				if (strcmp(Reservations[i].owner, username) == 0)
+				{
+					total += calculateTime(Reservations[i].time);
+				}
+			}
+			printf("该用户使用时长为：%.2lf小时\n", total/60.0);
+		}
+		else
+		{
+			printf("未查询到该用户!请重新输入!\n");
+		}
+		
+
+	}
+	
+}

@@ -182,11 +182,11 @@ int main()
 					{
 						responQueryMessage();
 					}
-					else if (i==3)
+					else if (i == 3)
 					{
-
+						TotalUseTime();
 					}
-					else if (i==4)
+					else if (i == 4)
 					{
 						resetResponPass(currentrespon,0);
 					}
