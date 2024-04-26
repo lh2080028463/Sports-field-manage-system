@@ -7,6 +7,7 @@
 #include"结构体信息.h"
 #include"文件处理.h"
 #include"基础功能.h"
+#include"管理员.h"
 #include"用户.h"
 
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
@@ -495,4 +496,80 @@ void queryUserReservation()
 					}
 				}
 			}
+}
+
+void FieldtoRespondent(Field* fieldRoot)
+{
+	int temp;
+	char fieldname[20];
+	printf("*****分配场地给场地负责人*****\n");
+	printf("请输入被分配的场地名称：");
+	scanf("%s", fieldname);
+	Field* tempField = findFieldname(fieldRoot, fieldname);
+	if (fieldRoot != NULL && tempField != NULL)
+	{
+		char responname[20];
+		Respondent* queryRespondent = (Respondent*)malloc(sizeof(Respondent));
+		FILE* filePointer;
+		char cwd[100] = { '\0' };      // 用于存储当前工作目录的字符数组
+		char filePath[100] = { '\0' }; // 用于存储文件路径的字符数组
+		printf("请输入分配到的场地负责人账号：");
+		scanf("%s", responname);
+		for (int i = 1; i <= ResponNum; i++)
+		{
+			if (getcwd(cwd, sizeof(cwd)) != NULL)
+			{
+				strcpy(filePath, cwd);
+				strcat(filePath, "\\respondata\\respondent");
+				char fieldIdx[10] = { '\0' };
+				_itoa(i, fieldIdx, 10);
+				strcat(filePath, fieldIdx);
+				strcat(filePath, ".txt");
+			}
+			else
+			{
+				perror("getcwd() 错误");
+				return 1;
+			}
+			filePointer = fopen(filePath, "r");
+			if (filePointer == NULL)
+			{
+				printf("初始化读入数据%d时无法打开文件！\n", i);
+				return 1;
+			}
+			fscanf(filePointer, "%u\n%s\n%s\n%s\n", &queryRespondent->idx, queryRespondent->name, queryRespondent->phone, queryRespondent->username);
+			if (strcmp(queryRespondent->username, responname) == 0 && queryRespondent->deleted != 1)
+			{
+				temp = 1;
+				break;
+			}
+			else
+				temp = 0;
+		}
+		if (temp == 0)
+		{
+			system("cls");
+			printf("该负责人不存在，请重新输入！\n");
+			Sleep(1000);
+			system("cls");
+			FieldtoRespondent(fieldRoot);
+		}
+		else
+		{
+			tempField->respondentIdx = queryRespondent->idx;
+			editFielddata(tempField->idx, tempField->name, tempField->area, tempField->price, tempField->openTime, tempField->rented, tempField->time, tempField->deleted, tempField->respondentIdx);
+			system("cls");
+			printf("分配成功！\n");
+			Sleep(1000);
+			system("cls");
+		}
+	}
+	else
+	{
+		system("cls");
+		printf("该场地不存在，请重新输入！\n");
+		Sleep(1000);
+		system("cls");
+		FieldtoRespondent(fieldRoot);
+	}
 }

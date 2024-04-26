@@ -134,6 +134,7 @@ void responManageMenu()
 	printf("                 1.添加场地负责人\n");
 	printf("                 2.修改场地负责人信息\n");
 	printf("                 3.删除场地负责人\n");
+	printf("                 4.分配场地给场地负责人\n");
 	printf(" ********************************************\n");
 	printf("\n");
 }

@@ -25,7 +25,8 @@ typedef struct Field
 	bool rented;       //租用状态
 	unsigned int time; //计费时长(min)
 	unsigned int deleted;                 //被删除状态
-
+	unsigned int respondentIdx;			//分配给的场地负责人
+	  
 	struct Field* left;            //左节点
 	struct Field* right;           //右节点
 	int Fieldheight;

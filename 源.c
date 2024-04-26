@@ -128,6 +128,11 @@ int main()
 								system("cls");
 								deleteRespondent();
 							}
+							else if (managerCmd == 4)
+							{
+								system("cls");
+								FieldtoRespondent(FieldRoot);
+							}
 						}
 
 					}

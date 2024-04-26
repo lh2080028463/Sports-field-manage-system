@@ -141,7 +141,7 @@ void deleteField(Field* fieldRoot)
 	if (fieldRoot != NULL && tempField != NULL)
 	{
 		tempField->deleted = 1;
-		editFielddata(tempField->idx, tempField->name, tempField->area, tempField->price, tempField->openTime, tempField->rented, tempField->time, tempField->deleted);
+		editFielddata(tempField->idx, tempField->name, tempField->area, tempField->price, tempField->openTime, tempField->rented, tempField->time, tempField->deleted, tempField->respondentIdx);
 		system("cls");
 		printf("已成功删除！\n");
 		Sleep(2000);
