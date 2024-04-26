@@ -157,7 +157,7 @@ void addRespondent()
 		printf("联系方式：");
 		scanf("%s", phone);
 		ResponNum++;
-		insertRespondentNode(RespondentsHead, createRespondentNode(ResponNum, username, password, name, phone, 0));
+		insertRespondentNode(&RespondentsHead, createRespondentNode(ResponNum, username, password, name, phone, 0));
 		system("cls");
 		printf("场地负责人添加成功！\n");
 		Sleep(500);

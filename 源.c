@@ -297,6 +297,7 @@ int main()
 					{
 						deleteUser(currentUser);
 						UserRoot = deleteUserNode(UserRoot, currentUser->username);
+						break;
 					}
 					else
 					{
