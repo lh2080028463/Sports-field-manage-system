@@ -10,5 +10,5 @@ void printRespondentList(Respondent* head);
 
 void registerUser();
 void responQueryMessage();
-void resetResponPass(Respondent* curRespondent);
+void resetResponPass(Respondent* curRespondent,bool forget);
 void responForget();

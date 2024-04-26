@@ -188,7 +188,7 @@ int main()
 					}
 					else if (i==4)
 					{
-						resetResponPass(currentrespon);
+						resetResponPass(currentrespon,0);
 					}
 					else
 					{
