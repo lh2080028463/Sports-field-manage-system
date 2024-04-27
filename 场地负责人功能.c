@@ -48,7 +48,7 @@ void registerUser()
 			{
 				makeReservation(&Reservations[ReservationNum], FieldRoot, tempUsername);
 				user->timed++;
-				editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time, user->deleted, user->timed)
+				editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time, user->deleted, user->timed);
 				break;
 			}
 		}

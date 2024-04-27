@@ -13,7 +13,7 @@ extern Field* FieldRoot;
 extern Reservation Reservations[10000];
 
 /*创建新用户*/
-User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted)
+User* newUser(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted,unsigned int timed)
 {
 	User* newUser = (User*)malloc(sizeof(User));
 	//用户数据读入
@@ -24,6 +24,7 @@ User* newUser(unsigned int idx, char username[], char password[], char name[], c
 	strcpy(newUser->phone, phone);
 	newUser->time = time;
 	newUser->deleted = deleted;
+	newUser->timed = timed;
 	//构建二叉树节点
 	newUser->left = NULL;
 	newUser->right = NULL;
@@ -78,7 +79,7 @@ User* insertUser(User* node, unsigned int idx, char username[], char password[],
 		UserNum++;
 		if (UserNum == 1)
 			editUserdata(1, username, password, name, phone, time, deleted,timed);
-		return newUser(idx, username, password, name, phone, time, deleted);
+		return newUser(idx, username, password, name, phone, time, deleted,timed);
 	}
 
 

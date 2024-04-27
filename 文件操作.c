@@ -174,7 +174,7 @@ char* getRespondataPath(const Respondent* respondent)
 }
 
 /*编辑文件用户信息*/
-void editUserdata(unsigned int idx,char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted)
+void editUserdata(unsigned int idx,char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted,unsigned int timed)
 {
 	//向文件中写入用户数据
 	FILE* filePointer;
@@ -196,7 +196,7 @@ void editUserdata(unsigned int idx,char username[], char password[], char name[]
 		return 1;
 	}
 	filePointer = fopen(filePath, "w");
-	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%u\n",idx,name, phone, username, password, time,deleted);
+	fprintf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%u\n%u\n",idx,name, phone, username, password, time,deleted,timed);
 	fflush(filePointer);
 	fclose(filePointer);
 }
@@ -342,7 +342,7 @@ void inputUserdata()
 		fscanf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%u\n%u\n", &newUser->idx, newUser->name, newUser->phone, newUser->username, newUser->password, &newUser->time, &newUser->deleted,&newUser->timed);
 		if (newUser->deleted == 0)
 		{
-			UserRoot = insertUser(UserRoot, newUser->idx, newUser->username, newUser->password, newUser->name, newUser->phone, newUser->time, newUser->deleted,&newUser->timed);
+			UserRoot = insertUser(UserRoot, newUser->idx, newUser->username, newUser->password, newUser->name, newUser->phone, newUser->time, newUser->deleted,newUser->timed);
 			UserNum--;
 		}
 		fflush(filePointer);
