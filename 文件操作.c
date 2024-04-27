@@ -339,10 +339,10 @@ void inputUserdata()
 			return 1;
 		}
 		User* newUser = (User*)malloc(sizeof(User));
-		fscanf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%u\n", &newUser->idx, newUser->name, newUser->phone, newUser->username, newUser->password, &newUser->time, &newUser->deleted);
+		fscanf(filePointer, "%u\n%s\n%s\n%s\n%s\n%u\n%u\n%u\n", &newUser->idx, newUser->name, newUser->phone, newUser->username, newUser->password, &newUser->time, &newUser->deleted,&newUser->timed);
 		if (newUser->deleted == 0)
 		{
-			UserRoot = insertUser(UserRoot, newUser->idx, newUser->username, newUser->password, newUser->name, newUser->phone, newUser->time, newUser->deleted);
+			UserRoot = insertUser(UserRoot, newUser->idx, newUser->username, newUser->password, newUser->name, newUser->phone, newUser->time, newUser->deleted,&newUser->timed);
 			UserNum--;
 		}
 		fflush(filePointer);

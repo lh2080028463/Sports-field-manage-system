@@ -310,7 +310,7 @@ User* userRegister(User* userRoot)
 		scanf("%s", phone);
 		printf(" *******************\n");
 		printf(" ×¢²á³É¹¦£¬Çë·µ»ØµÇÂ¼£¡\n");
-		return insertUser(userRoot, UserNum + 1, username, password, name, phone, 0, 0);
+		return insertUser(userRoot, UserNum + 1, username, password, name, phone, 0, 0,0);
 		/*Sleep(500);
 		userLogin(userRoot,username);*/
 	}
@@ -395,7 +395,7 @@ void editMessageMenu(User* user)
 
 		}
 	}
-	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time, user->deleted);
+	editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time, user->deleted,user->timed);
 	printf(" ******************************************\n");
 
 	printf("\n");

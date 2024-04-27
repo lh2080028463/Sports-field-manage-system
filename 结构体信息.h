@@ -56,9 +56,13 @@ typedef struct User
 	char username[20];     //账号
 	char password[20];     //密码
 	unsigned int time;     //总使用时长
-	unsigned int deleted;                 //删除情况
+	unsigned int deleted;   //删除情况
+
+	unsigned int timed;    //加时次数
+
 	struct User* left;            //左节点
 	struct User* right;           //右节点
+
 	int height;
 }User;
 

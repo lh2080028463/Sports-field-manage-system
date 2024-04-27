@@ -4,7 +4,7 @@
 
 char* getUserdataPath(const User user);
 void inputUserdata();
-void editUserdata(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted);
+void editUserdata(unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted,unsigned int timed);
 void initNum();
 void editUserNum();
 void inputReservation(Reservation r[]);

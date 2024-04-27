@@ -71,24 +71,24 @@ User* leftRotate(User* x)
 }
 
 /*用户注册*/
-User* insertUser(User* node, unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted)
+User* insertUser(User* node, unsigned int idx, char username[], char password[], char name[], char phone[], unsigned int time, unsigned int deleted,unsigned int timed)
 {
 	if (node == NULL)
 	{
 		UserNum++;
 		if (UserNum == 1)
-			editUserdata(1, username, password, name, phone, time, deleted);
+			editUserdata(1, username, password, name, phone, time, deleted,timed);
 		return newUser(idx, username, password, name, phone, time, deleted);
 	}
 
 
 	if (strcmp(username, node->username) < 0)
 	{
-		node->left = insertUser(node->left, idx, username, password, name, phone, time, deleted);
+		node->left = insertUser(node->left, idx, username, password, name, phone, time, deleted,timed);
 	}
 	else if (strcmp(username, node->username) > 0)
 	{
-		node->right = insertUser(node->right, idx, username, password, name, phone, time, deleted);
+		node->right = insertUser(node->right, idx, username, password, name, phone, time, deleted,timed);
 	}
 	else
 		return node;
@@ -122,7 +122,7 @@ User* insertUser(User* node, unsigned int idx, char username[], char password[],
 		return leftRotate(node);
 	}
 
-	editUserdata(idx, username, password, name, phone, time, deleted);
+	editUserdata(idx, username, password, name, phone, time, deleted,timed);
 	return node;
 }
 
@@ -319,6 +319,7 @@ void putFieldMessage(Field tempField[])
 	}
 	printf("\n");
 }
+
 /*输出预定信息*/
 void putReservation(Reservation tempReservation)
 {
@@ -414,7 +415,7 @@ void resetUserPass(User* curUser,bool forget)
 /*注销用户*/
 void deleteUser(User* curUser)
 {
-	editUserdata(curUser->idx, curUser->name, curUser->phone, curUser->username, curUser->password, curUser->time, 1);
+	editUserdata(curUser->idx, curUser->name, curUser->phone, curUser->username, curUser->password, curUser->time, 1,curUser->timed);
 	for (int i = 0; Reservations[i].idx != 0; i++)
 	{
 		if (strcmp(Reservations[i].owner, curUser->username) == 0)
