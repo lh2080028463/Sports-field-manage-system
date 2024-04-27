@@ -28,14 +28,29 @@ void registerUser()
 	{
 		scanf("%s", tempUsername);
 		if (strcmp(tempUsername, "0") == 0) break;
-		if (findUsername(UserRoot, tempUsername) == NULL)
+		User* user = findUsername(UserRoot, tempUsername);
+		if (user == NULL)
 		{
 			printf("该用户名未注册！\n请重新输入用户名：");
 		}
 		else
 		{
-			makeReservation(&Reservations[ReservationNum], FieldRoot, tempUsername);
-			break;
+			
+			if (user->timed >= 10)
+			{
+				system("cls");
+				printf("预约次数已达到上限！");
+				Sleep(1000);
+				system("cls");
+				break;
+			}
+			else
+			{
+				makeReservation(&Reservations[ReservationNum], FieldRoot, tempUsername);
+				user->timed++;
+				editUserdata(user->idx, user->username, user->password, user->name, user->phone, user->time, user->deleted, user->timed)
+				break;
+			}
 		}
 	}
 }
