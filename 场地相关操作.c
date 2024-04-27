@@ -13,11 +13,6 @@
 extern unsigned int ManagerNum, UserNum, ResponNum, ReservationNum, FieldNum;
 extern Field* FieldRoot;
 
-/*记录场地使用情况*/
-void recordUserField()
-{
-
-}
 
 /*修改场地信息*/
 void editField(Field* fieldRoot)

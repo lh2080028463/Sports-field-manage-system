@@ -330,13 +330,22 @@ void putReservation(Reservation tempReservation)
 /*删除预定场地信息*/
 void deleteReservation(char username[])
 {
+	bool flag = 1;
 	for (int i = 0; Reservations[i].idx != 0; i++)
 	{
 		if (strcmp(Reservations[i].owner, username) == 0)
 		{
+			flag = 0;
 			putReservation(Reservations[i]);
 		}
 	}
+	if (flag)
+	{
+		printf("当前暂无预定信息!\n");
+		Sleep(500);
+		return;
+	}
+
 	Reservation tempReserve;
 
 	printf("请按照以上格式输入你要删除的预定信息：");

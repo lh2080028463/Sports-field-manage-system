@@ -62,11 +62,28 @@ void responQueryMessage()
 		{
 			Field tempField[100] = { NULL };
 			char query[100];
-			printf("请输入查询场地名：");
-			scanf("%s", query);
 			int num = 0;
-			queryField(FieldRoot, query, tempField,&num);
-			putFieldMessage(tempField);
+			while (true)
+			{
+				printf("请输入查询场地名：");
+				scanf("%s", query);
+
+				queryField(FieldRoot, query, tempField, &num);
+				qsort(tempField, num, sizeof(Field), compareFields1);
+				if (num > 0)
+				{
+					putFieldMessage(tempField);
+					break;
+				}
+				else
+				{
+					getchar();
+					system("cls");
+					printf("未查询到含该关键词的场地!请重新输入！\n");
+					Sleep(500);
+					system("cls");
+				}
+			}
 			sortFields(tempField, num);
 		}
 		else if (querycmd == 2)

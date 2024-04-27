@@ -498,16 +498,23 @@ void editReservationMenu(char username[])
 {
 	int cnt = 0;
 	Reservation* reservationp[100];
+	bool flag = 1;
 	for (int i = 0; Reservations[i].idx != 0; i++)
 	{
 		if (strcmp(Reservations[i].owner, username) == 0&&!Reservations[i].deleted)
 		{
+			flag = 0;
 			printf("%d. ", cnt + 1);
 			reservationp[cnt++] = &Reservations[i];
 			putReservation(Reservations[i]);
 		}
 	}
-
+	if (flag)
+	{
+		printf("当前暂无预定信息!\n");
+		Sleep(500);
+		return;
+	}
 	printf("请输入要修改的预定编号：");
 	int idx;
 	while (true)
